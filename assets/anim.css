@@ -1,0 +1,229 @@
+/* Signal — shared motion layer
+ *
+ * All keyframes below are original to this project. Motion is used to explain
+ * something (a heart beating, a course completing, a wave of peristalsis),
+ * never as decoration for its own sake.
+ *
+ * Everything degrades to a still image under `prefers-reduced-motion: reduce`,
+ * which is honoured at the bottom of this file. Nothing here is load-bearing:
+ * with animation off, every icon and panel is still fully legible.
+ */
+
+/* ───────────────── icon motion ───────────────── */
+
+/* Heart — systole, a short pause, then refill. Not a simple pulse. */
+@keyframes sigBeat {
+  0%, 62%, 100% { transform: scale(1); }
+  8%            { transform: scale(1.13); }
+  18%           { transform: scale(0.99); }
+  27%           { transform: scale(1.07); }
+  38%           { transform: scale(1); }
+}
+.sig-beat { animation: sigBeat 1.7s ease-in-out infinite; }
+
+/* The ECG trace drawing itself across the icon */
+@keyframes sigTrace {
+  0%       { stroke-dasharray: 0 60; opacity: 0; }
+  12%      { opacity: .85; }
+  55%      { stroke-dasharray: 60 60; opacity: .85; }
+  85%,100% { stroke-dasharray: 60 60; opacity: 0; }
+}
+.sig-trace { animation: sigTrace 1.7s linear infinite; }
+
+/* Lungs — a slow, deliberately calming respiratory cycle */
+@keyframes sigBreathe {
+  0%, 100% { transform: scale(1); }
+  45%      { transform: scale(1.09); }
+}
+.sig-breathe { animation: sigBreathe 4.2s ease-in-out infinite; }
+
+/* A signal firing from node to node */
+@keyframes sigFire {
+  0%, 70%, 100% { opacity: .28; r: 2.4; }
+  12%           { opacity: 1;   r: 3.2; }
+}
+.sig-fire { animation: sigFire 1.5s ease-in-out infinite; }
+
+/* Peristalsis — a wave travelling the length of the gut */
+@keyframes sigFlow { to { stroke-dashoffset: -69; } }
+.sig-flow { animation: sigFlow 2.6s linear infinite; }
+
+/* Orbiting electrons */
+@keyframes sigSpin    { to { transform: rotate(360deg); } }
+@keyframes sigSpinRev { to { transform: rotate(-360deg); } }
+.sig-spin     { animation: sigSpin 6s linear infinite; }
+.sig-spin-rev { animation: sigSpinRev 8s linear infinite; }
+
+/* A microbe drifting, its flagellum whipping */
+@keyframes sigDrift {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(-2px, 1.5px); }
+}
+@keyframes sigWhip {
+  0%, 100% { transform: rotate(-14deg); }
+  50%      { transform: rotate(14deg); }
+}
+.sig-drift { animation: sigDrift 3.4s ease-in-out infinite; }
+.sig-whip  { animation: sigWhip .5s ease-in-out infinite; }
+
+/* Pain radiating outward */
+@keyframes sigRadiate {
+  0%   { r: 5;  opacity: .75; }
+  100% { r: 20; opacity: 0; }
+}
+.sig-radiate { animation: sigRadiate 2.1s ease-out infinite; }
+
+/* A protective check sweeping into place */
+@keyframes sigCheck {
+  0%, 12%  { stroke-dasharray: 0 22; }
+  32%, 88% { stroke-dasharray: 22 22; }
+  100%     { stroke-dasharray: 0 22; }
+}
+.sig-check { animation: sigCheck 3.4s ease-in-out infinite; }
+
+/* Shine travelling along a capsule */
+@keyframes sigShine {
+  0%, 100% { transform: translateX(0);    opacity: 0; }
+  30%      { opacity: .45; }
+  70%      { transform: translateX(18px); opacity: 0; }
+}
+.sig-shine { animation: sigShine 2.8s ease-in-out infinite; }
+
+/* Days ticking off, one by one */
+@keyframes sigTick {
+  0%, 55%, 100% { opacity: .22; }
+  8%, 45%       { opacity: 1; }
+}
+.sig-tick { animation: sigTick 2.4s ease-in-out infinite; }
+
+/* A bell ringing — only when called on */
+@keyframes sigRing {
+  0%, 55%, 100%    { transform: rotate(0); }
+  60%, 70%, 80%    { transform: rotate(9deg); }
+  65%, 75%, 85%    { transform: rotate(-9deg); }
+}
+.sig-ring { animation: sigRing 3s ease-in-out infinite; }
+
+/* A course filling to completion, then starting over */
+@keyframes sigFill {
+  0%       { transform: scaleX(0); }
+  70%,88%  { transform: scaleX(1); }
+  100%     { transform: scaleX(0); }
+}
+.sig-fill { animation: sigFill 3.6s ease-in-out infinite; }
+
+/* Pupil constricting to light, then reopening */
+@keyframes sigPupil {
+  0%, 100% { r: 3; }
+  45%, 60% { r: 1.7; }
+}
+.sig-pupil { animation: sigPupil 4s ease-in-out infinite; }
+
+/* A joint flexing through its range */
+@keyframes sigFlex {
+  0%, 100% { transform: rotate(0); }
+  50%      { transform: rotate(-11deg); }
+}
+.sig-flex { animation: sigFlex 3.2s ease-in-out infinite; }
+
+/* A drop forming, falling and fading */
+@keyframes sigDrop {
+  0%       { transform: translateY(0);   opacity: 0; }
+  20%      { opacity: .9; }
+  100%     { transform: translateY(11px); opacity: 0; }
+}
+.sig-drop { animation: sigDrop 1.8s ease-in infinite; }
+
+/* A drop swelling before it falls */
+@keyframes sigSwell {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+.sig-swell { animation: sigSwell 2.8s ease-in-out infinite; }
+
+/* A scanner beam sweeping down and back */
+@keyframes sigSweep {
+  0%, 100% { transform: translateY(-9px); opacity: 0; }
+  15%, 85% { opacity: .85; }
+  50%      { transform: translateY(9px); }
+}
+.sig-sweep { animation: sigSweep 2.6s ease-in-out infinite; }
+
+/* A single clean pass of the blade */
+@keyframes sigPass {
+  0%, 10%   { stroke-dasharray: 0 90; }
+  45%, 80%  { stroke-dasharray: 90 90; }
+  100%      { stroke-dasharray: 0 90; }
+}
+.sig-pass { animation: sigPass 3.6s ease-in-out infinite; }
+
+/* Consciousness drifting upward and away */
+@keyframes sigFloat {
+  0%       { transform: translateY(4px); opacity: 0; }
+  30%      { opacity: .9; }
+  100%     { transform: translateY(-7px); opacity: 0; }
+}
+.sig-float { animation: sigFloat 2.6s ease-in-out infinite; }
+
+/* One cell separating into two, then merging back */
+@keyframes sigDivideA {
+  0%, 100% { transform: translateX(0);    opacity: 1; }
+  50%      { transform: translateX(-4px); opacity: .8; }
+}
+@keyframes sigDivideB {
+  0%, 100% { transform: translateX(0);   opacity: 0; }
+  50%      { transform: translateX(4px); opacity: .8; }
+}
+.sig-divide-a { animation: sigDivideA 3.4s ease-in-out infinite; }
+.sig-divide-b { animation: sigDivideB 3.4s ease-in-out infinite; }
+
+/* A thermometer column climbing, then settling */
+@keyframes sigRiseCol {
+  0%, 100% { transform: scaleY(.55); }
+  50%      { transform: scaleY(1); }
+}
+.sig-rise-col { animation: sigRiseCol 3.2s ease-in-out infinite; }
+
+/* A second, faster heartbeat */
+@keyframes sigBeatFast {
+  0%, 55%, 100% { transform: scale(1); }
+  10%           { transform: scale(1.22); }
+  30%           { transform: scale(1.08); }
+}
+.sig-beat-fast { animation: sigBeatFast 1.05s ease-in-out infinite; }
+
+/* ───────────────── page motion ───────────────── */
+
+/* Tiles arriving in a soft cascade as a view is built */
+@keyframes sigRise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.sig-enter { animation: sigRise .34s cubic-bezier(.22,.9,.3,1) both; }
+
+/* A quiet pulse for anything genuinely safety-critical */
+@keyframes sigAlert {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(178,59,46,.32); }
+  55%      { box-shadow: 0 0 0 7px rgba(178,59,46,0); }
+}
+.sig-alert { animation: sigAlert 2.6s ease-out infinite; }
+
+/* Sliding indicator used by the view switcher */
+.sig-slide { transition: transform .3s cubic-bezier(.4,0,.2,1), width .3s cubic-bezier(.4,0,.2,1); }
+
+/* ───────────────── accessibility ─────────────────
+ * Reduced motion is a stated preference, not a suggestion. Everything stops.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .sig-anim,
+  .sig-enter,
+  .sig-alert,
+  [class*="sig-"] {
+    animation: none !important;
+    transition: none !important;
+  }
+  .sig-trace { stroke-dasharray: none !important; opacity: .85 !important; }
+  .sig-flow  { stroke-dasharray: none !important; }
+  .sig-check { stroke-dasharray: none !important; }
+  .sig-fill  { transform: scaleX(1) !important; }
+}
