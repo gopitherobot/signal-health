@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal · Symptoms — understand your symptom by urgency</title>
+<meta name="description" content="Plain-language symptom explainer organised by real urgency: what's usually harmless, what's worth checking, and what needs care now.">
+<link rel="stylesheet" href="../assets/anim.css">
+<style>
+  :root{
+    --ink:#14201d;--ink-soft:#4a5a54;--ink-faint:#7d8b85;
+    --paper:#f6f3ec;--card:#fffdf8;--line:#e3ddd0;
+    --calm:#3f7d6e;--calm-bg:#e6f0ec;--watch:#b8842b;--watch-bg:#f6eddb;--now:#b23b2e;--now-bg:#f7e4e0;
+    --shadow:0 1px 2px rgba(20,32,29,.04),0 8px 24px rgba(20,32,29,.06);
+    --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .safety{background:var(--now-bg);border-bottom:1px solid #e6c9c3;color:#7a2a20;font-size:13.5px;padding:9px 24px;text-align:center;font-weight:500}
+  .safety b{font-weight:700}
+  header{padding:26px 0 20px;border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .mark{font-family:var(--serif);font-size:26px;font-weight:600;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
+  .mark .dot{color:var(--calm)}
+  .tag{font-size:13px;color:var(--ink-faint);font-weight:500}
+  .navlink{margin-left:auto;font-size:14px;color:var(--calm);text-decoration:none;font-weight:500}
+  .navlink:hover{text-decoration:underline}
+  .hero{padding:52px 0 36px;max-width:720px}
+  .hero h1{font-family:var(--serif);font-size:42px;line-height:1.12;font-weight:600;letter-spacing:-.02em}
+  .hero h1 em{font-style:italic;color:var(--calm)}
+  .hero p{margin-top:18px;font-size:18px;color:var(--ink-soft);max-width:560px}
+  .legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:7px 13px;border-radius:999px;border:1px solid transparent}
+  .chip .d{width:9px;height:9px;border-radius:50%}
+  .chip.calm{background:var(--calm-bg);color:#295a4e;border-color:#cadfd8}.chip.calm .d{background:var(--calm)}
+  .chip.watch{background:var(--watch-bg);color:#8a6118;border-color:#e7d5a8}.chip.watch .d{background:var(--watch)}
+  .chip.now{background:var(--now-bg);color:#8f2c20;border-color:#eec7c0}.chip.now .d{background:var(--now)}
+  .search{margin:36px 0 8px;position:relative;max-width:560px}
+  .search input{width:100%;font-size:16px;font-family:var(--sans);padding:15px 18px 15px 46px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+  .search input:focus{outline:none;border-color:var(--calm);box-shadow:0 0 0 3px var(--calm-bg)}
+  .search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--ink-faint)}
+  .section-label{margin:40px 0 16px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px;padding-bottom:60px}
+  .stile{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;font-family:inherit;position:relative;overflow:hidden}
+  .stile:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#d3cbba}
+  .stile .sys{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .stile .nm{font-family:var(--serif);font-size:21px;font-weight:600;margin-top:5px}
+  .stile .mini{margin-top:12px;font-size:13px;color:var(--ink-soft);line-height:1.5}
+  .stile .rail{position:absolute;left:0;top:0;bottom:0;width:4px}
+  .stile .tico{width:38px;height:38px;border-radius:11px;background:var(--calm-bg);color:var(--calm);display:flex;align-items:center;justify-content:center;margin-bottom:12px;transition:transform .18s}
+  .stile:hover .tico{transform:scale(1.08)}
+  .stile[data-rail="watch"] .tico{background:var(--watch-bg);color:var(--watch)}
+  .stile[data-rail="now"] .tico{background:var(--now-bg);color:var(--now)}
+  .rail.calm{background:var(--calm)}.rail.watch{background:var(--watch)}.rail.now{background:var(--now)}.rail.mix{background:linear-gradient(var(--calm),var(--watch) 55%,var(--now))}
+  .scrim{position:fixed;inset:0;background:rgba(20,32,29,.42);backdrop-filter:blur(2px);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;z-index:50}
+  .scrim.open{display:flex}
+  .sheet{background:var(--paper);border-radius:18px;max-width:760px;width:100%;box-shadow:0 24px 60px rgba(20,32,29,.28);animation:rise .25s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .sheet-head{padding:26px 30px 22px;border-bottom:1px solid var(--line);position:relative}
+  .sheet-head .sys{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--calm);font-weight:700}
+  .sheet-head h2{font-family:var(--serif);font-size:34px;font-weight:600;margin-top:6px;letter-spacing:-.01em}
+  .sheet-head .story{margin-top:12px;font-size:16px;color:var(--ink-soft);max-width:600px}
+  .x{position:absolute;top:22px;right:24px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;color:var(--ink-soft);display:flex;align-items:center;justify-content:center}
+  .x:hover{background:#efe9dc}
+  .sheet-body{padding:24px 30px 30px}
+  .blk{margin-bottom:26px}
+  .blk h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:14px}
+  .urg{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:12px;border:1px solid var(--now-bg);background:var(--now-bg);border-color:#eec7c0}
+  .urg .badge{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border-radius:7px;white-space:nowrap;background:var(--now);color:#fff}
+  .urg .utxt{font-size:14.5px;color:#7a2a20}.urg .utxt b{color:#5f1e15}
+  .flags{background:var(--now-bg);border:1px solid #eec7c0;border-radius:12px;padding:16px 18px}
+  .flags .fh{font-weight:700;color:#8f2c20;font-size:14px;margin-bottom:10px}
+  .flags ul{list-style:none}
+  .flags li{font-size:14px;color:#7a2a20;padding:5px 0 5px 24px;position:relative}
+  .flags li::before{content:"";position:absolute;left:2px;top:11px;width:7px;height:7px;background:var(--now);border-radius:50%}
+  .cause{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+  .cause:last-child{border-bottom:none}
+  .freq{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:5px 0;text-align:center;border-radius:7px}
+  .freq.common{background:var(--calm-bg);color:#295a4e}.freq.some{background:var(--watch-bg);color:#8a6118}.freq.rare{background:var(--now-bg);color:#8f2c20}
+  .cause .cn{font-weight:600;font-size:15px}.cause .cd{font-size:13.5px;color:var(--ink-soft);margin-top:1px}
+  .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .type{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px 16px}
+  .type .tn{font-weight:600;font-size:15px;font-family:var(--serif)}.type .td{font-size:13px;color:var(--ink-soft);margin-top:4px}
+  .region{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:14px;color:var(--ink-soft)}
+  .region b{color:var(--ink)}.region .note{margin-top:8px;font-size:12.5px;color:var(--ink-faint);font-style:italic}
+  .foot{border-top:1px solid var(--line);padding:26px 0 60px;font-size:13px;color:var(--ink-faint);max-width:620px}
+  .foot b{color:var(--ink-soft)}
+  @media(max-width:600px){.hero h1{font-size:33px}.cause{grid-template-columns:96px 1fr}.sheet-head h2{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="safety"><b>Not a diagnosis.</b> This explains symptoms in plain language — it can't examine you. If something feels severe or sudden, contact emergency services or a doctor now.</div>
+<header><div class="wrap brand">
+  <a href="../index.html" class="mark">Signal<span class="dot">.</span></a>
+  <span class="tag">symptoms, explained by urgency</span>
+  <a href="../procedures/index.html" class="navlink">Procedures →</a>
+  <a href="../medicines/index.html" class="navlink" style="margin-left:16px">Medicines →</a>
+</div></header>
+<main class="wrap">
+  <section class="hero">
+    <h1>Every symptom tells a <em>story</em>. Some are whispers. A few are alarms.</h1>
+    <p>Most sites list what a symptom could mean. We start with the question you actually have: how worried should I be, and when do I need to act?</p>
+    <div class="legend">
+      <span class="chip calm"><span class="d"></span>Usually harmless</span>
+      <span class="chip watch"><span class="d"></span>Worth checking</span>
+      <span class="chip now"><span class="d"></span>Act now</span>
+    </div>
+  </section>
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="q" type="text" placeholder="Search a symptom — try &ldquo;chest pain&rdquo; or &ldquo;headache&rdquo;" oninput="filter(this.value)">
+  </div>
+  <div class="section-label">Explore by symptom — 20 entries</div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer class="wrap foot">
+  <p><b>Educational prototype.</b> Frequency bands (&ldquo;common / uncommon / rare&rdquo;) are relative and illustrative, not statistics. Every entry requires physician sign-off and a cited clinical source before any public deployment.</p>
+</footer>
+<div class="scrim" id="scrim" onclick="if(event.target===this)close_()"><div class="sheet" id="sheet"></div></div>
+
+<script src="../data/symptoms.js"></script>
+<script src="../assets/icons.js"></script>
+<script>
+const grid=document.getElementById('grid');
+function render(){
+  grid.innerHTML='';
+  Object.entries(window.SYMPTOMS).forEach(([k,d])=>{
+    const b=document.createElement('button');
+    b.className='stile';b.dataset.name=(d.name+' '+d.system).toLowerCase();b.onclick=()=>open_(k);
+    b.dataset.rail=d.rail;
+    b.innerHTML=`<span class="rail ${d.rail}"></span><div class="tico">${SignalIconFor(d.system,24)}</div><div class="sys">${d.system}</div><div class="nm">${d.name}</div><div class="mini">${d.mini}</div>`;
+    grid.appendChild(b);
+  });
+}
+function filter(v){v=v.trim().toLowerCase();document.querySelectorAll('.stile').forEach(t=>{t.style.display=t.dataset.name.includes(v)?'':'none';});}
+function open_(k){
+  const d=window.SYMPTOMS[k];
+  const causes=d.causes.map(c=>`<div class="cause"><div class="freq ${c.f}">${c.f}</div><div><div class="cn">${c.n}</div><div class="cd">${c.d}</div></div></div>`).join('');
+  const flags=d.flags.map(f=>`<li>${f}</li>`).join('');
+  const types=d.types.map(t=>`<div class="type"><div class="tn">${t.n}</div><div class="td">${t.d}</div></div>`).join('');
+  document.getElementById('sheet').innerHTML=`
+    <div class="sheet-head"><button class="x" onclick="close_()" aria-label="Close">&times;</button>
+      <div class="sys">${d.system}</div><h2>${d.name}</h2><p class="story">${d.story}</p></div>
+    <div class="sheet-body">
+      <div class="blk"><div class="urg"><span class="badge">${d.urgency.badge}</span><div class="utxt">${d.urgency.text}</div></div></div>
+      <div class="blk"><div class="flags"><div class="fh">Red flags — don't wait if you have these</div><ul>${flags}</ul></div></div>
+      <div class="blk"><h3>What's usually behind it</h3>${causes}</div>
+      <div class="blk"><h3>The different kinds</h3><div class="types">${types}</div></div>
+      <div class="blk"><h3>Regional note</h3><div class="region"><b>Where you are can shift the odds.</b> ${d.region.t}<div class="note">${d.region.note}</div></div></div>
+    </div>`;
+  document.getElementById('scrim').classList.add('open');document.body.style.overflow='hidden';
+}
+function close_(){document.getElementById('scrim').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close_()});
+render();
+</script>
+</body>
+</html>
