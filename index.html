@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Signal · Health, explained plainly for everyone</title>
 <meta name="description" content="Signal explains symptoms, procedures and medicines in plain language — by how worried to be, what's changing inside you, and whether to keep taking a medicine or only when you have symptoms.">
+<link rel="stylesheet" href="assets/anim.css">
 <style>
   :root{
     --ink:#161d24;--ink-soft:#4a5560;--ink-faint:#7a8590;
@@ -36,10 +37,11 @@
   .card.sym .accent{background:var(--calm)}.card.sym:hover{border-color:var(--calm)}
   .card.proc .accent{background:var(--deep)}.card.proc:hover{border-color:var(--deep)}
   .card.med .accent{background:var(--plum)}.card.med:hover{border-color:var(--plum)}
-  .icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;transition:transform .2s}
+  .card:hover .icon{transform:scale(1.07)}
   .card.sym .icon{background:var(--calm-bg)}.card.proc .icon{background:var(--deep-bg)}.card.med .icon{background:var(--plum-bg)}
-  .icon svg{width:24px;height:24px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .card.sym .icon svg{stroke:var(--calm)}.card.proc .icon svg{stroke:var(--deep)}.card.med .icon svg{stroke:var(--plum)}
+  .icon svg{width:30px;height:30px}
+  .card.sym .icon{color:var(--calm)}.card.proc .icon{color:var(--deep)}.card.med .icon{color:var(--plum)}
   .card .kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
   .card.sym .kicker{color:var(--calm)}.card.proc .kicker{color:var(--deep)}.card.med .kicker{color:var(--plum)}
   .card h2{font-family:var(--serif);font-size:25px;font-weight:600;margin-top:7px;line-height:1.15}
@@ -75,7 +77,7 @@
   <div class="cards">
     <a href="symptoms/index.html" class="card sym">
       <span class="accent"></span>
-      <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></div>
+      <div class="icon" id="ic-sym"></div>
       <div class="kicker">Symptoms</div>
       <h2>By urgency</h2>
       <div class="q">&ldquo;How worried should I be?&rdquo;</div>
@@ -86,7 +88,7 @@
 
     <a href="procedures/index.html" class="card proc">
       <span class="accent"></span>
-      <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5M6 21h12"/><circle cx="12" cy="12" r="2"/></svg></div>
+      <div class="icon" id="ic-proc"></div>
       <div class="kicker">Procedures</div>
       <h2>From the inside</h2>
       <div class="q">&ldquo;What will it do to my body?&rdquo;</div>
@@ -97,13 +99,13 @@
 
     <a href="medicines/index.html" class="card med">
       <span class="accent"></span>
-      <div class="icon"><svg viewBox="0 0 24 24"><path d="M10.5 3.5 3.5 10.5a5 5 0 0 0 7 7l7-7a5 5 0 0 0-7-7z"/><path d="M7 7l7 7"/></svg></div>
+      <div class="icon" id="ic-med"></div>
       <div class="kicker">Medicines</div>
       <h2>Keep taking, or not?</h2>
       <div class="q">&ldquo;Every day, or only when I have symptoms?&rdquo;</div>
-      <p>Common medicine groups by what they do and, crucially, whether to take them every day, only when needed, or as a course.</p>
+      <p>Explore three ways: by whether to take it every day, when needed or as a course; by pharmacological drug class; or by the condition being treated.</p>
       <span class="go">Explore medicines &rarr;</span>
-      <span class="count">16 medicine groups</span>
+      <span class="count">16 groups · 50 drug classes · 23 conditions</span>
     </a>
   </div>
 
@@ -119,5 +121,11 @@
 <footer class="foot">
   <p><b>Educational prototype — not yet for public use.</b> Every entry requires physician sign-off and cited clinical sources before deployment. Descriptions of frequency, risk and medicine use are illustrative teaching devices — not statistics, and not medical advice. Always follow the specific guidance you were given by your own clinician.</p>
 </footer>
+<script src="assets/icons.js"></script>
+<script>
+  document.getElementById('ic-sym').innerHTML  = SignalIcon('heart', 30);
+  document.getElementById('ic-proc').innerHTML = SignalIcon('scan', 30);
+  document.getElementById('ic-med').innerHTML  = SignalIcon('pill', 30);
+</script>
 </body>
 </html>

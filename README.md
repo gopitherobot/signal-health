@@ -6,7 +6,7 @@ Signal is a two-part public health-education website:
 
 - **Symptoms** — 20 common symptoms, each organised by *real urgency* (usually harmless / worth checking / act now), with red flags, likely causes in relative frequency bands, symptom types, and a region-aware note for the Indian and South Asian context.
 - **Procedures** — 20 common medical procedures, each explained through a structural / functional / chemical model with a **before ↔ after** toggle, plus indications, a benefit/risk trade-off, the patient journey, myth-busting, and questions worth asking your doctor.
-- **Medicines** — 16 common medicine *groups* (a concepts layer, deliberately **no brand names or doses**), each organised by the single most useful public distinction: **take every day / take when needed / take as a course**. Covers what each does, how it helps, the syndromes it treats, common dangerous mistakes (like stopping a preventive medicine because you "feel fine"), and questions to ask. Its signature feature is a mode filter to instantly see "which of my medicines should I never stop?"
+- **Medicines** — 16 common medicine *groups*, now explorable along **three independent axes**: by the take-daily/when-needed/course rule, by **pharmacological drug class** (50 classes in 8 families), and by **condition** (23 conditions across 8 body systems). Originally 16 common medicine *groups* (a concepts layer, deliberately **no brand names or doses**), each organised by the single most useful public distinction: **take every day / take when needed / take as a course**. Covers what each does, how it helps, the syndromes it treats, common dangerous mistakes (like stopping a preventive medicine because you "feel fine"), and questions to ask. Its signature feature is a mode filter to instantly see "which of my medicines should I never stop?"
 
 The guiding idea: most health sites answer *"what could this be?"* Signal answers the questions people actually arrive with — *"how worried should I be?"*, *"what's really happening inside me?"*, and *"should I keep taking this medicine, or only when I have symptoms?"*
 
@@ -40,8 +40,11 @@ signal-health/
 ├── data/
 │   ├── symptoms.js          # 20 symptom entries — window.SYMPTOMS
 │   ├── procedures.js        # 20 procedure entries — window.PROCEDURES
-│   └── medicines.js         # 16 medicine-group entries — window.MEDICINES
-├── assets/                  # (reserved for future images/icons)
+│   ├── medicines.js         # 16 medicine-group entries — window.MEDICINES
+│   └── classification.js    # window.PHARM (drug classes) + window.SYSTEMS (conditions)
+├── assets/
+│   ├── icons.js             # original animated SVG icon set — no third-party assets
+│   └── anim.css             # shared keyframes; honours prefers-reduced-motion
 ├── README.md
 ├── LICENSE
 └── .gitignore
@@ -68,6 +71,16 @@ python3 -m http.server 8000
 **Procedure** (`window.PROCEDURES[key]`): `cat`, `name`, `mini`, `story`, `urgency[{c,t}]`, `indications`, `axes{before[{l,b}],after[{l,b}]}`, `benefits[]`, `risks[]`, `rbnote`, `journey[{n,d}]`, `myths[{m,t}]`, `ask[]`.
 
 **Medicine** (`window.MEDICINES[key]`): `cat`, `name`, `mode` (`daily`/`when`/`course`/`mixed`), `modeText`, `mini`, `story`, `why`, `how`, `rule`, `syndrome`, `examples`, `mistakes[]`, `flags[]`, `ask[]`.
+
+**Drug class** (`window.PHARM[family].classes[id]`): `name`, `tag`, `mech`, `use`, `note`, `med` (the `MEDICINES` key it belongs to), `mode`.
+
+**Condition** (`window.SYSTEMS[system].conditions[]`): `id`, `name`, `desc`, `classes[]` (class ids), `meds[]` (medicine keys), `key` (the one thing worth knowing).
+
+The two classification axes reference medicine keys and class ids rather than duplicating content, so all three views stay in sync from a single source of truth.
+
+## Motion and imagery
+
+Every icon and animation is **original work authored for this project** as inline SVG with CSS keyframes (`assets/icons.js`, `assets/anim.css`). Nothing is imported, traced or derived from any third-party icon set, stock library or GIF — so there is no licensing, attribution or corporate-usage question, and no external network request. Motion always explains something (a heart beating, a course completing, peristalsis travelling), never decorates. All of it stops under `prefers-reduced-motion: reduce`.
 
 ---
 
