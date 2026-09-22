@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal · Procedures — what actually changes in your body</title>
+<meta name="description" content="Plain-language explainer of common medical procedures: what changes structurally, functionally and chemically — before and after — plus risks, benefits and what to ask.">
+<link rel="stylesheet" href="../assets/anim.css">
+<style>
+  :root{
+    --ink:#141c26;--ink-soft:#48545f;--ink-faint:#7a8590;
+    --paper:#f3f5f8;--card:#ffffff;--line:#e0e4ea;
+    --deep:#33507e;--deep-bg:#e7ecf5;--good:#2f7d63;--good-bg:#e3f0ea;--warn:#b23b2e;--warn-bg:#f7e4e0;
+    --before:#8a6a3a;--before-bg:#f3ead9;--after:#33507e;--after-bg:#e7ecf5;
+    --shadow:0 1px 2px rgba(20,28,38,.04),0 8px 24px rgba(20,28,38,.07);
+    --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .safety{background:var(--warn-bg);border-bottom:1px solid #e6c9c3;color:#7a2a20;font-size:13.5px;padding:9px 24px;text-align:center;font-weight:500}
+  .safety b{font-weight:700}
+  header{padding:26px 0 20px;border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .mark{font-family:var(--serif);font-size:26px;font-weight:600;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
+  .mark .dot{color:var(--deep)}
+  .tag{font-size:13px;color:var(--ink-faint);font-weight:500}
+  .navlink{margin-left:auto;font-size:14px;color:var(--deep);text-decoration:none;font-weight:500}
+  .navlink:hover{text-decoration:underline}
+  .hero{padding:52px 0 30px;max-width:730px}
+  .hero h1{font-family:var(--serif);font-size:42px;line-height:1.12;font-weight:600;letter-spacing:-.02em}
+  .hero h1 em{font-style:italic;color:var(--deep)}
+  .hero p{margin-top:18px;font-size:18px;color:var(--ink-soft);max-width:580px}
+  .search{margin:30px 0 8px;position:relative;max-width:560px}
+  .search input{width:100%;font-size:16px;font-family:var(--sans);padding:15px 18px 15px 46px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+  .search input:focus{outline:none;border-color:var(--deep);box-shadow:0 0 0 3px var(--deep-bg)}
+  .search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--ink-faint)}
+  .section-label{margin:38px 0 16px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px;padding-bottom:60px}
+  .ptile{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;font-family:inherit;position:relative}
+  .ptile{overflow:hidden}
+  .ptile .tico{width:38px;height:38px;border-radius:11px;background:var(--deep-bg);color:var(--deep);display:flex;align-items:center;justify-content:center;margin-bottom:12px;transition:transform .18s}
+  .ptile:hover .tico{transform:scale(1.08)}
+  .ptile:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#cfd6df}
+  .ptile .cat{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--deep);font-weight:700}
+  .ptile .nm{font-family:var(--serif);font-size:21px;font-weight:600;margin-top:5px;line-height:1.2}
+  .ptile .mini{margin-top:11px;font-size:13px;color:var(--ink-soft);line-height:1.5}
+  .scrim{position:fixed;inset:0;background:rgba(20,28,38,.44);backdrop-filter:blur(2px);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;z-index:50}
+  .scrim.open{display:flex}
+  .sheet{background:var(--paper);border-radius:18px;max-width:800px;width:100%;box-shadow:0 24px 60px rgba(20,28,38,.3);animation:rise .25s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .sheet-head{padding:26px 30px 22px;border-bottom:1px solid var(--line);position:relative}
+  .sheet-head .cat{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--deep);font-weight:700}
+  .sheet-head h2{font-family:var(--serif);font-size:34px;font-weight:600;margin-top:6px;letter-spacing:-.01em}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .ubadge{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid transparent}
+  .ubadge.planned{background:var(--good-bg);color:#1f5e49;border-color:#bfe0d2}
+  .ubadge.urgent{background:var(--before-bg);color:#7a5a25;border-color:#e6d3ad}
+  .ubadge.emerg{background:var(--warn-bg);color:#8f2c20;border-color:#eec7c0}
+  .sheet-head .story{margin-top:14px;font-size:16px;color:var(--ink-soft);max-width:640px}
+  .x{position:absolute;top:22px;right:24px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;color:var(--ink-soft);display:flex;align-items:center;justify-content:center}
+  .x:hover{background:#eceff4}
+  .sheet-body{padding:24px 30px 30px}
+  .blk{margin-bottom:28px}
+  .blk h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:14px}
+  .indic{font-size:15px;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 18px}
+  .indic b{color:var(--ink)}
+  /* Signature toggle */
+  .toggle-head{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+  .toggle{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;position:relative}
+  .toggle button{font-family:inherit;font-size:14px;font-weight:600;padding:8px 22px;border:none;background:none;color:var(--ink-faint);cursor:pointer;border-radius:999px;position:relative;z-index:1;transition:color .2s}
+  .toggle button.on{color:#fff}
+  .toggle .slider{position:absolute;top:4px;bottom:4px;border-radius:999px;transition:transform .28s cubic-bezier(.4,0,.2,1),background .28s;z-index:0}
+  .toggle-hint{font-size:13px;color:var(--ink-faint)}
+  .axes{display:grid;gap:12px}
+  .axis{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:16px 18px;border-left:4px solid var(--line);transition:border-color .28s,background .28s}
+  .axis .al{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:6px;color:var(--ink-faint)}
+  .axis .ab{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+  .axis .ab b{color:var(--ink);font-weight:600}
+  .state-before .axis{border-left-color:var(--before);background:linear-gradient(90deg,var(--before-bg) 0%,var(--card) 32%)}
+  .state-before .axis .al{color:var(--before)}
+  .state-after .axis{border-left-color:var(--after);background:linear-gradient(90deg,var(--after-bg) 0%,var(--card) 32%)}
+  .state-after .axis .al{color:var(--after)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .col{border-radius:13px;padding:16px 18px;border:1px solid var(--line)}
+  .col.good{background:var(--good-bg);border-color:#bfe0d2}
+  .col.risk{background:var(--warn-bg);border-color:#eec7c0}
+  .col h4{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .col.good h4{color:#1f5e49}.col.risk h4{color:#8f2c20}
+  .col ul{list-style:none}
+  .col li{font-size:13.5px;padding:5px 0 5px 18px;position:relative;line-height:1.45}
+  .col.good li{color:#22624c}.col.risk li{color:#7a2a20}
+  .col li::before{content:"";position:absolute;left:2px;top:10px;width:6px;height:6px;border-radius:50%}
+  .col.good li::before{background:var(--good)}.col.risk li::before{background:var(--warn)}
+  .rbnote{margin-top:12px;font-size:13.5px;color:var(--ink-soft);font-style:italic;padding:0 4px}
+  .journey{position:relative;padding-left:8px}
+  .jstep{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .jstep:last-child{border-bottom:none}
+  .jstep .jn{font-weight:700;font-size:13.5px;color:var(--deep)}
+  .jstep .jd{font-size:14px;color:var(--ink-soft)}
+  .myth{padding:12px 0;border-bottom:1px solid var(--line)}
+  .myth:last-child{border-bottom:none}
+  .myth .m{font-weight:600;font-size:14.5px;color:var(--ink);margin-bottom:3px}
+  .myth .t{font-size:14px;color:var(--ink-soft)}.myth .t b{color:var(--good)}
+  .ask{background:var(--deep-bg);border:1px solid #cdd8ea;border-radius:13px;padding:16px 18px}
+  .ask h4{font-size:13px;font-weight:700;color:var(--deep);margin-bottom:10px}
+  .ask ul{list-style:none}
+  .ask li{font-size:14px;color:#2f486f;padding:5px 0 5px 22px;position:relative}
+  .ask li::before{content:"?";position:absolute;left:2px;top:5px;font-weight:700;color:var(--deep);font-size:13px}
+  .foot{border-top:1px solid var(--line);padding:26px 0 60px;font-size:13px;color:var(--ink-faint);max-width:640px}
+  .foot b{color:var(--ink-soft)}
+  @media(max-width:640px){.hero h1{font-size:33px}.cols{grid-template-columns:1fr}.jstep{grid-template-columns:92px 1fr}.sheet-head h2{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="safety"><b>Not medical advice.</b> This explains what procedures do in general terms. Your own care, risks and options must come from the team treating you.</div>
+<header><div class="wrap brand">
+  <a href="../index.html" class="mark">Signal<span class="dot">.</span></a>
+  <span class="tag">procedures, explained from the inside</span>
+  <a href="../symptoms/index.html" class="navlink">Symptoms →</a>
+  <a href="../medicines/index.html" class="navlink" style="margin-left:16px">Medicines →</a>
+</div></header>
+<main class="wrap">
+  <section class="hero">
+    <h1>What actually <em>changes</em> inside you — before, and after.</h1>
+    <p>Most explainers tell you what a procedure is called. We show you what it changes in your body across three layers: structure, function, and chemistry. Flip between before and after, and the picture completes itself.</p>
+  </section>
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="q" type="text" placeholder="Search a procedure — try &ldquo;anaesthesia&rdquo; or &ldquo;stent&rdquo;" oninput="filter(this.value)">
+  </div>
+  <div class="section-label">Explore by procedure — 20 entries</div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer class="wrap foot">
+  <p><b>Educational prototype.</b> The structural / functional / chemical model is a teaching device, simplified for clarity. Risk and benefit descriptions are qualitative and illustrative; every entry requires physician sign-off and cited clinical sources before any public deployment.</p>
+</footer>
+<div class="scrim" id="scrim" onclick="if(event.target===this)close_()"><div class="sheet" id="sheet"></div></div>
+
+<script src="../data/procedures.js"></script>
+<script src="../assets/icons.js"></script>
+<script>
+const grid=document.getElementById('grid');
+let cur=null,state='after';
+function render(){
+  grid.innerHTML='';
+  Object.entries(window.PROCEDURES).forEach(([k,d])=>{
+    const b=document.createElement('button');
+    b.className='ptile';b.dataset.name=(d.name+' '+d.cat+' '+d.mini).toLowerCase();b.onclick=()=>open_(k);
+    b.innerHTML=`<div class="tico">${SignalIconFor(d.cat,24)}</div><div class="cat">${d.cat}</div><div class="nm">${d.name}</div><div class="mini">${d.mini}</div>`;
+    grid.appendChild(b);
+  });
+}
+function filter(v){v=v.trim().toLowerCase();document.querySelectorAll('.ptile').forEach(t=>{t.style.display=t.dataset.name.includes(v)?'':'none';});}
+function axesHTML(d){
+  const arr=state==='before'?d.axes.before:d.axes.after;
+  return arr.map(a=>`<div class="axis"><div class="al">${a.l}</div><div class="ab">${a.b}</div></div>`).join('');
+}
+function setState(s){
+  state=s;const d=window.PROCEDURES[cur];
+  document.getElementById('axesWrap').className='axes state-'+s;
+  document.getElementById('axesWrap').innerHTML=axesHTML(d);
+  document.getElementById('bBefore').classList.toggle('on',s==='before');
+  document.getElementById('bAfter').classList.toggle('on',s==='after');
+  const sl=document.getElementById('slider');
+  const bw=document.getElementById('bBefore').offsetWidth;
+  if(s==='before'){sl.style.transform='translateX(0)';sl.style.width=bw+'px';sl.style.background='var(--before)';}
+  else{sl.style.transform=`translateX(${bw}px)`;sl.style.width=document.getElementById('bAfter').offsetWidth+'px';sl.style.background='var(--after)';}
+}
+function open_(k){
+  cur=k;state='after';const d=window.PROCEDURES[k];
+  const badges=d.urgency.map(u=>`<span class="ubadge ${u.c}">${u.t}</span>`).join('');
+  const benefits=d.benefits.map(x=>`<li>${x}</li>`).join('');
+  const risks=d.risks.map(x=>`<li>${x}</li>`).join('');
+  const journey=d.journey.map(j=>`<div class="jstep"><div class="jn">${j.n}</div><div class="jd">${j.d}</div></div>`).join('');
+  const myths=d.myths.map(m=>`<div class="myth"><div class="m">${m.m}</div><div class="t">${m.t}</div></div>`).join('');
+  const ask=d.ask.map(a=>`<li>${a}</li>`).join('');
+  document.getElementById('sheet').innerHTML=`
+    <div class="sheet-head"><button class="x" onclick="close_()" aria-label="Close">&times;</button>
+      <div class="cat">${d.cat}</div><h2>${d.name}</h2>
+      <div class="badges">${badges}</div>
+      <p class="story">${d.story}</p></div>
+    <div class="sheet-body">
+      <div class="blk"><h3>When it's used</h3><div class="indic">${d.indications}</div></div>
+      <div class="blk">
+        <h3>What changes in your body</h3>
+        <div class="toggle-head">
+          <div class="toggle"><span class="slider" id="slider"></span>
+            <button id="bBefore" onclick="setState('before')">Before</button>
+            <button id="bAfter" onclick="setState('after')">After</button>
+          </div>
+          <span class="toggle-hint">Flip to compare across all three layers</span>
+        </div>
+        <div class="axes state-after" id="axesWrap"></div>
+      </div>
+      <div class="blk"><h3>The trade-off</h3>
+        <div class="cols">
+          <div class="col good"><h4>Why it's done</h4><ul>${benefits}</ul></div>
+          <div class="col risk"><h4>What to weigh</h4><ul>${risks}</ul></div>
+        </div>
+        <div class="rbnote">${d.rbnote}</div>
+      </div>
+      <div class="blk"><h3>The journey</h3><div class="journey">${journey}</div></div>
+      <div class="blk"><h3>Myths, cleared up</h3>${myths}</div>
+      <div class="blk"><div class="ask"><h4>Questions worth asking your doctor</h4><ul>${ask}</ul></div></div>
+    </div>`;
+  document.getElementById('scrim').classList.add('open');document.body.style.overflow='hidden';
+  requestAnimationFrame(()=>setState('after'));
+}
+function close_(){document.getElementById('scrim').classList.remove('open');document.body.style.overflow='';cur=null;}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close_()});
+render();
+</script>
+</body>
+</html>
