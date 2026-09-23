@@ -25,7 +25,7 @@ const check = (label, ok, detail) => { checks++; ok ? pass(label) : fail(label +
 const section = t => console.log('\n' + t);
 
 global.window = {};
-['symptoms', 'procedures', 'medicines', 'classification'].forEach(f => require(path.join(ROOT, 'data', f + '.js')));
+['symptoms', 'procedures', 'medicines', 'classification', 'sections'].forEach(f => require(path.join(ROOT, 'data', f + '.js')));
 const { SYMPTOMS, PROCEDURES, MEDICINES, PHARM, SYSTEMS } = global.window;
 const DATA = { symptoms: SYMPTOMS, procedures: PROCEDURES, medicines: MEDICINES };
 const SECTIONS = Object.keys(DATA);
@@ -303,6 +303,60 @@ section('Accessibility baseline');
   const noManifest = ['index.html', 'a-z.html'].concat(ENTRY_PAGES)
     .filter(p => !/data\/manifest\.js/.test(src[p]));
   check('pages that need the manifest load it', !noManifest.length, noManifest.join(', '));
+}
+
+/* ─────────────────── 6a. section identity ─────────────────── */
+section('Section identity');
+{
+  const SEC = global.window.SECTIONS;
+
+  /* The pages carry the copy inline so it is indexable and works without JS;
+     data/sections.js is the source of truth. This check is what keeps the two
+     honest, across seven pages. */
+  const ENT = {
+    '&mdash;': '—', '&ndash;': '–', '&middot;': '·',
+    '&ldquo;': '“', '&rdquo;': '”', '&nbsp;': ' ',
+    '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"'
+  };
+  const norm = s => String(s)
+    .replace(/&[a-z]+;/g, m => (m in ENT ? ENT[m] : m))
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  check('data/sections.js defines all three sections',
+    !!SEC && SECTIONS.every(s => SEC[s] && SEC[s].name && SEC[s].kicker && SEC[s].intro),
+    SEC ? '' : 'missing');
+
+  const missing = [];
+  SECTIONS.forEach(s => {
+    const d = SEC[s];
+
+    const index = norm(read(s + '/index.html'));
+    if (!index.includes('class="mh-name">' + d.name + '<')) missing.push(`${s}/index.html name`);
+    if (!index.includes(norm(d.kicker))) missing.push(`${s}/index.html kicker`);
+    if (!index.includes(norm(d.intro)))  missing.push(`${s}/index.html intro`);
+
+    const entry = norm(read(s + '/entry.html'));
+    if (!entry.includes('class="mh-name-sm">' + d.name + '<')) missing.push(`${s}/entry.html name`);
+    if (!entry.includes(norm(d.kicker))) missing.push(`${s}/entry.html kicker`);
+  });
+  check('every section page matches data/sections.js', !missing.length, missing.join(', '));
+
+  /* The landing page introduces all three by name and question. */
+  const land = norm(read('index.html'));
+  const landMissing = [];
+  SECTIONS.forEach(s => {
+    const d = SEC[s];
+    if (!land.includes('class="card-name">' + d.name + '<')) landMissing.push(d.name + ' name');
+    if (!land.includes(norm(d.kicker))) landMissing.push(d.name + ' kicker');
+  });
+  check('landing page introduces all three sections by name and question',
+    !landMissing.length, landMissing.join(', '));
+
+  /* The topic title must be the h1 of its index page. */
+  const badH1 = SECTIONS.filter(s =>
+    !/<h1 class="mh-name">/.test(read(s + '/index.html')));
+  check('the topic title is the h1 on each section index', !badH1.length, badH1.join(', '));
 }
 
 /* ───────────────────────── 7. generated manifest ───────────────────────── */

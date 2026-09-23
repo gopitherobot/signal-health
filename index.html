@@ -54,6 +54,14 @@
   .procband h2 em { font-style: italic; color: var(--green-light); }
   .procband p { font-size: 18px; line-height: 1.55; color: var(--green-pale); max-width: 560px; }
 
+  /* Pillar cards lead with the topic name, then the reader's question. */
+  .card-name { font-family: var(--display); font-size: 54px; line-height: 0.95; letter-spacing: -0.025em; }
+  .card-kicker { font-family: var(--display); font-style: italic; font-size: 25px; line-height: 1.15; margin-top: -6px; }
+  .card--dark  .card-kicker { color: var(--rust-light); }
+  .card--green .card-kicker { color: var(--green-light); }
+  .card .card-kicker { color: var(--rust); }
+  @media (max-width: 900px) { .card-name { font-size: 40px; } .card-kicker { font-size: 21px; } }
+
   .works { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .works .w { display: flex; flex-direction: column; gap: 12px; padding: 30px 32px; border-radius: var(--r-block); background: var(--card); border: 1px solid var(--line); }
   .works .wt { font-family: var(--display); font-size: 30px; line-height: 1.1; }
@@ -163,8 +171,9 @@
     <div class="grid-3">
 
       <a class="card card--dark" href="symptoms/index.html">
-        <div class="eyebrow" style="color:var(--rust-light)">01 &middot; Symptoms</div>
-        <div class="card-title">How worried should I be?</div>
+        <div class="eyebrow" style="color:var(--rust-light)">01</div>
+        <div class="card-name">Symptoms</div>
+        <div class="card-kicker">How worried should I be?</div>
         <p class="card-body">Common symptoms sorted by real urgency &mdash; what's usually harmless, what's worth checking, and the red flags that mean act now.</p>
         <div class="card-foot">
           <span class="chip chip--calm">Usually fine</span>
@@ -175,8 +184,9 @@
       </a>
 
       <a class="card" href="procedures/index.html">
-        <div class="eyebrow">02 &middot; Procedures</div>
-        <div class="card-title">What will it do to my body?</div>
+        <div class="eyebrow">02</div>
+        <div class="card-name">Procedures</div>
+        <div class="card-kicker">What will it do to my body?</div>
         <p class="card-body">Common procedures explained across structure, function and chemistry &mdash; flip between before and after to see the whole picture.</p>
         <div class="card-foot">
           <span class="toggle" aria-hidden="true"><button type="button" class="on" tabindex="-1" style="background:var(--ink);color:var(--paper)">Before</button><button type="button" tabindex="-1">After</button></span>
@@ -185,8 +195,9 @@
       </a>
 
       <a class="card card--green" href="medicines/index.html">
-        <div class="eyebrow" style="color:var(--green-light)">03 &middot; Medicines</div>
-        <div class="card-title">Every day, or only when I need it?</div>
+        <div class="eyebrow" style="color:var(--green-light)">03</div>
+        <div class="card-name">Medicines</div>
+        <div class="card-kicker">Every day, or only when I need it?</div>
         <p class="card-body">Find a medicine three ways &mdash; by how you take it, by drug class, or by the condition it treats.</p>
         <div class="card-foot">
           <span class="chip chip--outline">Daily</span>

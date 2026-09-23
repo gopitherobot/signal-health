@@ -47,6 +47,7 @@ signal-health/
 │   ├── symptoms.js          # 30 symptom entries — window.SYMPTOMS
 │   ├── procedures.js        # 30 procedure entries — window.PROCEDURES
 │   ├── medicines.js         # 24 medicine-group entries — window.MEDICINES
+│   ├── sections.js          # the three topics — name, question, framing
 │   ├── classification.js    # window.PHARM (drug classes) + window.SYSTEMS (conditions)
 │   └── manifest.js          # GENERATED — lightweight index of all 84 entries
 ├── assets/
@@ -109,6 +110,18 @@ Every entry in all three sections begins with the same shared metadata:
 **Condition** (`window.SYSTEMS[system].conditions[]`): `id`, `name`, `desc`, `classes[]` (class ids), `meds[]` (medicine keys), `key` (the one thing worth knowing).
 
 The two classification axes reference medicine keys and class ids rather than duplicating content, so all three views stay in sync from a single source of truth. Full schemas, invariants and safety rules are in [CLAUDE.md](CLAUDE.md).
+
+## The three topics
+
+Symptoms, Procedures and Medicines are the spine of the site, so each is introduced by name on every page it touches — a full masthead at the head of its index, a slim band above every entry, and a named card on the landing page. Each carries the reader's own question rather than a description of the feature:
+
+| | | |
+|---|---|---|
+| **Symptoms** | *How worried should I be?* | Every symptom tells a story. Some are whispers, a few are alarms. |
+| **Procedures** | *What will it do to my body?* | A procedure is not a name on a consent form. |
+| **Medicines** | *Every day, or only when I need it?* | Some medicines treat what you can feel. Others prevent what you cannot. |
+
+The wording lives in [data/sections.js](data/sections.js) and is checked against every page, so it cannot drift.
 
 ## Design
 

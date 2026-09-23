@@ -54,6 +54,7 @@ signal-health/
 │   ├── symptoms.js         # window.SYMPTOMS   — 30 entries
 │   ├── procedures.js       # window.PROCEDURES — 30 entries
 │   ├── medicines.js        # window.MEDICINES  — 24 entries
+│   ├── sections.js         # window.SECTIONS — the three topics' name/kicker/intro
 │   ├── classification.js   # window.PHARM (10 families / 62 classes)
 │   │                       # window.SYSTEMS (10 systems / 29 conditions)
 │   │                       # window.CLASSIFICATION_REVIEW
@@ -191,6 +192,24 @@ These two fields lead every entry, in all three data files:
 }
 ```
 
+### Section identity — `window.SECTIONS`
+
+The three topics are the spine of the site, so their framing is content, not page furniture. `data/sections.js` is the source of truth:
+
+```js
+window.SECTIONS.symptoms = {
+  order:  "01",
+  name:   "Symptoms",                    // the topic title. The h1 of the index page.
+  kicker: "How worried should I be?",    // the reader's question, in their words
+  intro:  "Every symptom tells a story…",// the thesis of the section, two sentences
+  card:   "Common symptoms sorted by…"   // the longer landing-card blurb
+}
+```
+
+**Keep `kicker` phrased as the reader's question, never as a feature.** The whole editorial premise is that people arrive with a question rather than a diagnosis, and these three lines are where that premise is stated.
+
+The pages carry this copy **inline** rather than rendering it from the data file, so the topic title is a real `h1`, indexable and present without JavaScript. `tools/check.js` compares the two across all seven pages, so they cannot drift — change the wording in `data/sections.js` and the check will name every page that still disagrees.
+
 ### Classification — `window.PHARM` and `window.SYSTEMS`
 
 The medicines section has two further axes beyond "by rule", both living in `data/classification.js`.
@@ -277,7 +296,9 @@ Loaded from Google Fonts with `display=swap` and real system fallbacks, so a slo
 4. **Footer** (`.footer`) — four columns and an emergency line. Every link points at something that exists.
 
 **Page components:**
-5. **Hero** — eyebrow, very large display headline with one italic rust accent phrase, standfirst.
+5. **Section masthead** (`.masthead`) — the topic opener at the head of each section index: a hairline rule, `Section 01 of 03`, the topic name at `clamp(56px, 11vw, 132px)`, the kicker question in large rust italic, then the intro. This is deliberately the loudest thing on the page after the safety banner — the topic title carries the site's structure, so it is given the weight of a magazine section opener rather than a small label.
+6. **Slim masthead** (`.masthead--slim`) — the same identity as a band above every entry article, so a reader arriving from search still knows which of the three questions they are inside. The breadcrumb below it drops the section to avoid saying it twice.
+7. **Hero** — eyebrow, very large display headline with one italic rust accent phrase, standfirst.
 6. **Tile grid** (`.tilegrid` / `.tile`) — `repeat(auto-fill, minmax(300px, 1fr))`; each tile is an `<a>` to `entry.html?e=<slug>`.
 7. **Article layout** (`.art-grid`) — TOC | article | rail. The TOC is generated from the article's `h2`s and scroll-spied; the rail carries related links and a safety card. Below 1200px the rail moves under the article rather than being dropped, because it is content.
 8. **Reading progress** (`.progress`) — sticky rust bar, driven by `SignalArticle.init()`.

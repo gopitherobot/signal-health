@@ -347,6 +347,66 @@ a.card--dark:hover, a.card--green:hover { border-color: currentColor; }
 .tilegrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
 
 
+/* ──────────────── 6a. Section masthead ────────────────
+ * The three topics are the spine of the site, so their names are given the
+ * weight of a magazine section opener rather than a small label. The full
+ * masthead heads each section index; the slim band repeats the same identity
+ * above every entry article, so a reader who lands deep still knows which of
+ * the three questions they are inside.
+ */
+
+.masthead { display: flex; flex-direction: column; gap: 18px; padding-top: 56px; padding-bottom: 12px; }
+.masthead .mh-rule { height: 1px; background: var(--line); margin-bottom: 8px; }
+.masthead .mh-label { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--rust); }
+
+.mh-name {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(56px, 11vw, 132px);
+  line-height: 0.86; letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.mh-kicker {
+  font-family: var(--display); font-style: italic;
+  font-size: clamp(26px, 4.2vw, 46px);
+  line-height: 1.05; letter-spacing: -0.02em;
+  color: var(--rust);
+  max-width: 20ch;
+}
+.mh-intro {
+  font-size: 21px; line-height: 1.55; color: var(--ink-muted);
+  max-width: 68ch; margin-top: 6px;
+}
+
+/* Slim variant — the same identity, sized to sit above an article title. */
+.masthead--slim {
+  border-bottom: 1px solid var(--line);
+  background: var(--card);
+}
+.masthead--slim .shell {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 18px;
+  padding-top: 18px; padding-bottom: 18px;
+}
+.masthead--slim .mh-name-sm {
+  font-family: var(--display); font-size: 34px; line-height: 1; letter-spacing: -0.02em; color: var(--ink);
+}
+.masthead--slim a.mh-name-sm:hover { color: var(--rust); }
+.masthead--slim .mh-kicker-sm {
+  font-family: var(--display); font-style: italic; font-size: 21px; line-height: 1.2; color: var(--rust);
+}
+.masthead--slim .mh-sep { color: var(--line); font-size: 20px; }
+.masthead--slim .mh-back { margin-left: auto; font-size: 14px; font-weight: 500; color: var(--ink-muted); white-space: nowrap; }
+.masthead--slim .mh-back:hover { color: var(--rust); }
+
+@media (max-width: 900px) {
+  .masthead { padding-top: 32px; gap: 14px; }
+  .mh-intro { font-size: 17px; }
+  .masthead--slim .shell { padding-top: 14px; padding-bottom: 14px; }
+  .masthead--slim .mh-name-sm { font-size: 26px; }
+  .masthead--slim .mh-kicker-sm { font-size: 17px; }
+  .masthead--slim .mh-back { display: none; }
+}
+
+
 /* ─────────────────────── 7. Article ─────────────────────── */
 
 .progress { position: sticky; top: 0; z-index: 30; height: 4px; background: var(--line); }
