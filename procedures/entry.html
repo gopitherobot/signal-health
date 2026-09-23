@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal · Procedures</title>
+<meta name="description" content="A plain-language procedure explainer from Signal — what changes structurally, functionally and chemically, the trade-off, and what to ask before you sign.">
+<meta name="theme-color" content="#F3EFE7">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Signal">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/anim.css">
+<link rel="stylesheet" href="../assets/theme.css">
+
+<style>
+  .togglehead { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-bottom: 4px; }
+  .togglehint { font-size: 14px; color: var(--ink-faint); }
+  .journey { display: flex; flex-direction: column; }
+  .jstep { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 20px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .jstep:first-child { border-top: 0; }
+  .jn { font-family: var(--display); font-size: 22px; line-height: 1.2; }
+  .jd { font-size: 16px; line-height: 1.6; color: var(--ink-muted); }
+  .myth { padding: 20px 0; border-top: 1px solid var(--line); }
+  .myth:first-child { border-top: 0; }
+  .myth .m { font-family: var(--display); font-size: 22px; line-height: 1.25; }
+  .myth .t { margin-top: 6px; font-size: 16px; line-height: 1.6; color: var(--ink-muted); }
+  .myth .t b { color: var(--green); }
+  .rbnote { margin-top: 14px; font-size: 15px; line-height: 1.6; color: var(--ink-faint); font-style: italic; }
+  .ubadge { display: inline-flex; padding: 6px 12px; border-radius: 12px; font-size: 13px; font-weight: 500; }
+  .ubadge.planned { background: var(--green-bg); color: var(--green); }
+  .ubadge.urgent  { background: var(--watch-bg); color: var(--watch); }
+  .ubadge.emerg   { background: var(--rust-bg);  color: var(--rust-deep); }
+  .railcard { padding: 26px 28px; border-radius: var(--r-block); background: var(--card); border: 1px solid var(--line); }
+  .railcard .rh { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 14px; }
+  @media (max-width: 900px) { .jstep { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
+  @media print {
+    .utility, .nav, .progress, .art-toc, .art-rail, .footer, .keep, .sig-skip, .art-tools { display: none !important; }
+    .art-grid { grid-template-columns: minmax(0,1fr) !important; padding: 0 !important; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+<a class="sig-skip" href="#main">Skip to the explainer</a>
+
+<div class="utility">
+  <div class="shell wrap">
+    <div>EDUCATIONAL, NOT A DOCTOR &middot; IN AN EMERGENCY CALL 112</div>
+    <div class="utility-links">
+      <a href="../index.html#how-it-works">How entries are reviewed</a>
+      <a href="../index.html#limits">What Signal can't do</a>
+    </div>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="shell wrap">
+    <a href="../index.html" class="mark" aria-label="Signal — home">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15h6l3-8 5 16 4-11 2 3h6"/></svg>
+      Signal
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="../symptoms/index.html">Symptoms</a>
+      <a href="index.html" aria-current="page">Procedures</a>
+      <a href="../medicines/index.html">Medicines</a>
+      <a href="../a-z.html">Conditions A&ndash;Z</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn--ghost btn--sm" href="../index.html#search">Search everything</a>
+    </div>
+  </div>
+</header>
+
+<div class="progress" aria-hidden="true"><span id="bar"></span></div>
+
+<div class="safety">
+  <div class="shell wrap"><b>Not medical advice.</b> This explains what procedures do in general terms. Your own care, risks and options must come from the team treating you.</div>
+</div>
+
+<main id="main">
+
+  <header class="shell wrap art-head">
+    <div class="art-crumb"><a href="../index.html">Signal</a> / <a href="index.html">Procedures</a> / <span id="crumbCat"></span></div>
+    <h1 class="art-h1" id="title"></h1>
+    <p class="art-stand" id="stand"></p>
+    <div class="art-meta" id="meta"></div>
+  </header>
+
+  <div class="shell wrap art-grid">
+
+    <nav class="art-toc" aria-label="On this page">
+      <div class="head">On this page</div>
+      <div id="toc" style="display:contents"></div>
+      <div class="art-tools">
+        <button class="icon-btn" id="shareBtn" type="button" aria-label="Copy link to this page">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/></svg>
+        </button>
+        <button class="icon-btn" id="printBtn" type="button" aria-label="Print this page">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <article class="article" id="article"></article>
+
+    <aside class="art-rail">
+      <div class="sticky" id="rail"></div>
+    </aside>
+
+  </div>
+
+  <section class="band band--card keep" id="keepWrap" hidden>
+    <div class="shell wrap stack gap-36">
+      <h2 class="h-sub">Keep reading</h2>
+      <div class="grid-3" id="keep"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="shell wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-mark">Signal</div>
+        <p style="line-height:1.55;max-width:320px">Health, explained plainly. Educational information, not a substitute for your doctor.</p>
+      </div>
+      <div class="footer-col">
+        <div class="head">Read</div>
+        <a href="../symptoms/index.html">Symptoms</a>
+        <a href="index.html">Procedures</a>
+        <a href="../medicines/index.html">Medicines</a>
+        <a href="../a-z.html">Conditions A&ndash;Z</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Trust</div>
+        <a href="../index.html#how-it-works">How entries are reviewed</a>
+        <a href="../index.html#limits">What Signal can't do</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Project</div>
+        <a href="https://github.com/gopitherobot/signal-health">Source on GitHub</a>
+        <a href="https://github.com/gopitherobot/signal-health/blob/main/README.md">About this prototype</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; <span id="yr"></span> Signal Health &middot; educational prototype</span>
+      <span>If you think it's an emergency, call 112 or go to the nearest emergency department.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../data/procedures.js"></script>
+<script src="../data/manifest.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/signal.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+let state = 'after';
+let CUR = null;
+
+/* The signature interaction: the same three layers, re-read before and after. */
+function setState(s){
+  state = s;
+  const d = CUR;
+  if (!d) return;
+  const wrap = document.getElementById('axesWrap');
+  wrap.className = 'axes state-' + s;
+  wrap.innerHTML = (s === 'before' ? d.axes.before : d.axes.after)
+    .map(a => `<div class="axis"><div class="al">${a.l}</div><div class="ab">${a.b}</div></div>`).join('');
+
+  const bB = document.getElementById('bBefore'), bA = document.getElementById('bAfter');
+  bB.classList.toggle('on', s === 'before');
+  bA.classList.toggle('on', s === 'after');
+  bB.setAttribute('aria-pressed', s === 'before');
+  bA.setAttribute('aria-pressed', s === 'after');
+
+  const sl = document.getElementById('slider'), bw = bB.offsetWidth;
+  if (s === 'before') { sl.style.transform = 'translateX(0)'; sl.style.width = bw + 'px'; }
+  else { sl.style.transform = `translateX(${bw}px)`; sl.style.width = bA.offsetWidth + 'px'; }
+}
+
+(function () {
+  const slug = SignalSlug();
+  const d = slug ? window.PROCEDURES[slug] : null;
+  const article = document.getElementById('article');
+
+  if (!d) {
+    document.getElementById('title').textContent = 'Procedure not found';
+    document.getElementById('crumbCat').textContent = 'Not found';
+    article.innerHTML = SignalNotFound('procedures');
+    document.querySelector('.art-toc').style.display = 'none';
+    return;
+  }
+  CUR = d;
+
+  document.title = `${d.name} — Signal`;
+  document.querySelector('meta[name="description"]').setAttribute('content', d.mini);
+  document.getElementById('crumbCat').textContent = d.cat;
+  document.getElementById('title').textContent = d.name;
+  document.getElementById('stand').textContent = d.mini;
+
+  document.getElementById('meta').innerHTML = `
+    <span class="who"><span class="avatar"></span><span>${SignalReviewLine(d)}</span></span>
+    <span class="sep"></span>
+    <span>${SignalReadTime(d)} min read</span>
+    <span class="sep"></span>
+    <span class="badges" style="display:flex;gap:6px">${d.urgency.map(u => `<span class="ubadge ${u.c}">${u.t}</span>`).join('')}</span>`;
+
+  const li = a => a.map(x => `<li>${x}</li>`).join('');
+
+  article.innerHTML = `
+    <div class="answer">
+      <div class="head">When it's used</div>
+      <p style="font-size:18px;line-height:1.6">${d.indications}</p>
+    </div>
+
+    <p>${d.story}</p>
+
+    <h2 id="changes">What changes in your body</h2>
+    <div class="togglehead">
+      <span class="toggle" role="group" aria-labelledby="changes">
+        <span class="slider" id="slider" aria-hidden="true"></span>
+        <button id="bBefore" type="button" aria-pressed="false" onclick="setState('before')">Before</button>
+        <button id="bAfter"  type="button" aria-pressed="true"  onclick="setState('after')">After</button>
+      </span>
+      <span class="togglehint">Flip to compare across all three layers</span>
+    </div>
+    <div class="axes state-after" id="axesWrap" aria-live="polite"></div>
+
+    <h2>The trade-off</h2>
+    <div class="split">
+      <div class="col good"><h4>Why it's done</h4><ul>${li(d.benefits)}</ul></div>
+      <div class="col risk"><h4>What to weigh</h4><ul>${li(d.risks)}</ul></div>
+    </div>
+    <p class="rbnote">${d.rbnote}</p>
+
+    <h2>The journey</h2>
+    <div class="journey">
+      ${d.journey.map(j => `<div class="jstep"><div class="jn">${j.n}</div><div class="jd">${j.d}</div></div>`).join('')}
+    </div>
+
+    <h2>Myths, cleared up</h2>
+    <div>${d.myths.map(m => `<div class="myth"><div class="m">${m.m}</div><div class="t">${m.t}</div></div>`).join('')}</div>
+
+    <h2>Questions worth asking</h2>
+    <div class="ask"><h4>Before you sign the consent form</h4><ul>${li(d.ask)}</ul></div>
+
+    ${SignalReview(d)}
+
+    <div class="panel" style="background:var(--warm);border:0">
+      This explainer is educational and doesn't replace advice from the team treating you.
+      <a href="https://github.com/gopitherobot/signal-health/issues" style="border-bottom:1px solid var(--ink)">Report a correction</a>
+    </div>`;
+
+  const related = SignalRelated(d);
+  document.getElementById('rail').innerHTML = `
+    ${related ? `<div class="railcard"><div class="rh">Related on Signal</div>${related}</div>` : ''}
+    <div class="railcard" style="background:var(--green);border-color:var(--green);color:var(--paper)">
+      <div class="rh" style="color:var(--green-light)">Before you consent</div>
+      <p style="font-size:15px;line-height:1.55;color:var(--green-pale)">You are allowed to ask why this procedure, what happens if you wait, and what the alternatives are &mdash; including doing nothing. The questions above are a starting point.</p>
+    </div>
+    <a class="btn btn--ghost" href="index.html" style="width:100%">&larr; All procedures</a>`;
+
+  const keep = SignalKeepReading(d);
+  if (keep) {
+    document.getElementById('keep').innerHTML = keep;
+    document.getElementById('keepWrap').hidden = false;
+  }
+
+  SignalArticle.init();
+  requestAnimationFrame(() => setState('after'));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Signal — Health, explained plainly</title>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;color:#15171B;background:#F3EFE7}
+a{color:#15171B;text-decoration:none}a:hover{color:#C43E17}
+body>div>*{flex-shrink:0}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1"><style>
+.v-mobile{display:none}
+@media (max-width: 900px){.v-desktop{display:none}.v-mobile{display:block}}
+.v-desktop>div>*,.v-mobile>div>*,.v-article>div>*{flex-shrink:0}
+.v-desktop>div{max-width:1600px;margin:0 auto}
+@media (max-width: 1200px){.v-desktop h1{font-size:84px !important}}
+.art-grid{}
+@media (max-width: 1100px){.art-grid{grid-template-columns:minmax(0,1fr) !important;padding:24px 20px 64px !important}.art-toc,.art-rail{display:none !important}
+.v-article h1{font-size:48px !important}.v-article .art-meta{flex-wrap:wrap;justify-content:center;gap:12px !important}
+.v-article .art-nav-links{display:none !important}.v-article .art-rel{grid-template-columns:minmax(0,1fr) !important}
+.v-article > div > div{padding-left:20px !important;padding-right:20px !important}}
+</style></head>
+<body>
+<div class="v-desktop"><div style="width: 100%; box-sizing: border-box; display: flex; flex-direction: column; background: #F3EFE7; font-family: 'Geist', system-ui, sans-serif; color: #15171B;">
+
+<!-- Utility bar -->
+<div style="height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 64px; background: #15171B; color: #E9E4D9; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.04em;">
+<div>EDUCATIONAL, NOT A DOCTOR · IN AN EMERGENCY CALL 112</div>
+<div style="display: flex; gap: 28px;"><a href="#" style="color: #E9E4D9;">About our reviewers</a><a href="#" style="color: #E9E4D9;">For hospitals →</a></div>
+</div>
+
+<!-- Nav -->
+<div style="height: 84px; display: flex; align-items: center; justify-content: space-between; padding: 0 64px; border-bottom: 1px solid #D9D3C7;">
+<a href="#" style="display: flex; align-items: center; gap: 10px; font-family: 'Instrument Serif', serif; font-size: 34px; letter-spacing: -0.01em;">
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#C43E17" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15h6l3-8 5 16 4-11 2 3h6"></path></svg>
+Signal</a>
+<div style="display: flex; gap: 36px; font-size: 15px; font-weight: 500;">
+<a href="#">Symptoms</a><a href="#">Procedures</a><a href="#">Medicines</a><a href="#">Evidence reviews</a><a href="#">Conditions A–Z</a>
+</div>
+<div style="display: flex; align-items: center; gap: 12px;">
+<button aria-label="Search" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid #D9D3C7; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15171B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg></button>
+<a href="#" style="height: 44px; padding: 0 20px; border-radius: 22px; background: #15171B; color: #F3EFE7; display: flex; align-items: center; font-size: 14px; font-weight: 500;">Get the weekly brief</a>
+</div>
+</div>
+
+<!-- Hero -->
+<div style="display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 64px; padding: 72px 64px 80px;">
+<div style="display: flex; flex-direction: column; gap: 28px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: #C43E17;">● HEALTH, EXPLAINED PLAINLY</div>
+<h1 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 112px; line-height: 0.95; letter-spacing: -0.025em;">Understand your health. <span style="font-style: italic; color: #C43E17;">Don’t just Google your fear.</span></h1>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #4E4C47; max-width: 600px;">Doctor-reviewed answers to the questions people actually ask — how worried to be, what a procedure does to your body, and how to take your medicines right.</p>
+<form style="display: flex; align-items: center; height: 68px; border-radius: 34px; background: #FBF9F5; border: 1.5px solid #15171B; padding: 0 8px 0 28px; gap: 14px; max-width: 640px;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15171B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<label for="q" style="position: absolute; left: -9999px;">Search symptoms, procedures or medicines</label>
+<input id="q" placeholder="Try “chest pain after exercise” or “metformin”" style="flex-grow: 1; border: 0; background: transparent; font-family: 'Geist', sans-serif; font-size: 17px; color: #15171B; outline: none;">
+<button style="height: 52px; padding: 0 26px; border-radius: 26px; border: 0; background: #C43E17; color: #FFFFFF; font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer;">Search</button>
+</form>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px;">
+<span style="color: #5C5A55; padding: 10px 0;">People are asking:</span>
+<a href="#" style="padding: 10px 16px; border-radius: 20px; border: 1px solid #D9D3C7;">Headache that won’t go</a>
+<a href="#" style="padding: 10px 16px; border-radius: 20px; border: 1px solid #D9D3C7;">Is my BP too high?</a>
+<a href="#" style="padding: 10px 16px; border-radius: 20px; border: 1px solid #D9D3C7;">Before a C-section</a>
+<a href="#" style="padding: 10px 16px; border-radius: 20px; border: 1px solid #D9D3C7;">Antibiotics for a cold?</a>
+</div>
+</div>
+
+<!-- Featured review -->
+<a href="article.html" style="display: flex; flex-direction: column; border-radius: 28px; background: #FBF9F5; border: 1px solid #D9D3C7; overflow: hidden; align-self: start;">
+<div style="height: 340px; background: #E7DFD0; display: flex; align-items: flex-end; justify-content: space-between; padding: 20px; position: relative;">
+<svg width="100%" height="100%" viewBox="0 0 520 340" preserveAspectRatio="none" style="position: absolute; left: 0; top: 0;" fill="none" stroke="#C43E17" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M0 200h140l30-90 45 170 40-120 24 40h241"></path></svg>
+<span style="position: relative; font-family: 'Geist Mono', monospace; font-size: 11px; color: #5C5A55;">[FEATURE ILLUSTRATION]</span>
+<span style="position: relative; padding: 8px 14px; border-radius: 16px; background: #15171B; color: #F3EFE7; font-size: 12px; font-weight: 500;">Evidence review</span>
+</div>
+<div style="padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 14px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: #5C5A55;">MEDICINES · 8 MIN READ</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 40px; line-height: 1.05; letter-spacing: -0.01em;">Paracetamol or ibuprofen for a fever: which, and when?</div>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: #4E4C47;">
+<span style="width: 28px; height: 28px; border-radius: 14px; background: #1E4A3C;"></span>
+Reviewed by [REVIEWER NAME, MD] · Updated [DATE]
+</div>
+</div>
+</a>
+</div>
+
+<!-- Leaderboard ad -->
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 24px 64px 40px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #5C5A55;">ADVERTISEMENT</div>
+<div style="width: 970px; height: 90px; border: 1px dashed #B8B0A0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Geist Mono', monospace; font-size: 13px; color: #5C5A55; background: #EDE8DE;">970 × 90 leaderboard · health-safe ad categories only</div>
+</div>
+
+<!-- Three pillars -->
+<div style="padding: 64px 64px 96px; display: flex; flex-direction: column; gap: 40px;">
+<div style="display: flex; justify-content: space-between; align-items: flex-end;">
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 64px; line-height: 1; letter-spacing: -0.02em;">Start with your question</h2>
+<a href="#" style="font-size: 15px; font-weight: 500; border-bottom: 1.5px solid #15171B; padding-bottom: 2px;">Browse the full library →</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;">
+
+<a href="#" style="display: flex; flex-direction: column; gap: 20px; padding: 36px; border-radius: 28px; background: #15171B; color: #F3EFE7; min-height: 380px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #F2A58C;">01 · SYMPTOMS</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 46px; line-height: 1.02;">How worried should I be?</div>
+<div style="font-size: 16px; line-height: 1.55; color: #CFC9BD;">Common symptoms sorted by real urgency — what’s usually harmless, what’s worth checking, and the red flags that mean act now.</div>
+<div style="display: flex; gap: 8px; margin-top: auto; font-size: 13px; font-weight: 500;">
+<span style="padding: 7px 12px; border-radius: 14px; background: #2F6B4F; color: #FFFFFF;">Usually fine</span>
+<span style="padding: 7px 12px; border-radius: 14px; background: #8A5A00; color: #FFFFFF;">Get it checked</span>
+<span style="padding: 7px 12px; border-radius: 14px; background: #C43E17; color: #FFFFFF;">Act now</span>
+</div>
+</a>
+
+<a href="#" style="display: flex; flex-direction: column; gap: 20px; padding: 36px; border-radius: 28px; background: #FBF9F5; border: 1px solid #D9D3C7; min-height: 380px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #C43E17;">02 · PROCEDURES</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 46px; line-height: 1.02;">What will it do to my body?</div>
+<div style="font-size: 16px; line-height: 1.55; color: #4E4C47;">Common procedures explained across structure, function and chemistry — flip between before and after to see the whole picture.</div>
+<div style="display: flex; margin-top: auto; border-radius: 14px; border: 1px solid #15171B; overflow: hidden; align-self: flex-start; font-size: 13px; font-weight: 500;">
+<span style="padding: 8px 16px; background: #15171B; color: #F3EFE7;">Before</span><span style="padding: 8px 16px;">After</span>
+</div>
+</a>
+
+<a href="#" style="display: flex; flex-direction: column; gap: 20px; padding: 36px; border-radius: 28px; background: #1E4A3C; color: #F3EFE7; min-height: 380px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #A8D5BF;">03 · MEDICINES</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 46px; line-height: 1.02;">Every day, or only when I need it?</div>
+<div style="font-size: 16px; line-height: 1.55; color: #D3E3DA;">Find a medicine three ways — by how you take it, by drug class, or by the condition it treats.</div>
+<div style="display: flex; gap: 8px; margin-top: auto; font-size: 13px; font-weight: 500;">
+<span style="padding: 7px 12px; border-radius: 14px; border: 1px solid #A8D5BF;">Daily</span>
+<span style="padding: 7px 12px; border-radius: 14px; border: 1px solid #A8D5BF;">As needed</span>
+<span style="padding: 7px 12px; border-radius: 14px; border: 1px solid #A8D5BF;">A course</span>
+</div>
+</a>
+</div>
+</div>
+
+<!-- Evidence reviews -->
+<div style="padding: 96px 64px; background: #FBF9F5; border-top: 1px solid #D9D3C7; border-bottom: 1px solid #D9D3C7; display: flex; flex-direction: column; gap: 44px;">
+<div style="display: flex; justify-content: space-between; align-items: flex-end;">
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: #C43E17;">● EVIDENCE REVIEWS</div>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 64px; line-height: 1; letter-spacing: -0.02em;">What the research actually says</h2>
+</div>
+<div style="display: flex; gap: 8px; font-size: 14px; font-weight: 500;">
+<a href="#" style="padding: 10px 18px; border-radius: 20px; background: #15171B; color: #F3EFE7;">Latest</a>
+<a href="#" style="padding: 10px 18px; border-radius: 20px; border: 1px solid #D9D3C7;">Myths checked</a>
+<a href="#" style="padding: 10px 18px; border-radius: 20px; border: 1px solid #D9D3C7;">Before surgery</a>
+<a href="#" style="padding: 10px 18px; border-radius: 20px; border: 1px solid #D9D3C7;">Heart &amp; BP</a>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px;">
+<a href="article.html" style="display: flex; flex-direction: column; gap: 14px;">
+<div style="height: 220px; border-radius: 20px; background: #E7DFD0; display: flex; align-items: flex-end; padding: 14px; font-family: 'Geist Mono', monospace; font-size: 11px; color: #5C5A55;">[IMAGE]</div>
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5C5A55;">ANAESTHESIA · 6 MIN</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.1;">What general anaesthesia really does to your brain</div>
+<div style="font-size: 14px; color: #4E4C47;">Evidence: <strong style="color: #1E4A3C;">Strong</strong> · Reviewed [DATE]</div>
+</a>
+<a href="#" style="display: flex; flex-direction: column; gap: 14px;">
+<div style="height: 220px; border-radius: 20px; background: #D8E2DA; display: flex; align-items: flex-end; padding: 14px; font-family: 'Geist Mono', monospace; font-size: 11px; color: #4E4C47;">[IMAGE]</div>
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5C5A55;">MYTH CHECK · 4 MIN</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.1;">Do you need antibiotics for a sore throat?</div>
+<div style="font-size: 14px; color: #4E4C47;">Evidence: <strong style="color: #1E4A3C;">Strong</strong> · Reviewed [DATE]</div>
+</a>
+<a href="#" style="display: flex; flex-direction: column; gap: 14px;">
+<div style="height: 220px; border-radius: 20px; background: #EAD6CC; display: flex; align-items: flex-end; padding: 14px; font-family: 'Geist Mono', monospace; font-size: 11px; color: #4E4C47;">[IMAGE]</div>
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5C5A55;">HEART &amp; BP · 7 MIN</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.1;">Blood pressure tablets: morning or night?</div>
+<div style="font-size: 14px; color: #4E4C47;">Evidence: <strong style="color: #8A5A00;">Mixed</strong> · Reviewed [DATE]</div>
+</a>
+<!-- Native sponsored slot -->
+<a href="#" style="display: flex; flex-direction: column; gap: 14px; padding: 16px; border-radius: 24px; border: 1px dashed #B8B0A0; background: #F3EFE7;">
+<div style="height: 188px; border-radius: 14px; background: #E2DCD0; display: flex; align-items: center; justify-content: center; font-family: 'Geist Mono', monospace; font-size: 12px; color: #5C5A55;">300 × 250 · native</div>
+<div style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #5C5A55;">SPONSORED · [ADVERTISER]</div>
+<div style="font-size: 18px; font-weight: 600; line-height: 1.3;">[Sponsor headline — health-safe category, clearly separated from editorial]</div>
+</a>
+</div>
+
+<div style="display: flex; align-items: center; gap: 16px; padding: 20px 24px; border-radius: 16px; background: #F3EFE7; font-size: 15px; color: #4E4C47;">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E4A3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg>
+<span><strong style="color: #15171B;">Our promise:</strong> every review is written or checked by a practising clinician, graded for strength of evidence, and dated. Ads never appear inside red-flag or emergency guidance.</span>
+</div>
+</div>
+
+<!-- Before your procedure band -->
+<div style="padding: 96px 64px; background: #1E4A3C; color: #F3EFE7; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: center;">
+<div style="display: flex; flex-direction: column; gap: 24px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: #A8D5BF;">● BEFORE YOUR PROCEDURE</div>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 64px; line-height: 1; letter-spacing: -0.02em;">Scanned a code on your consent form? <span style="font-style: italic; color: #A8D5BF;">Start here.</span></h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #D3E3DA; max-width: 560px;">Plain-language guides to the procedure you’re agreeing to — what happens, the common and serious risks, the alternatives, and the questions to ask your doctor before you sign.</p>
+<div style="display: flex; gap: 12px;">
+<a href="#" style="height: 52px; padding: 0 26px; border-radius: 26px; background: #F3EFE7; color: #15171B; display: flex; align-items: center; font-size: 15px; font-weight: 600;">Enter your consent code</a>
+<a href="#" style="height: 52px; padding: 0 26px; border-radius: 26px; border: 1px solid #A8D5BF; color: #F3EFE7; display: flex; align-items: center; font-size: 15px; font-weight: 500;">Browse procedures</a>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 20px; padding: 22px 26px; border-radius: 20px; background: #275A4A;">
+<span style="font-family: 'Instrument Serif', serif; font-size: 40px; color: #A8D5BF; width: 40px;">1</span>
+<span style="font-size: 17px; line-height: 1.4;">What will happen, step by step</span>
+</div>
+<div style="display: flex; align-items: center; gap: 20px; padding: 22px 26px; border-radius: 20px; background: #275A4A;">
+<span style="font-family: 'Instrument Serif', serif; font-size: 40px; color: #A8D5BF; width: 40px;">2</span>
+<span style="font-size: 17px; line-height: 1.4;">Risks — common, rare and serious</span>
+</div>
+<div style="display: flex; align-items: center; gap: 20px; padding: 22px 26px; border-radius: 20px; background: #275A4A;">
+<span style="font-family: 'Instrument Serif', serif; font-size: 40px; color: #A8D5BF; width: 40px;">3</span>
+<span style="font-size: 17px; line-height: 1.4;">Your alternatives, including doing nothing</span>
+</div>
+<div style="display: flex; align-items: center; gap: 20px; padding: 22px 26px; border-radius: 20px; background: #275A4A;">
+<span style="font-family: 'Instrument Serif', serif; font-size: 40px; color: #A8D5BF; width: 40px;">4</span>
+<span style="font-size: 17px; line-height: 1.4;">Questions to ask before you sign</span>
+</div>
+<div style="font-size: 14px; color: #A8D5BF; padding: 8px 4px 0;">Run a hospital? <a href="#" style="color: #F3EFE7; border-bottom: 1px solid #A8D5BF;">Link your consent forms to Signal →</a></div>
+</div>
+</div>
+
+<!-- Newsletter -->
+<div style="padding: 96px 64px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center;">
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 56px; line-height: 1.02; letter-spacing: -0.02em;">One clear health read, every week. No scare headlines.</h2>
+<form style="display: flex; flex-direction: column; gap: 12px;">
+<label for="em" style="font-size: 14px; font-weight: 500;">Email address</label>
+<div style="display: flex; gap: 10px;">
+<input id="em" placeholder="you@example.com" style="flex-grow: 1; height: 56px; border-radius: 28px; border: 1.5px solid #15171B; background: #FBF9F5; padding: 0 24px; font-family: 'Geist', sans-serif; font-size: 16px;">
+<button style="height: 56px; padding: 0 28px; border-radius: 28px; border: 0; background: #15171B; color: #F3EFE7; font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer;">Subscribe</button>
+</div>
+<div style="font-size: 13px; color: #5C5A55;">Unsubscribe anytime. We never sell your data or share what you read.</div>
+</form>
+</div>
+
+<!-- Footer -->
+<div style="flex-grow: 1; padding: 72px 64px 48px; background: #15171B; color: #CFC9BD; display: flex; flex-direction: column; gap: 56px;">
+<div style="display: grid; grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr)); gap: 40px; font-size: 15px;">
+<div style="display: flex; flex-direction: column; gap: 16px;">
+<div style="font-family: 'Instrument Serif', serif; font-size: 44px; color: #F3EFE7;">Signal</div>
+<div style="line-height: 1.55; max-width: 320px;">Health, explained plainly. Educational information, not a substitute for your doctor.</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px;"><div style="color: #F3EFE7; font-weight: 600;">Read</div><a href="#" style="color: #CFC9BD;">Symptoms</a><a href="#" style="color: #CFC9BD;">Procedures</a><a href="#" style="color: #CFC9BD;">Medicines</a><a href="#" style="color: #CFC9BD;">Evidence reviews</a></div>
+<div style="display: flex; flex-direction: column; gap: 12px;"><div style="color: #F3EFE7; font-weight: 600;">Trust</div><a href="#" style="color: #CFC9BD;">Our reviewers</a><a href="#" style="color: #CFC9BD;">Editorial policy</a><a href="#" style="color: #CFC9BD;">Advertising policy</a><a href="#" style="color: #CFC9BD;">Corrections</a></div>
+<div style="display: flex; flex-direction: column; gap: 12px;"><div style="color: #F3EFE7; font-weight: 600;">For hospitals</div><a href="#" style="color: #CFC9BD;">Consent explainers</a><a href="#" style="color: #CFC9BD;">Partner with us</a><a href="#" style="color: #CFC9BD;">Advertise</a></div>
+<div style="display: flex; flex-direction: column; gap: 12px;"><div style="color: #F3EFE7; font-weight: 600;">Signal</div><a href="#" style="color: #CFC9BD;">About</a><a href="#" style="color: #CFC9BD;">Contact</a><a href="#" style="color: #CFC9BD;">Privacy</a><a href="#" style="color: #CFC9BD;">Terms</a></div>
+</div>
+<div style="display: flex; justify-content: space-between; padding-top: 24px; border-top: 1px solid #34363B; font-size: 13px; font-family: 'Geist Mono', monospace;">
+<span>© [YEAR] Signal Health</span><span>If you think it’s an emergency, call 112 or go to the nearest emergency department.</span>
+</div>
+</div>
+
+</div></div>
+<div class="v-mobile"><div style="width: 100%; box-sizing: border-box; display: flex; flex-direction: column; background: #F3EFE7; font-family: 'Geist', system-ui, sans-serif; color: #15171B;">
+
+<div style="padding: 8px 16px; background: #15171B; color: #E9E4D9; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.04em; text-align: center;">EDUCATIONAL, NOT A DOCTOR · EMERGENCY 112</div>
+
+<div style="height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid #D9D3C7;">
+<a href="#" style="display: flex; align-items: center; gap: 8px; font-family: 'Instrument Serif', serif; font-size: 28px;">
+<svg width="24" height="24" viewBox="0 0 30 30" fill="none" stroke="#C43E17" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15h6l3-8 5 16 4-11 2 3h6"></path></svg>Signal</a>
+<div style="display: flex; gap: 4px;">
+<button aria-label="Search" style="width: 44px; height: 44px; border-radius: 22px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15171B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg></button>
+<button aria-label="Menu" style="width: 44px; height: 44px; border-radius: 22px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#15171B" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"></path></svg></button>
+</div>
+</div>
+
+<!-- Hero -->
+<div style="padding: 36px 16px 32px; display: flex; flex-direction: column; gap: 20px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #C43E17;">● HEALTH, EXPLAINED PLAINLY</div>
+<h1 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 54px; line-height: 0.98; letter-spacing: -0.02em;">Understand your health. <span style="font-style: italic; color: #C43E17;">Don’t just Google your fear.</span></h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #4E4C47;">Doctor-reviewed answers to the questions people actually ask.</p>
+<form style="display: flex; align-items: center; height: 56px; border-radius: 28px; background: #FBF9F5; border: 1.5px solid #15171B; padding: 0 6px 0 20px; gap: 10px;">
+<label for="mq" style="position: absolute; left: -9999px;">Search</label>
+<input id="mq" placeholder="Symptom, procedure, medicine" style="flex-grow: 1; min-width: 0; border: 0; background: transparent; font-family: 'Geist', sans-serif; font-size: 16px; outline: none;">
+<button aria-label="Search" style="width: 44px; height: 44px; border-radius: 22px; border: 0; background: #C43E17; display: flex; align-items: center; justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg></button>
+</form>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px;">
+<a href="#" style="padding: 11px 14px; border-radius: 20px; border: 1px solid #D9D3C7;">Headache that won’t go</a>
+<a href="#" style="padding: 11px 14px; border-radius: 20px; border: 1px solid #D9D3C7;">Is my BP too high?</a>
+<a href="#" style="padding: 11px 14px; border-radius: 20px; border: 1px solid #D9D3C7;">Before a C-section</a>
+</div>
+</div>
+
+<!-- Featured -->
+<a href="article.html" style="margin: 0 16px; display: flex; flex-direction: column; border-radius: 24px; background: #FBF9F5; border: 1px solid #D9D3C7; overflow: hidden;">
+<div style="height: 200px; background: #E7DFD0; position: relative; display: flex; align-items: flex-end; justify-content: flex-end; padding: 14px;">
+<svg width="100%" height="100%" viewBox="0 0 358 200" preserveAspectRatio="none" style="position: absolute; left: 0; top: 0;" fill="none" stroke="#C43E17" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M0 120h90l20-60 30 110 26-80 16 30h176"></path></svg>
+<span style="position: relative; padding: 7px 12px; border-radius: 14px; background: #15171B; color: #F3EFE7; font-size: 12px; font-weight: 500;">Evidence review</span>
+</div>
+<div style="padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 10px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5C5A55;">MEDICINES · 8 MIN</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 30px; line-height: 1.05;">Paracetamol or ibuprofen for a fever: which, and when?</div>
+<div style="font-size: 13px; color: #4E4C47;">Reviewed by [REVIEWER NAME, MD]</div>
+</div>
+</a>
+
+<!-- Ad -->
+<div style="padding: 32px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5C5A55;">ADVERTISEMENT</div>
+<div style="width: 320px; height: 100px; border: 1px dashed #B8B0A0; border-radius: 8px; background: #EDE8DE; display: flex; align-items: center; justify-content: center; font-family: 'Geist Mono', monospace; font-size: 12px; color: #5C5A55;">320 × 100</div>
+</div>
+
+<!-- Pillars -->
+<div style="padding: 8px 16px 40px; display: flex; flex-direction: column; gap: 14px;">
+<h2 style="margin: 0 0 8px; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 40px; line-height: 1;">Start with your question</h2>
+<a href="#" style="display: flex; flex-direction: column; gap: 10px; padding: 24px; border-radius: 22px; background: #15171B; color: #F3EFE7;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #F2A58C;">01 · SYMPTOMS</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 32px; line-height: 1.05;">How worried should I be?</div>
+<div style="display: flex; gap: 6px; font-size: 12px; font-weight: 500; padding-top: 4px;">
+<span style="padding: 6px 10px; border-radius: 12px; background: #2F6B4F; color: #FFFFFF;">Usually fine</span>
+<span style="padding: 6px 10px; border-radius: 12px; background: #8A5A00; color: #FFFFFF;">Get checked</span>
+<span style="padding: 6px 10px; border-radius: 12px; background: #C43E17; color: #FFFFFF;">Act now</span>
+</div>
+</a>
+<a href="#" style="display: flex; flex-direction: column; gap: 10px; padding: 24px; border-radius: 22px; background: #FBF9F5; border: 1px solid #D9D3C7;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #C43E17;">02 · PROCEDURES</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 32px; line-height: 1.05;">What will it do to my body?</div>
+<div style="font-size: 15px; line-height: 1.5; color: #4E4C47;">Flip between before and after to see the whole picture.</div>
+</a>
+<a href="#" style="display: flex; flex-direction: column; gap: 10px; padding: 24px; border-radius: 22px; background: #1E4A3C; color: #F3EFE7;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #A8D5BF;">03 · MEDICINES</div>
+<div style="font-family: 'Instrument Serif', serif; font-size: 32px; line-height: 1.05;">Every day, or only when I need it?</div>
+<div style="font-size: 15px; line-height: 1.5; color: #D3E3DA;">By how you take it, by drug class, or by condition.</div>
+</a>
+</div>
+
+<!-- Reviews -->
+<div style="padding: 48px 16px; background: #FBF9F5; border-top: 1px solid #D9D3C7; border-bottom: 1px solid #D9D3C7; display: flex; flex-direction: column; gap: 24px;">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #C43E17;">● EVIDENCE REVIEWS</div>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 40px; line-height: 1;">What the research actually says</h2>
+</div>
+<div style="display: flex; gap: 8px; font-size: 13px; font-weight: 500;">
+<a href="#" style="padding: 11px 14px; border-radius: 20px; background: #15171B; color: #F3EFE7;">Latest</a>
+<a href="#" style="padding: 11px 14px; border-radius: 20px; border: 1px solid #D9D3C7;">Myths</a>
+<a href="#" style="padding: 11px 14px; border-radius: 20px; border: 1px solid #D9D3C7;">Surgery</a>
+</div>
+<a href="#" style="display: flex; gap: 14px; align-items: center;">
+<div style="width: 96px; height: 96px; flex-shrink: 0; border-radius: 16px; background: #E7DFD0;"></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5C5A55;">ANAESTHESIA · 6 MIN</div><div style="font-family: 'Instrument Serif', serif; font-size: 22px; line-height: 1.1;">What general anaesthesia really does to your brain</div></div>
+</a>
+<a href="#" style="display: flex; gap: 14px; align-items: center;">
+<div style="width: 96px; height: 96px; flex-shrink: 0; border-radius: 16px; background: #D8E2DA;"></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5C5A55;">MYTH CHECK · 4 MIN</div><div style="font-family: 'Instrument Serif', serif; font-size: 22px; line-height: 1.1;">Do you need antibiotics for a sore throat?</div></div>
+</a>
+<a href="#" style="display: flex; gap: 14px; align-items: center;">
+<div style="width: 96px; height: 96px; flex-shrink: 0; border-radius: 16px; background: #EAD6CC;"></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5C5A55;">HEART &amp; BP · 7 MIN</div><div style="font-family: 'Instrument Serif', serif; font-size: 22px; line-height: 1.1;">Blood pressure tablets: morning or night?</div></div>
+</a>
+<a href="#" style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 18px; border: 1px dashed #B8B0A0; background: #F3EFE7;">
+<div style="height: 150px; border-radius: 12px; background: #E2DCD0; display: flex; align-items: center; justify-content: center; font-family: 'Geist Mono', monospace; font-size: 12px; color: #5C5A55;">native ad</div>
+<div style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5C5A55;">SPONSORED · [ADVERTISER]</div>
+<div style="font-size: 16px; font-weight: 600; line-height: 1.3;">[Sponsor headline]</div>
+</a>
+</div>
+
+<!-- Consent band -->
+<div style="padding: 48px 16px; background: #1E4A3C; color: #F3EFE7; display: flex; flex-direction: column; gap: 18px;">
+<div style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #A8D5BF;">● BEFORE YOUR PROCEDURE</div>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 40px; line-height: 1.02;">Scanned a code on your consent form? <span style="font-style: italic; color: #A8D5BF;">Start here.</span></h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #D3E3DA;">What happens, the risks, your alternatives, and what to ask before you sign.</p>
+<a href="#" style="height: 52px; border-radius: 26px; background: #F3EFE7; color: #15171B; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">Enter your consent code</a>
+<a href="#" style="height: 52px; border-radius: 26px; border: 1px solid #A8D5BF; color: #F3EFE7; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500;">Browse procedures</a>
+</div>
+
+<!-- Newsletter -->
+<div style="padding: 48px 16px; display: flex; flex-direction: column; gap: 16px;">
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 36px; line-height: 1.05;">One clear health read, every week.</h2>
+<label for="mem" style="font-size: 14px; font-weight: 500;">Email address</label>
+<input id="mem" placeholder="you@example.com" style="height: 52px; border-radius: 26px; border: 1.5px solid #15171B; background: #FBF9F5; padding: 0 20px; font-family: 'Geist', sans-serif; font-size: 16px;">
+<button style="height: 52px; border-radius: 26px; border: 0; background: #15171B; color: #F3EFE7; font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600;">Subscribe</button>
+</div>
+
+<!-- Footer -->
+<div style="flex-grow: 1; padding: 40px 16px; background: #15171B; color: #CFC9BD; display: flex; flex-direction: column; gap: 24px; font-size: 15px;">
+<div style="font-family: 'Instrument Serif', serif; font-size: 36px; color: #F3EFE7;">Signal</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;">
+<a href="#" style="color: #CFC9BD;">Symptoms</a><a href="#" style="color: #CFC9BD;">Our reviewers</a>
+<a href="#" style="color: #CFC9BD;">Procedures</a><a href="#" style="color: #CFC9BD;">Editorial policy</a>
+<a href="#" style="color: #CFC9BD;">Medicines</a><a href="#" style="color: #CFC9BD;">Advertising policy</a>
+<a href="#" style="color: #CFC9BD;">Evidence reviews</a><a href="#" style="color: #CFC9BD;">For hospitals</a>
+</div>
+<div style="font-size: 12px; line-height: 1.5; font-family: 'Geist Mono', monospace; padding-top: 16px; border-top: 1px solid #34363B;">Educational, not a doctor. In an emergency, call 112.</div>
+</div>
+
+</div></div>
+</body>
+</html>

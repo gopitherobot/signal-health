@@ -25,7 +25,8 @@ The guiding principle across all three: **lead with the real question, be honest
 This is the most important structural decision and must be preserved.
 
 - **All content lives in `data/*.js`** as plain JavaScript objects attached to `window` (`window.SYMPTOMS`, `window.PROCEDURES`, `window.MEDICINES`).
-- **Each page is a renderer.** The HTML/CSS/JS in each section's `index.html` reads its data file and builds the tiles and modal detail views from it. The page logic contains *no content*.
+- **Each page is a renderer.** A section's `index.html` reads its data file and builds the tile grid; its `entry.html` reads the same file and renders one full article, chosen by `?e=<slug>`. The page logic contains *no content*.
+- **Entries are pages, not modals.** Every entry has its own URL, so it can be shared, bookmarked, printed and indexed. There is still no per-entry HTML file — one template serves all of a section's entries.
 - **To add an entry, you add an object to the data file** — the page picks it up automatically. This is what lets Signal scale from 20 entries to hundreds without touching page logic, and what would later let the same data feed a database, an API, or a mobile app.
 
 No framework, no dependencies, no bundler. Plain static HTML/CSS/vanilla JS. This is intentional: it deploys anywhere, loads instantly, and has almost no attack surface or maintenance burden.
@@ -38,13 +39,17 @@ No framework, no dependencies, no bundler. Plain static HTML/CSS/vanilla JS. Thi
 
 ```
 signal-health/
-├── index.html              # Landing page — three-way hub + unified search
+├── index.html              # Landing page — hero, search, pillars, trust
+├── a-z.html                # Everything alphabetically (entries + conditions)
 ├── symptoms/
-│   └── index.html          # Renders from ../data/symptoms.js
+│   ├── index.html          # Tile grid from ../data/symptoms.js
+│   └── entry.html          # One article, chosen by ?e=<slug>
 ├── procedures/
-│   └── index.html          # Renders from ../data/procedures.js
+│   ├── index.html          # Tile grid from ../data/procedures.js
+│   └── entry.html          # One article, chosen by ?e=<slug>
 ├── medicines/
-│   └── index.html          # Renders from ../data/medicines.js
+│   ├── index.html          # Three views from ../data/medicines.js + classification.js
+│   └── entry.html          # One article, chosen by ?e=<slug>
 ├── data/
 │   ├── symptoms.js         # window.SYMPTOMS   — 30 entries
 │   ├── procedures.js       # window.PROCEDURES — 30 entries
@@ -56,8 +61,8 @@ signal-health/
 ├── assets/
 │   ├── icons.js            # Animated icon set + label→icon routing
 │   ├── anim.css            # Shared motion layer
-│   ├── shared.css          # Review stamp, related block, focus styles
-│   └── signal.js           # Review line, cross-links, accessible modal, deep links
+│   ├── theme.css           # THE design system — tokens, chrome, components
+│   └── signal.js           # Review stamp, cross-links, TOC, progress, read time
 ├── tools/
 │   ├── build-manifest.js   # Regenerates data/manifest.js
 │   ├── sync-related.js     # Mirrors `related` links + reports dangling slugs
@@ -110,8 +115,8 @@ These two fields lead every entry, in all three data files:
 }
 ```
 
-- **`reviewedBy` / `lastReviewed`** drive the stamp at the foot of every modal. While `reviewedBy` is `null` the entry renders a visible amber **"Pending clinical review"** notice; set it and the stamp turns green and names the reviewer and date. This is deliberately not subtle — an unreviewed entry should look unreviewed (§7.6). `data/classification.js` carries a single file-level `window.CLASSIFICATION_REVIEW` instead, because the taxonomy is reviewed as one coherent map rather than as 62 independent statements.
-- **`related`** is rendered as the "Related on Signal" block. Same-section chips open a modal in place; other-section chips are links carrying `?e=<slug>`. A slug missing from the manifest is skipped rather than rendered as a dead link. Run `tools/sync-related.js` after editing (§3a).
+- **`reviewedBy` / `lastReviewed`** drive the stamp near the foot of every entry page. While `reviewedBy` is `null` the entry renders a visible amber **"Pending clinical review"** notice; set it and the stamp turns green and names the reviewer and date. This is deliberately not subtle — an unreviewed entry should look unreviewed (§7.6). `data/classification.js` carries a single file-level `window.CLASSIFICATION_REVIEW` instead, because the taxonomy is reviewed as one coherent map rather than as 62 independent statements.
+- **`related`** is rendered as the "Related on Signal" block in the article rail. Every chip is a link to `<section>/entry.html?e=<slug>`, resolved through the manifest; a slug missing from the manifest is skipped rather than rendered as a dead link. Run `tools/sync-related.js` after editing (§3a).
 
 ### Symptom — `window.SYMPTOMS[key]`
 ```js
@@ -231,40 +236,58 @@ window.SYSTEMS.<system> = {
 
 ## 5. Design system
 
-**Typography (shared across all pages):**
-- Serif (headings, names, story): `'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif`
-- Sans (body, UI): `'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif`
+**Everything lives in `assets/theme.css`.** It is the single source of truth: tokens, chrome, controls, cards, the article layout, the safety components and the responsive rules. Pages add only the handful of layout rules unique to them. Do not reintroduce per-section stylesheets.
 
-**Aesthetic direction:** warm, editorial, calm — *not* clinical-cold. Off-white paper backgrounds, generous whitespace, serif display type, soft shadows, rounded corners (14–18px). It should feel like a thoughtful magazine, not a hospital form. Each section has its own paper tint and accent so they feel related but distinct.
+**Typography:**
+- Display (headings, entry names): `'Instrument Serif', 'Iowan Old Style', Palatino, Georgia, serif`
+- Body and UI: `'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif`
+- Labels, eyebrows, meta: `'Geist Mono', ui-monospace, Menlo, monospace`
 
-**Per-section palette:**
+Loaded from Google Fonts with `display=swap` and real system fallbacks, so a slow connection renders immediately in the fallback and reflows when the webfont lands. This is the one external network request on the site.
 
-| | Accent | Accent-bg | Paper | Card | Ink |
-|---|---|---|---|---|---|
-| Landing | uses all three | — | `#f4f5f7` | `#ffffff` | `#161d24` |
-| Symptoms | `--calm #3f7d6e` (green) | `#e6f0ec` | `#f6f3ec` | `#fffdf8` | `#14201d` |
-| Procedures | `--deep #33507e` (blue) | `#e7ecf5` | `#f3f5f8` | `#ffffff` | `#141c26` |
-| Medicines | `--plum #6d4b86` (violet) | `#efe8f4` | `#f5f2f7` | `#fffdff` | `#1e1726` |
+**Aesthetic direction:** warm editorial, not clinical-cold. Paper backgrounds, generous whitespace, very large serif display type, a single rust accent, and rounded corners (16–28px). It should read like a thoughtful magazine, not a hospital form.
 
-Each page also aliases its accent as **`--accent` / `--accent-bg`** on `:root`. `assets/shared.css` is written against those aliases only, so the review stamp, the related block and the focus ring pick up each section's tint without any per-section overrides. Keep the alias when adding a section.
+**One palette, site-wide.** The earlier per-section green/blue/violet tinting is gone. Sections are distinguished by an accent word and a label, not by their own colour — which matters, because it leaves the safety colours unambiguous wherever they appear.
 
-**Shared functional colours (urgency / status), consistent site-wide:**
-- Calm/safe/good: green `#2f7d63`–`#3f7d6e`, bg `#e3f0ea`/`#e6f0ec`
-- Watch/caution: amber `#b8842b`, bg `#f6eddb`
-- Now/danger/risk: red `#b23b2e`, bg `#f7e4e0`
+| Token | Value | Used for |
+|---|---|---|
+| `--paper` | `#F3EFE7` | page background |
+| `--card` | `#FBF9F5` | cards, tiles, panels |
+| `--warm` / `--warm-deep` | `#EDE8DE` / `#E7DFD0` | table headers, feature art |
+| `--line` | `#D9D3C7` | every border |
+| `--ink` | `#15171B` | headings, dark bands |
+| `--ink-body` | `#26282D` | article body copy |
+| `--ink-muted` / `--ink-faint` | `#4E4C47` / `#5C5A55` | secondary text, meta |
+| `--rust` | `#C43E17` | **the accent** — links, eyebrows, progress, focus |
+| `--rust-deep` / `--rust-light` / `--rust-bg` | `#A33412` / `#F2A58C` / `#FBEDE7` | on light / on dark / tint |
+| `--green` | `#1E4A3C` | the deep green band, reviewer mark |
+| `--green-light` / `--green-pale` / `--green-bg` | `#A8D5BF` / `#D3E3DA` / `#DDE9E1` | on green / on green / tint |
 
-**Shared components (same structure, section-tinted):**
-1. **Red safety banner** — fixed at the very top of every page. Non-negotiable (see §7).
-2. **Header** — `Signal.` serif wordmark + tagline + cross-links to the other two sections.
-3. **Hero** — big serif headline with one italic accent word, subhead, section-specific framing.
-4. **Search input** — filters tiles live by name/keywords.
-5. **Tile grid** — `repeat(auto-fill, minmax(~240px, 1fr))`, each tile a button opening the modal.
-6. **Modal "sheet"** — centered overlay with blurred scrim, `rise` entry animation, `×` close, Esc-to-close, click-outside-to-close. This is where the full entry renders. Opening and closing go through `SignalModal` in `assets/signal.js`, which adds `role="dialog"`, traps Tab inside the sheet, restores focus to the tile that opened it, and syncs a shareable `?e=<slug>` URL.
-7. **Related block** — `SignalRelated(entry, section)`, cross-section chips resolved through the manifest.
-8. **Review stamp** — `SignalReview(entry)`, the last thing in every modal body.
-9. **Footer disclaimer** — the "educational prototype, needs physician sign-off" text.
+**Safety colours, used identically everywhere:**
+- Calm / safe / *keep taking it*: `--calm #2F6B4F`, bg `--calm-bg #DDE9E1`
+- Watch / caution / *only when needed*: `--watch #8A5A00`, bg `--watch-bg #F6EDDB`
+- Now / danger / *finish the course*: `--now #C43E17`, bg `--now-bg #FBEDE7`
 
-**Accessibility baseline (do not regress):** every page has a skip link, one `<main id="main">`, labelled search inputs, `role="status" aria-live="polite"` on the result counts, and `:focus-visible` rings from `shared.css`. Tile grids are `role="list"` with `role="listitem"` buttons. The medicines view switcher is a real `role="tablist"`; its collapsible family headers are `role="button"` with `tabindex="0"`, `aria-expanded`, and Enter/Space handling. `prefers-reduced-motion` is honoured in `anim.css` (icon layer) and `shared.css` (page layer).
+`--accent` / `--accent-bg` alias the rust so shared components need no per-page overrides.
+
+**Shared chrome, identical on all eight pages:**
+1. **Utility bar** (`.utility`) — dark strip carrying *EDUCATIONAL, NOT A DOCTOR · IN AN EMERGENCY CALL 112*. Always the first thing on the page.
+2. **Nav** (`.nav`) — ECG wordmark, the four sections, and a search link. On phones the links become a horizontally scrollable row rather than hiding behind a menu, so nothing becomes unreachable.
+3. **Red safety banner** (`.safety`) — sits under the nav with the section-specific wording. Non-negotiable (see §7).
+4. **Footer** (`.footer`) — four columns and an emergency line. Every link points at something that exists.
+
+**Page components:**
+5. **Hero** — eyebrow, very large display headline with one italic rust accent phrase, standfirst.
+6. **Tile grid** (`.tilegrid` / `.tile`) — `repeat(auto-fill, minmax(300px, 1fr))`; each tile is an `<a>` to `entry.html?e=<slug>`.
+7. **Article layout** (`.art-grid`) — TOC | article | rail. The TOC is generated from the article's `h2`s and scroll-spied; the rail carries related links and a safety card. Below 1200px the rail moves under the article rather than being dropped, because it is content.
+8. **Reading progress** (`.progress`) — sticky rust bar, driven by `SignalArticle.init()`.
+9. **Answer box** (`.answer`) — the dark "what you came to find out" block that opens every article.
+10. **Related block** — `SignalRelated(entry)`, cross-section chips resolved through the manifest.
+11. **Review stamp** — `SignalReview(entry)`, near the end of every article.
+
+**`assets/signal.js` provides:** `SignalSlug`, `SignalReview`, `SignalReviewLine`, `SignalRelated`, `SignalKeepReading`, `SignalReadTime`, `SignalNotFound`, `SignalArticle.init`.
+
+**Accessibility baseline (do not regress):** every page has a skip link, one `<main id="main">`, labelled search inputs, `role="status" aria-live="polite"` on the result counts, and `:focus-visible` rings from `theme.css`. Tile grids are `role="list"` with `role="listitem"` links. On phones the section nav becomes a scrollable row rather than disappearing. The medicines view switcher is a real `role="tablist"`; its collapsible family headers are `role="button"` with `tabindex="0"`, `aria-expanded`, and Enter/Space handling. Entry pages carry a generated, scroll-spied table of contents and print styles. `prefers-reduced-motion` is honoured in `anim.css` (icon layer) and `theme.css` (page layer). `tools/check.js` enforces all of this.
 
 ---
 
@@ -273,13 +296,15 @@ Each page also aliases its accent as **`--accent` / `--accent-bg`** on `:root`. 
 Each section has one distinctive interaction that carries its identity. These are the parts worth getting right.
 
 **Symptoms — the urgency rail + red-flag block.**
-Every tile has a coloured left rail (`calm`/`watch`/`now`, or a `mix` gradient for symptoms spanning the range). Inside the modal, the urgency verdict and a red-bordered "red flags — don't wait" list come *first*, before causes. Causes are shown with relative frequency chips (`common`/`some`/`rare`), never percentages. The whole section is organised so the "how worried?" answer is unmissable.
+Every tile has a coloured left rail (`calm`/`watch`/`now`, or a `mix` gradient for symptoms spanning the range), and the grid is **sorted loudest-first** so the emergencies are at the top. On the entry page the urgency verdict fills the dark answer box at the very top, and a rust-bordered "red flags — don't wait" block is the first `h2`, before causes. Causes use relative frequency chips (`common`/`some`/`rare`), never percentages.
 
 **Procedures — the Before ↔ After toggle.**
-A pill toggle switches the three axis cards (Structural / Functional / Chemical) between the `before` and `after` state. Implementation: a sliding indicator animates between the two buttons; the three cards re-render and change their left-border colour (amber for *before*, blue for *after*) with a left-to-right background gradient wash. The three axes stay in the same order so the reader watches each layer *change*. This is the section's whole conceptual hook: you see what physically, functionally, and chemically transforms.
+A pill toggle switches the three axis cards (Structural / Functional / Chemical) between the `before` and `after` state. A sliding indicator animates between the two buttons and the cards re-render, changing their left-border colour (amber for *before*, green for *after*). The three axes stay in the same order so the reader watches each layer *change*. This is the section's whole conceptual hook, and it lives in the middle of the article page.
 
 **Medicines — the mode filter + rule banner.**
-A row of filter buttons (`All / Take every day / Take when needed / Take as a course / Depends on type`) filters the grid, with a live count ("Take every day — 11 groups"). This lets someone instantly answer *"which of my medicines should I never stop?"* Each tile shows a coloured mode pill. Inside the modal, a prominent colour-coded **rule banner** sits at the very top stating the take-daily/when-needed/course verdict — the single most useful thing on the page — followed by a two-column "why it's prescribed / how it helps", the syndrome, a red "common dangerous mistakes" block, when-to-seek-advice, and questions to ask.
+A row of filter pills (`All / Take every day / Take when needed / Take as a course / Depends on type`) filters the grid with a live count. This lets someone instantly answer *"which of my medicines should I never stop?"* Each tile shows a coloured mode pill and rail. On the entry page a colour-coded **rule banner** is the very first thing in the article — green for *keep taking it*, amber for *only when needed*, rust for *finish the course* — followed by why/how, where it's used, the dangerous-mistakes block, when to seek advice, and questions to ask. The rail repeats the one-line rule so it stays visible while scrolling.
+
+**The fourth surface — Conditions A–Z.** `a-z.html` lists all 84 entries plus the 29 conditions in one alphabetical index, filterable by type, with a sticky letter bar. Conditions have no page of their own, so they link into the medicines condition view via `?view=cond&q=<name>`.
 
 ---
 
@@ -312,9 +337,11 @@ Connect the repo, no build command, publish directory = repo root. These give a 
 **Going-live checklist (do these before it faces real users):**
 
 Done:
-- [x] **`reviewedBy` / `lastReviewed` per entry**, surfaced in every modal, defaulting to a visible "Pending clinical review" notice.
+- [x] **`reviewedBy` / `lastReviewed` per entry**, surfaced on every entry page, defaulting to a visible "Pending clinical review" notice.
 - [x] **Accessibility pass** — focus trap, focus restore, ARIA roles, skip links, labelled inputs, live regions, `prefers-reduced-motion`. Baseline recorded in §5.
-- [x] **Page `<title>`, `<meta name="description">`, canonical URL, Open Graph and Twitter card tags** on all four pages.
+- [x] **Page `<title>`, `<meta name="description">`, canonical URL, Open Graph and Twitter card tags** on the index pages; entry pages set title and description from the entry at runtime.
+- [x] **Entries are real pages** with their own URLs — shareable, printable (there are print styles) and indexable.
+- [x] **One editorial design system** in `assets/theme.css`, with `tools/check.js` guarding the accessibility baseline.
 
 Still open — **the first item is the blocker**:
 - [ ] **Physician sign-off on all 84 entries plus the classification layer.** Nothing else on this list gates public use the way this does. Special attention to the medicines flagged in §7.6. Until then, every entry openly says it is unreviewed, which is the honest state — not a bug to paper over.

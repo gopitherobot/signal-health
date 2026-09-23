@@ -151,16 +151,24 @@ section('Safety rules');
   const doses = medSrc.match(/[0-9]+\s?(mg|mcg|ml|IU)\b/gi) || [];
   check('medicines: no doses or units (§7.4)', !doses.length, doses.slice(0, 5).join(', '));
 
-  const pages = ['index.html', 'symptoms/index.html', 'procedures/index.html', 'medicines/index.html'];
+  const pages = ['index.html', 'a-z.html',
+                 'symptoms/index.html', 'procedures/index.html', 'medicines/index.html',
+                 'symptoms/entry.html', 'procedures/entry.html', 'medicines/entry.html'];
   const noBanner = pages.filter(p => !/class="safety"/.test(read(p)));
   check('every page keeps its red safety banner (§7.1)', !noBanner.length, noBanner.join(', '));
 
-  const medPage = read('medicines/index.html');
-  check('medicines banner still says never start/stop/change (§7.1)',
-    /Never start, stop or change a medicine based on this page/.test(medPage));
+  const medPages = ['medicines/index.html', 'medicines/entry.html'];
+  const noMedWording = medPages.filter(p =>
+    !/Never start, stop or change a medicine based on this page/.test(read(p)));
+  check('both medicines pages keep the never start/stop/change wording (§7.1)',
+    !noMedWording.length, noMedWording.join(', '));
 
-  const noFooter = pages.filter(p => !/physician sign-off|Physician sign-off/.test(read(p)));
-  check('every page keeps its sign-off disclaimer (§7.5)', !noFooter.length, noFooter.join(', '));
+  /* §7.5 is about framing, not a fixed sentence: every page must say, somewhere,
+     that this is education and does not replace the reader's own clinician. */
+  const SUBORDINATE = /not a substitute for|doesn't replace|does not replace|physician sign-off|instructions always come first/i;
+  const noFooter = pages.filter(p => !SUBORDINATE.test(read(p)));
+  check('every page defers to the reader and their own clinician (§7.5)',
+    !noFooter.length, noFooter.join(', '));
 
   /* §7.3 — every symptom and medicine entry names when to seek care */
   const noFlags = []
@@ -189,11 +197,60 @@ section('Safety rules');
   }
 }
 
-/* ───────────────────────── 5. accessibility baseline ───────────────────────── */
+/* ───────────────────────── 5. pages and routing ───────────────────────── */
+section('Pages and routing');
+{
+  const INDEX_PAGES = ['index.html', 'a-z.html',
+                       'symptoms/index.html', 'procedures/index.html', 'medicines/index.html'];
+  const ENTRY_PAGES = ['symptoms/entry.html', 'procedures/entry.html', 'medicines/entry.html'];
+  const PAGES = INDEX_PAGES.concat(ENTRY_PAGES);
+
+  const missing = PAGES.filter(p => !fs.existsSync(path.join(ROOT, p)));
+  check('every page exists', !missing.length, missing.join(', '));
+  if (missing.length) return;
+
+  const src = {};
+  PAGES.forEach(p => { src[p] = read(p); });
+
+  /* Each section's tiles link to that section's entry template. */
+  const badLink = [];
+  SECTIONS.forEach(sec => {
+    const page = src[sec + '/index.html'];
+    if (!/entry\.html\?e=/.test(page)) badLink.push(sec);
+  });
+  check('section pages link tiles to their entry template', !badLink.length, badLink.join(', '));
+
+  /* Nothing should still be pointing at the retired modal deep link. */
+  const oldLink = PAGES.filter(p => /index\.html\?e=/.test(src[p]));
+  check('no page still uses the old index.html?e= deep link', !oldLink.length, oldLink.join(', '));
+
+  /* Every page carries the same chrome. */
+  const noUtility = PAGES.filter(p => !/class="utility"/.test(src[p]));
+  check('every page has the utility bar with the emergency number', !noUtility.length, noUtility.join(', '));
+
+  const noEmergency = PAGES.filter(p => !/EMERGENCY CALL 112/.test(src[p]));
+  check('every page states the emergency number', !noEmergency.length, noEmergency.join(', '));
+
+  const noNav = PAGES.filter(p => !/class="nav-links"/.test(src[p]));
+  check('every page has the section nav', !noNav.length, noNav.join(', '));
+
+  const noFooter = PAGES.filter(p => !/class="footer"/.test(src[p]));
+  check('every page has the footer', !noFooter.length, noFooter.join(', '));
+
+  /* The A-Z hands conditions to the medicines condition view. */
+  check('A-Z links conditions into the medicines view',
+    /medicines\/index\.html\?view=cond/.test(src['a-z.html']));
+  check('medicines page honours ?view= and ?q=',
+    /view=|searchParams/.test(src['medicines/index.html']) && /renderSystems\(q\)/.test(src['medicines/index.html']));
+}
+
+/* ───────────────────────── 6. accessibility baseline ───────────────────────── */
 section('Accessibility baseline');
 {
-  const PAGES = ['index.html', 'symptoms/index.html', 'procedures/index.html', 'medicines/index.html'];
-  const SECTION_PAGES = PAGES.slice(1);
+  const INDEX_PAGES = ['index.html', 'a-z.html',
+                       'symptoms/index.html', 'procedures/index.html', 'medicines/index.html'];
+  const ENTRY_PAGES = ['symptoms/entry.html', 'procedures/entry.html', 'medicines/entry.html'];
+  const PAGES = INDEX_PAGES.concat(ENTRY_PAGES);
   const src = {};
   PAGES.forEach(p => { src[p] = read(p); });
 
@@ -203,11 +260,13 @@ section('Accessibility baseline');
   const noMain = PAGES.filter(p => !/<main[^>]*id="main"/.test(src[p]));
   check('every page has a <main id="main"> landmark', !noMain.length, noMain.join(', '));
 
-  const noShared = PAGES.filter(p => !/assets\/shared\.css/.test(src[p]));
-  check('every page loads shared.css (focus rings, reduced motion)', !noShared.length, noShared.join(', '));
+  const noTheme = PAGES.filter(p => !/assets\/theme\.css/.test(src[p]));
+  check('every page loads theme.css', !noTheme.length, noTheme.join(', '));
 
-  const noAccent = PAGES.filter(p => !/--accent:/.test(src[p]));
-  check('every page defines --accent for the shared components', !noAccent.length, noAccent.join(', '));
+  const theme = read('assets/theme.css');
+  check('theme defines --accent for the shared components', /--accent:\s*var\(--rust\)/.test(theme));
+  check('theme has a visible focus-visible ring', /:focus-visible/.test(theme));
+  check('reduced motion honoured at page level', /prefers-reduced-motion/.test(theme));
 
   /* every text input needs a programmatic label */
   const unlabelled = [];
@@ -222,24 +281,31 @@ section('Accessibility baseline');
   });
   check('every search input is labelled', !unlabelled.length, unlabelled.join(', '));
 
-  /* the three section pages own the modal */
-  const noScrim = SECTION_PAGES.filter(p => !/id="scrim"[^>]*aria-hidden="true"/.test(src[p]));
-  check('section pages start with the modal hidden from assistive tech', !noScrim.length, noScrim.join(', '));
+  const noLive = INDEX_PAGES.filter(p => !/aria-live="polite"/.test(src[p]));
+  check('list pages announce result counts', !noLive.length, noLive.join(', '));
 
-  const noSignal = SECTION_PAGES.filter(p => !/assets\/signal\.js/.test(src[p]));
-  check('section pages load signal.js (focus trap, focus restore, deep links)', !noSignal.length, noSignal.join(', '));
+  const noSignal = ENTRY_PAGES.filter(p => !/assets\/signal\.js/.test(src[p]));
+  check('entry pages load signal.js', !noSignal.length, noSignal.join(', '));
 
-  const noLive = SECTION_PAGES.filter(p => !/aria-live="polite"/.test(src[p]));
-  check('section pages announce result counts', !noLive.length, noLive.join(', '));
+  const noToc = ENTRY_PAGES.filter(p => !/class="art-toc"/.test(src[p]) || !/id="toc"/.test(src[p]));
+  check('entry pages have a table of contents', !noToc.length, noToc.join(', '));
 
-  const noManifest = PAGES.filter(p => !/data\/manifest\.js/.test(src[p]));
-  check('every page loads the manifest', !noManifest.length, noManifest.join(', '));
+  const noProgress = ENTRY_PAGES.filter(p => !/class="progress"/.test(src[p]) || !/id="bar"/.test(src[p]));
+  check('entry pages have a reading-progress bar', !noProgress.length, noProgress.join(', '));
+
+  const noPrint = ENTRY_PAGES.filter(p => !/@media print/.test(src[p]));
+  check('entry pages have print styles', !noPrint.length, noPrint.join(', '));
 
   check('medicines view switcher is a real tablist', /role="tablist"/.test(src['medicines/index.html']));
-  check('reduced motion honoured at page level', /prefers-reduced-motion/.test(read('assets/shared.css')));
+  check('collapsible headers are keyboard operable',
+    /role="button" tabindex="0" aria-expanded/.test(src['medicines/index.html']));
+
+  const noManifest = ['index.html', 'a-z.html'].concat(ENTRY_PAGES)
+    .filter(p => !/data\/manifest\.js/.test(src[p]));
+  check('pages that need the manifest load it', !noManifest.length, noManifest.join(', '));
 }
 
-/* ───────────────────────── 6. generated manifest ───────────────────────── */
+/* ───────────────────────── 7. generated manifest ───────────────────────── */
 section('Generated manifest');
 {
   const src = read('data/manifest.js');
@@ -276,7 +342,7 @@ section('Generated manifest');
     JSON.stringify(counts));
 }
 
-/* ───────────────────────── 7. review status ───────────────────────── */
+/* ───────────────────────── 8. review status ───────────────────────── */
 section('Clinical review status');
 {
   let reviewed = 0, pending = 0;

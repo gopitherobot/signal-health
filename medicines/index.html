@@ -14,522 +14,425 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Signal · Medicines — by rule, by drug class, by condition">
 <meta name="twitter:description" content="Plain-language guide to common medicine groups, explorable three ways: whether to take it daily, when needed or as a course; by pharmacological class; or by the condition being treated.">
-<meta name="theme-color" content="#f4f5f7">
+<meta name="theme-color" content="#F3EFE7">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/anim.css">
-<link rel="stylesheet" href="../assets/shared.css">
+<link rel="stylesheet" href="../assets/theme.css">
+
 <style>
-  :root{
-    --ink:#1e1726;--ink-soft:#54495e;--ink-faint:#867a8f;
-    --paper:#f5f2f7;--card:#fffdff;--line:#e5dfea;
-    --accent:#6d4b86;--accent-bg:#efe8f4;
-    --plum:#6d4b86;--plum-bg:#efe8f4;--plum-deep:#513467;
-    --daily:#33507e;--daily-bg:#e7ecf5;--when:#b8842b;--when-bg:#f6eddb;--course:#2f7d63;--course-bg:#e3f0ea;--mixed:#8a5a86;--mixed-bg:#f0e6ef;
-    --warn:#b23b2e;--warn-bg:#f7e4e0;
-    --shadow:0 1px 2px rgba(30,23,38,.04),0 8px 24px rgba(30,23,38,.07);
-    --shadow-lg:0 4px 12px rgba(30,23,38,.06),0 18px 44px rgba(30,23,38,.11);
-    --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
-    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-  .safety{background:var(--warn-bg);border-bottom:1px solid #e6c9c3;color:#7a2a20;font-size:13.5px;padding:9px 24px;text-align:center;font-weight:500}
-  .safety b{font-weight:700}
-  header{padding:26px 0 20px;border-bottom:1px solid var(--line)}
-  .brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-  .mark{font-family:var(--serif);font-size:26px;font-weight:600;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
-  .mark .dot{color:var(--plum)}
-  .tag{font-size:13px;color:var(--ink-faint);font-weight:500}
-  .navlink{margin-left:auto;font-size:14px;color:var(--plum);text-decoration:none;font-weight:500}
-  .navlink:hover{text-decoration:underline}
+  .index-hero { padding-top: 64px; padding-bottom: 20px; display: flex; flex-direction: column; gap: 24px; max-width: 980px; }
+  .index-hero h1 { font-size: 78px; line-height: 0.99; letter-spacing: -0.025em; }
+  .index-hero h1 em { font-style: italic; color: var(--rust); }
+  .index-hero .stand { font-size: 20px; line-height: 1.5; color: var(--ink-muted); max-width: 680px; }
 
-  /* ── hero with living illustration ── */
-  .herowrap{display:grid;grid-template-columns:1fr 250px;gap:40px;align-items:center;padding:50px 0 26px}
-  .hero{max-width:660px}
-  .hero h1{font-family:var(--serif);font-size:41px;line-height:1.13;font-weight:600;letter-spacing:-.02em}
-  .hero h1 em{font-style:italic;color:var(--plum)}
-  .hero p{margin-top:18px;font-size:17.5px;color:var(--ink-soft)}
-  .heroart{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
-  .orb{width:74px;height:74px;border-radius:20px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
-  .orb.a{color:var(--daily)}.orb.b{color:var(--when)}.orb.c{color:var(--course)}
-  .keymsg{margin-top:22px;background:var(--daily-bg);border:1px solid #cdd8ea;border-left:4px solid var(--daily);border-radius:12px;padding:16px 18px;font-size:15px;color:#2f486f;max-width:660px}
-  .keymsg b{color:#25406b}
+  .keymsg { padding: 24px 28px; border-radius: var(--r-block); background: var(--green-bg); border-left: 4px solid var(--green); font-size: 16.5px; line-height: 1.6; color: var(--green); max-width: 900px; }
 
-  /* ── the three-axis view switcher ── */
-  .axisbar{margin:32px 0 8px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:7px;display:inline-flex;gap:4px;position:relative;box-shadow:var(--shadow)}
-  .axisbtn{position:relative;z-index:2;font-family:inherit;font-size:14.5px;font-weight:600;padding:11px 20px;border-radius:11px;border:none;background:none;color:var(--ink-soft);cursor:pointer;display:inline-flex;align-items:center;gap:9px;transition:color .22s}
-  .axisbtn.active{color:#fff}
-  .axisind{position:absolute;top:7px;bottom:7px;left:7px;background:var(--plum);border-radius:11px;z-index:1;box-shadow:0 2px 8px rgba(109,75,134,.3)}
-  .axishint{margin-top:12px;font-size:14px;color:var(--ink-faint);max-width:680px}
+  .axisbar { display: flex; gap: 6px; padding: 6px; border-radius: var(--r-pill); background: var(--warm); align-self: flex-start; flex-wrap: wrap; }
+  .axisbtn { border: 0; background: transparent; padding: 11px 22px; border-radius: var(--r-pill); font-family: var(--sans); font-size: 14.5px; font-weight: 500; color: var(--ink-muted); cursor: pointer; transition: background .18s ease, color .18s ease; }
+  .axisbtn[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+  .axishint { font-size: 15px; line-height: 1.6; color: var(--ink-faint); max-width: 680px; }
 
-  .search{margin:20px 0 8px;position:relative;max-width:560px}
-  .search input{width:100%;font-size:16px;font-family:var(--sans);padding:14px 18px 14px 46px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
-  .search input:focus{outline:none;border-color:var(--plum);box-shadow:0 0 0 3px var(--plum-bg)}
-  .search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--ink-faint)}
+  .view { display: none; }
+  .view.on { display: block; }
 
-  /* ── mode filter (rule view) ── */
-  .filterlabel{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin:26px 0 12px}
-  .modes{display:flex;gap:10px;flex-wrap:wrap}
-  .modebtn{font-family:inherit;font-size:14px;font-weight:600;padding:10px 16px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);cursor:pointer;display:inline-flex;align-items:center;gap:9px;transition:all .16s}
-  .modebtn .dot{width:10px;height:10px;border-radius:50%}
-  .modebtn:hover{border-color:#d0c7d8;transform:translateY(-1px)}
-  .modebtn.active{color:#fff;border-color:transparent}
-  .modebtn[data-m="all"].active{background:var(--plum)}
-  .modebtn[data-m="daily"] .dot{background:var(--daily)}.modebtn[data-m="daily"].active{background:var(--daily)}
-  .modebtn[data-m="when"] .dot{background:var(--when)}.modebtn[data-m="when"].active{background:var(--when)}
-  .modebtn[data-m="course"] .dot{background:var(--course)}.modebtn[data-m="course"].active{background:var(--course)}
-  .modebtn[data-m="mixed"] .dot{background:var(--mixed)}.modebtn[data-m="mixed"].active{background:var(--mixed)}
-  .modebtn.active .dot{background:#fff !important}
+  .modes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .modepill { display: inline-flex; padding: 6px 11px; border-radius: 12px; font-size: 12.5px; font-weight: 500; }
+  .modepill.daily  { background: var(--green-bg); color: var(--green); }
+  .modepill.when   { background: var(--watch-bg); color: var(--watch); }
+  .modepill.course { background: var(--rust-bg);  color: var(--rust-deep); }
+  .modepill.mixed  { background: var(--warm);     color: var(--ink-muted); }
+  .tile .rail.daily  { background: var(--green); }
+  .tile .rail.when   { background: var(--watch); }
+  .tile .rail.course { background: var(--rust); }
+  .tile .rail.mixed  { background: var(--ink-faint); }
 
-  .section-label{margin:26px 0 16px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;padding-bottom:20px}
-  .mtile{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;transition:transform .17s,box-shadow .17s,border-color .17s;font-family:inherit;position:relative;overflow:hidden}
-  .mtile:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:#d5ccdd}
-  .mtile .rail{position:absolute;left:0;top:0;bottom:0;width:4px}
-  .rail.daily{background:var(--daily)}.rail.when{background:var(--when)}.rail.course{background:var(--course)}.rail.mixed{background:var(--mixed)}
-  .mtile .cat{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
-  .mtile .nm{font-family:var(--serif);font-size:20px;font-weight:600;margin-top:5px;line-height:1.2}
-  .mtile .modepill{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px}
-  .modepill.daily{background:var(--daily-bg);color:#2f486f}.modepill.when{background:var(--when-bg);color:#8a6118}.modepill.course{background:var(--course-bg);color:#1f5e49}.modepill.mixed{background:var(--mixed-bg);color:#6d4468}
-  .mtile .mini{margin-top:11px;font-size:13px;color:var(--ink-soft);line-height:1.5}
-  .mtile .ico{position:absolute;top:14px;right:14px;opacity:.16;color:var(--plum)}
+  .fam { border: 1px solid var(--line); border-radius: var(--r-block); background: var(--card); overflow: hidden; margin-bottom: 14px; }
+  .famhead { display: flex; align-items: center; gap: 20px; padding: 24px 28px; cursor: pointer; }
+  .famhead:hover { background: var(--warm); }
+  .famicon { width: 34px; height: 34px; flex: none; color: var(--rust); }
+  .famtext h3 { font-family: var(--display); font-size: 28px; line-height: 1.1; }
+  .famtext p { font-size: 15px; line-height: 1.55; color: var(--ink-muted); margin-top: 4px; }
+  .famcount { margin-left: auto; flex: none; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+  .chev { width: 22px; height: 22px; flex: none; stroke: var(--ink-faint); fill: none; stroke-width: 2; transition: transform .22s ease; }
+  .fam.open .chev { transform: rotate(180deg); }
+  .fambody { display: none; padding: 0 28px 28px; }
+  .fam.open .fambody { display: block; }
 
-  /* ── family / system panels (class + condition views) ── */
-  .fam{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)}
-  .famhead{display:flex;align-items:center;gap:16px;padding:19px 22px;cursor:pointer;user-select:none;transition:background .15s}
-  .famhead:hover{background:#faf7fc}
-  .famicon{width:52px;height:52px;border-radius:14px;background:var(--plum-bg);color:var(--plum);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .famtext{flex:1;min-width:0}
-  .famtext h3{font-family:var(--serif);font-size:21px;font-weight:600;line-height:1.2}
-  .famtext p{font-size:13.5px;color:var(--ink-faint);margin-top:3px}
-  .famcount{font-size:12px;font-weight:700;color:var(--plum);background:var(--plum-bg);padding:5px 11px;border-radius:999px;white-space:nowrap}
-  .chev{width:20px;height:20px;stroke:var(--ink-faint);stroke-width:2.2;fill:none;transition:transform .28s cubic-bezier(.4,0,.2,1);flex-shrink:0}
-  .fam.open .chev{transform:rotate(180deg)}
-  .fambody{display:none;padding:0 22px 20px;border-top:1px solid var(--line)}
-  .fam.open .fambody{display:block}
+  .classgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .ctile { padding: 22px 24px; border-radius: 16px; border: 1px solid var(--line); background: var(--paper); display: flex; flex-direction: column; gap: 8px; }
+  .ctag { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--rust); }
+  .cnm { font-family: var(--display); font-size: 23px; line-height: 1.15; }
+  .cmech, .cuse, .cnote { font-size: 14.5px; line-height: 1.55; color: var(--ink-muted); }
+  .cnote { color: var(--ink-faint); font-style: italic; }
+  .cfoot { margin-top: auto; padding-top: 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 
-  .classgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:12px;margin-top:18px}
-  .ctile{text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:16px;cursor:pointer;font-family:inherit;transition:transform .16s,box-shadow .16s,border-color .16s;position:relative;overflow:hidden}
-  .ctile:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#d5ccdd;background:var(--card)}
-  .ctile .ctag{font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--plum)}
-  .ctile .cnm{font-size:15.5px;font-weight:650;margin-top:5px;line-height:1.32;color:var(--ink)}
-  .ctile .cmech{margin-top:8px;font-size:13px;color:var(--ink-soft);line-height:1.5}
-  .ctile .cfoot{margin-top:11px;display:flex;align-items:center;gap:8px}
-  .minipill{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px}
-  .minipill.daily{background:var(--daily-bg);color:#2f486f}.minipill.when{background:var(--when-bg);color:#8a6118}.minipill.course{background:var(--course-bg);color:#1f5e49}.minipill.mixed{background:var(--mixed-bg);color:#6d4468}
+  .cond { padding: 26px 0; border-top: 1px solid var(--line); }
+  .cond:first-child { border-top: 0; padding-top: 6px; }
+  .cond h4 { font-family: var(--display); font-size: 27px; line-height: 1.12; }
+  .cdesc { font-size: 16px; line-height: 1.6; color: var(--ink-muted); margin-top: 6px; }
+  .condkey { margin-top: 12px; padding: 14px 18px; border-radius: 14px; background: var(--green-bg); font-size: 15.5px; line-height: 1.55; color: var(--green); }
+  .chiprow { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .chiplabel { font-family: var(--mono); font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); margin-right: 4px; }
 
-  /* condition rows */
-  .cond{border:1px solid var(--line);border-radius:13px;padding:17px 19px;margin-top:12px;background:var(--paper);transition:border-color .16s,background .16s}
-  .cond:hover{border-color:#d5ccdd;background:var(--card)}
-  .cond h4{font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.25}
-  .cond .cdesc{font-size:13.5px;color:var(--ink-soft);margin-top:5px}
-  .condkey{margin-top:12px;background:var(--plum-bg);border-left:3px solid var(--plum);border-radius:0 9px 9px 0;padding:11px 14px;font-size:13.5px;color:var(--plum-deep);line-height:1.5}
-  .chiprow{margin-top:13px;display:flex;flex-wrap:wrap;gap:7px}
-  .chiplabel{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;width:100%;margin-bottom:-3px}
-  .chip{font-family:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);cursor:pointer;transition:all .15s}
-  .chip:hover{border-color:var(--plum);color:var(--plum);background:var(--plum-bg);transform:translateY(-1px)}
-  .chip.grp{border-color:#d9cde2;color:var(--plum);background:var(--plum-bg)}
-
-  /* ── modal ── */
-  .scrim{position:fixed;inset:0;background:rgba(30,23,38,.46);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;z-index:50}
-  .scrim.open{display:flex}
-  .sheet{background:var(--paper);border-radius:18px;max-width:790px;width:100%;box-shadow:0 24px 60px rgba(30,23,38,.3);animation:rise .26s cubic-bezier(.22,.9,.3,1)}
-  @keyframes rise{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
-  .sheet-head{padding:26px 30px 22px;border-bottom:1px solid var(--line);position:relative}
-  .sheet-head .cat{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--plum);font-weight:700}
-  .sheet-head h2{font-family:var(--serif);font-size:31px;font-weight:600;margin-top:6px;letter-spacing:-.01em;padding-right:44px}
-  .x{position:absolute;top:22px;right:24px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;color:var(--ink-soft);display:flex;align-items:center;justify-content:center;transition:background .15s}
-  .x:hover{background:#ede7f2}
-  .rulebanner{margin-top:16px;border-radius:13px;padding:16px 18px;border:1px solid;display:flex;gap:14px;align-items:flex-start}
-  .rulebanner .rico{flex-shrink:0;margin-top:1px}
-  .rulebanner .rl{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
-  .rulebanner .rt{font-size:15px;line-height:1.5}
-  .rulebanner.daily{background:var(--daily-bg);border-color:#cdd8ea;color:var(--daily)}.rulebanner.daily .rt{color:#2f486f}.rulebanner.daily .rt b{color:#25406b}
-  .rulebanner.when{background:var(--when-bg);border-color:#e7d5a8;color:#8a6118}.rulebanner.when .rt{color:#7a5a1c}.rulebanner.when .rt b{color:#664c14}
-  .rulebanner.course{background:var(--course-bg);border-color:#bfe0d2;color:#1f5e49}.rulebanner.course .rt{color:#22624c}.rulebanner.course .rt b{color:#184c3a}
-  .rulebanner.mixed{background:var(--mixed-bg);border-color:#dcc7da;color:#6d4468}.rulebanner.mixed .rt{color:#6d4468}.rulebanner.mixed .rt b{color:#54324f}
-  .sheet-body{padding:24px 30px 30px}
-  .blk{margin-bottom:24px}
-  .blk h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:12px}
-  .story{font-size:15.5px;color:var(--ink-soft);line-height:1.62}
-  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .infocard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 17px}
-  .infocard .ih{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--plum);font-weight:700;margin-bottom:7px}
-  .infocard .it{font-size:14px;color:var(--ink-soft);line-height:1.55}
-  .syn{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 17px;font-size:14px;color:var(--ink-soft)}
-  .syn b{color:var(--ink)}
-  .mistakes{background:var(--warn-bg);border:1px solid #eec7c0;border-radius:12px;padding:16px 18px}
-  .mistakes .mh{font-weight:700;color:#8f2c20;font-size:13.5px;margin-bottom:10px}
-  .mistakes ul,.flags ul,.ask ul{list-style:none}
-  .mistakes li{font-size:14px;color:#7a2a20;padding:5px 0 5px 22px;position:relative}
-  .mistakes li::before{content:"\2717";position:absolute;left:2px;top:5px;color:var(--warn);font-weight:700;font-size:12px}
-  .flags{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--card)}
-  .flags .fh{font-weight:700;color:var(--ink);font-size:13.5px;margin-bottom:10px}
-  .flags li{font-size:14px;color:var(--ink-soft);padding:5px 0 5px 22px;position:relative}
-  .flags li::before{content:"";position:absolute;left:4px;top:11px;width:7px;height:7px;background:var(--warn);border-radius:50%}
-  .ask{background:var(--plum-bg);border:1px solid #ddcfe6;border-radius:13px;padding:16px 18px}
-  .ask h4{font-size:13px;font-weight:700;color:var(--plum);margin-bottom:10px}
-  .ask li{font-size:14px;color:#553f68;padding:5px 0 5px 22px;position:relative}
-  .ask li::before{content:"?";position:absolute;left:3px;top:5px;font-weight:700;color:var(--plum)}
-  .noteline{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--plum);border-radius:0 12px 12px 0;padding:14px 17px;font-size:14.5px;color:var(--ink-soft);line-height:1.55}
-  .foot{border-top:1px solid var(--line);padding:26px 0 60px;font-size:13px;color:var(--ink-faint);max-width:700px;margin-top:36px}
-  .foot b{color:var(--ink-soft)}
-  .empty{padding:40px 0;text-align:center;color:var(--ink-faint);font-size:15px}
-  .view{display:none}.view.on{display:block}
-  @media(max-width:860px){.herowrap{grid-template-columns:1fr}.heroart{justify-content:flex-start}}
-  @media(max-width:640px){
-    .hero h1{font-size:31px}.twocol{grid-template-columns:1fr}.sheet-head h2{font-size:24px}
-    .axisbar{display:flex;width:100%;overflow-x:auto}.axisbtn{white-space:nowrap;padding:10px 14px;font-size:13.5px}
-    .famhead{padding:16px}.fambody{padding:0 16px 18px}
+  .countline { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 24px 0 18px; }
+  @media (max-width: 900px) {
+    .index-hero h1 { font-size: 38px; line-height: 1.04; }
+    .index-hero .stand { font-size: 17px; }
+    .classgrid { grid-template-columns: minmax(0, 1fr); }
+    .famhead { padding: 20px; gap: 14px; }
+    .fambody { padding: 0 20px 20px; }
   }
 </style>
 </head>
 <body>
 <a class="sig-skip" href="#main">Skip to the medicine list</a>
-<div class="safety"><b>Never start, stop or change a medicine based on this page.</b> It explains medicine groups in general terms only. Your own doctor's instructions for your situation always come first.</div>
-<header><div class="wrap brand">
-  <a href="../index.html" class="mark">Signal<span class="dot">.</span></a>
-  <span class="tag">medicines, three ways</span>
-  <a href="../symptoms/index.html" class="navlink">Symptoms →</a>
-  <a href="../procedures/index.html" class="navlink" style="margin-left:16px">Procedures →</a>
-</div></header>
 
-<main class="wrap" id="main">
-  <div class="herowrap">
-    <section class="hero">
-      <h1>The question nobody explains: <em>keep taking it, or only when I have symptoms?</em></h1>
-      <p>Most medicine confusion comes down to one thing — is this preventing something I can't feel, or treating something I can? Get that wrong and people stop life-saving tablets because they "feel fine".</p>
-    </section>
-    <div class="heroart">
-      <div class="orb a" id="orb1"></div>
-      <div class="orb b" id="orb2"></div>
-      <div class="orb c" id="orb3"></div>
+<div class="utility">
+  <div class="shell wrap">
+    <div>EDUCATIONAL, NOT A DOCTOR &middot; IN AN EMERGENCY CALL 112</div>
+    <div class="utility-links">
+      <a href="../index.html#how-it-works">How entries are reviewed</a>
+      <a href="../index.html#limits">What Signal can't do</a>
     </div>
   </div>
-  <div class="keymsg"><b>The single most important idea here:</b> many of the most important medicines treat problems you cannot feel — high blood pressure, high cholesterol, a thinning of the blood. Feeling well on them means they're working. It is almost never a reason to stop.</div>
+</div>
 
-  <div class="axisbar" id="axisbar" role="tablist" aria-label="Three ways to explore medicines">
-    <div class="axisind" id="axisind" aria-hidden="true"></div>
-    <button class="axisbtn active" role="tab" id="tab-rule"  aria-selected="true"  aria-controls="v-rule"  data-v="rule"  onclick="setView('rule')">By rule</button>
-    <button class="axisbtn"        role="tab" id="tab-class" aria-selected="false" aria-controls="v-class" data-v="class" onclick="setView('class')">By drug class</button>
-    <button class="axisbtn"        role="tab" id="tab-cond"  aria-selected="false" aria-controls="v-cond"  data-v="cond"  onclick="setView('cond')">By condition</button>
+<header class="nav">
+  <div class="shell wrap">
+    <a href="../index.html" class="mark" aria-label="Signal — home">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15h6l3-8 5 16 4-11 2 3h6"/></svg>
+      Signal
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="../symptoms/index.html">Symptoms</a>
+      <a href="../procedures/index.html">Procedures</a>
+      <a href="index.html" aria-current="page">Medicines</a>
+      <a href="../a-z.html">Conditions A&ndash;Z</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn--ghost btn--sm" href="../index.html#search">Search everything</a>
+    </div>
   </div>
-  <p class="axishint" id="axishint"></p>
+</header>
+
+<div class="safety">
+  <div class="shell wrap"><b>Never start, stop or change a medicine based on this page.</b> It explains medicine groups in general terms only. Your own doctor's instructions for your situation always come first.</div>
+</div>
+
+<main id="main" class="shell wrap">
+
+  <section class="index-hero">
+    <div class="eyebrow"><span class="dot">&#9679;</span> Medicines</div>
+    <h1>The question nobody explains: <em>keep taking it, or only when I have symptoms?</em></h1>
+    <p class="stand">Most medicine confusion comes down to one thing &mdash; is this preventing something I can't feel, or treating something I can? Get that wrong and people stop life-saving tablets because they &ldquo;feel fine&rdquo;.</p>
+  </section>
+
+  <div class="keymsg">
+    <b>The single most important idea here:</b> many of the most important medicines treat problems you cannot feel &mdash; high blood pressure, high cholesterol, a thinning of the blood. Feeling well on them means they're working. It is almost never a reason to stop.
+  </div>
+
+  <div style="padding-top:40px;display:flex;flex-direction:column;gap:16px">
+    <div class="axisbar" role="tablist" aria-label="Three ways to explore medicines">
+      <button class="axisbtn" role="tab" id="tab-rule"  aria-selected="true"  aria-controls="v-rule"  data-v="rule"  onclick="setView('rule')">By rule</button>
+      <button class="axisbtn" role="tab" id="tab-class" aria-selected="false" aria-controls="v-class" data-v="class" onclick="setView('class')">By drug class</button>
+      <button class="axisbtn" role="tab" id="tab-cond"  aria-selected="false" aria-controls="v-cond"  data-v="cond"  onclick="setView('cond')">By condition</button>
+    </div>
+    <p class="axishint" id="axishint"></p>
+  </div>
 
   <!-- ═══ VIEW 1 — by rule ═══ -->
   <div class="view on" id="v-rule" role="tabpanel" aria-labelledby="tab-rule" tabindex="0">
-    <div class="filterlabel">Filter by how it's taken</div>
-    <div class="modes" id="modes">
-      <button class="modebtn active" data-m="all" onclick="setMode('all')">All medicines</button>
-      <button class="modebtn" data-m="daily" onclick="setMode('daily')"><span class="dot"></span>Take every day</button>
-      <button class="modebtn" data-m="when" onclick="setMode('when')"><span class="dot"></span>Take when needed</button>
-      <button class="modebtn" data-m="course" onclick="setMode('course')"><span class="dot"></span>Take as a course</button>
-      <button class="modebtn" data-m="mixed" onclick="setMode('mixed')"><span class="dot"></span>Depends on type</button>
+    <div style="padding-top:28px;display:flex;flex-direction:column;gap:18px;max-width:900px">
+      <div class="modes" id="modes">
+        <button class="pill is-on" data-m="all"    onclick="setMode('all')">All medicines</button>
+        <button class="pill" data-m="daily"  onclick="setMode('daily')">Take every day</button>
+        <button class="pill" data-m="when"   onclick="setMode('when')">Take when needed</button>
+        <button class="pill" data-m="course" onclick="setMode('course')">Take as a course</button>
+        <button class="pill" data-m="mixed"  onclick="setMode('mixed')">Depends on type</button>
+      </div>
+      <div class="search search--sm" style="max-width:640px">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <label class="sr-only" for="q">Search medicine groups</label>
+        <input id="q" type="text" autocomplete="off" placeholder="Search &mdash; try &ldquo;blood pressure&rdquo; or &ldquo;inhaler&rdquo;" oninput="applyFilters()">
+      </div>
     </div>
-    <div class="search">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <label class="sr-only" for="q">Search medicine groups</label>
-      <input id="q" type="text" autocomplete="off" placeholder="Search — try &ldquo;blood pressure&rdquo; or &ldquo;inhaler&rdquo;" oninput="applyFilters()">
+    <div class="countline">
+      <div class="meta" id="countlabel" role="status" aria-live="polite">Explore by medicine group</div>
     </div>
-    <div class="section-label" id="countlabel" role="status" aria-live="polite">Explore by medicine group</div>
-    <div class="grid" id="grid" role="list"></div>
-    <div class="empty" id="empty" style="display:none">No medicine groups match that filter.</div>
+    <div class="tilegrid" id="grid" role="list"></div>
+    <p class="empty" id="empty" hidden>No medicine groups match that filter.</p>
   </div>
 
   <!-- ═══ VIEW 2 — by pharmacological class ═══ -->
   <div class="view" id="v-class" role="tabpanel" aria-labelledby="tab-class" tabindex="0">
-    <div class="search">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <label class="sr-only" for="qc">Search pharmacological drug classes</label>
-      <input id="qc" type="text" autocomplete="off" placeholder="Search a class — try &ldquo;beta-blocker&rdquo; or &ldquo;statin&rdquo;" oninput="renderClasses(this.value)">
+    <div style="padding-top:28px;max-width:640px">
+      <div class="search search--sm">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <label class="sr-only" for="qc">Search pharmacological drug classes</label>
+        <input id="qc" type="text" autocomplete="off" placeholder="Search a class &mdash; try &ldquo;beta-blocker&rdquo; or &ldquo;statin&rdquo;" oninput="renderClasses(this.value)">
+      </div>
     </div>
-    <div class="section-label" id="classcount" role="status" aria-live="polite">Pharmacological families</div>
+    <div class="countline">
+      <div class="meta" id="classcount" role="status" aria-live="polite">Pharmacological families</div>
+    </div>
     <div id="fams"></div>
-    <div class="empty" id="emptyc" style="display:none">No drug classes match that search.</div>
+    <p class="empty" id="emptyc" hidden>No drug classes match that search.</p>
   </div>
 
-  <!-- ═══ VIEW 3 — by condition / system ═══ -->
+  <!-- ═══ VIEW 3 — by condition ═══ -->
   <div class="view" id="v-cond" role="tabpanel" aria-labelledby="tab-cond" tabindex="0">
-    <div class="search">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <label class="sr-only" for="qs">Search conditions by name or body system</label>
-      <input id="qs" type="text" autocomplete="off" placeholder="Search a condition — try &ldquo;asthma&rdquo; or &ldquo;diabetes&rdquo;" oninput="renderSystems(this.value)">
+    <div style="padding-top:28px;max-width:640px">
+      <div class="search search--sm">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <label class="sr-only" for="qs">Search conditions by name or body system</label>
+        <input id="qs" type="text" autocomplete="off" placeholder="Search a condition &mdash; try &ldquo;asthma&rdquo; or &ldquo;diabetes&rdquo;" oninput="renderSystems(this.value)">
+      </div>
     </div>
-    <div class="section-label" id="condcount" role="status" aria-live="polite">Body systems &amp; the conditions within them</div>
+    <div class="countline">
+      <div class="meta" id="condcount" role="status" aria-live="polite">Body systems &amp; the conditions within them</div>
+    </div>
     <div id="systems"></div>
-    <div class="empty" id="emptys" style="display:none">No conditions match that search.</div>
+    <p class="empty" id="emptys" hidden>No conditions match that search.</p>
   </div>
+
+  <p class="meta" style="margin:56px 0 72px;max-width:820px;line-height:1.7;text-transform:none;letter-spacing:0;font-size:13.5px">
+    <b>Educational prototype &mdash; general information, not personal advice.</b> No brand names or doses are given by design; this explains <i>groups</i> and <i>classes</i> of medicines and how they're used. Mechanisms are simplified teaching models. Every entry needs physician sign-off and cited sources before public deployment. Always follow the specific instructions you were given.
+  </p>
+
 </main>
 
-<footer class="wrap foot">
-  <p><b>Educational prototype — general information, not personal advice.</b> No brand names or doses are given by design; this explains <i>groups</i> and <i>classes</i> of medicines and how they're used. Mechanisms are simplified teaching models. Every entry needs physician sign-off and cited sources before public deployment. Always follow the specific instructions you were given.</p>
+<footer class="footer">
+  <div class="shell wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-mark">Signal</div>
+        <p style="line-height:1.55;max-width:320px">Health, explained plainly. Educational information, not a substitute for your doctor.</p>
+      </div>
+      <div class="footer-col">
+        <div class="head">Read</div>
+        <a href="../symptoms/index.html">Symptoms</a>
+        <a href="../procedures/index.html">Procedures</a>
+        <a href="index.html">Medicines</a>
+        <a href="../a-z.html">Conditions A&ndash;Z</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Trust</div>
+        <a href="../index.html#how-it-works">How entries are reviewed</a>
+        <a href="../index.html#limits">What Signal can't do</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Project</div>
+        <a href="https://github.com/gopitherobot/signal-health">Source on GitHub</a>
+        <a href="https://github.com/gopitherobot/signal-health/blob/main/README.md">About this prototype</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; <span id="yr"></span> Signal Health &middot; educational prototype</span>
+      <span>If you think it's an emergency, call 112 or go to the nearest emergency department.</span>
+    </div>
+  </div>
 </footer>
-
-<div class="scrim" id="scrim" aria-hidden="true" onclick="if(event.target===this)close_()"><div class="sheet" id="sheet"></div></div>
 
 <script src="../data/medicines.js"></script>
 <script src="../data/classification.js"></script>
-<script src="../data/manifest.js"></script>
 <script src="../assets/icons.js"></script>
-<script src="../assets/signal.js"></script>
 <script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
 const MED = window.MEDICINES, PHARM = window.PHARM, SYS = window.SYSTEMS;
-const modeNames = {daily:"Take every day", when:"Take when needed", course:"Take as a course", mixed:"Depends on type"};
-const modeIcon  = {daily:"daily", when:"when", course:"course", mixed:"pill"};
+const modeNames = { daily: "Take every day", when: "Take when needed", course: "Take as a course", mixed: "Depends on type" };
 const hints = {
   rule : "Start here if you hold a strip of tablets and want to know whether it is safe to stop. Sorted by the one distinction that prevents the most harm.",
   class: "The pharmacological view: what kind of drug this is and the mechanism it works by. Families open to reveal the classes inside them.",
   cond : "The clinical view: pick the condition, and see which classes and medicine groups are used in it — and why more than one is often needed."
 };
-let curMode = 'all', curView = 'rule';
+let curMode = 'all';
 
-/* ── hero icons ── */
-['orb1','orb2','orb3'].forEach((id,i)=>{
-  document.getElementById(id).innerHTML = SignalIcon(['daily','when','course'][i], 40);
-});
-
-/* ── view switching with sliding indicator ── */
-function moveInd(){
-  const btn = document.querySelector('.axisbtn.active');
-  const ind = document.getElementById('axisind');
-  ind.style.width = btn.offsetWidth + 'px';
-  ind.style.transform = `translateX(${btn.offsetLeft - 7}px)`;
-  ind.classList.add('sig-slide');
-}
 function setView(v){
-  curView = v;
-  document.querySelectorAll('.axisbtn').forEach(b=>{
-    const on = b.dataset.v===v;
-    b.classList.toggle('active', on);
-    b.setAttribute('aria-selected', on);
-  });
-  document.querySelectorAll('.view').forEach(s=>s.classList.remove('on'));
-  document.getElementById('v-'+v).classList.add('on');
+  document.querySelectorAll('.axisbtn').forEach(b => b.setAttribute('aria-selected', b.dataset.v === v));
+  document.querySelectorAll('.view').forEach(s => s.classList.remove('on'));
+  document.getElementById('v-' + v).classList.add('on');
   document.getElementById('axishint').textContent = hints[v];
-  moveInd();
 }
-window.addEventListener('resize', moveInd);
 
 /* ═══ VIEW 1 — by rule ═══ */
 function renderMeds(){
-  const grid = document.getElementById('grid');
-  grid.innerHTML = '';
-  Object.entries(MED).forEach(([k,d],i)=>{
-    const b = document.createElement('button');
-    b.className = 'mtile sig-enter';
-    b.style.animationDelay = Math.min(i*22,320)+'ms';
-    b.dataset.name = (d.name+' '+d.cat+' '+d.mini+' '+d.syndrome).toLowerCase();
-    b.dataset.mode = d.mode;
-    b.setAttribute('role','listitem');
-    b.setAttribute('aria-label', d.name+' — '+modeNames[d.mode]+'. Open full explainer.');
-    b.onclick = ()=>openMed(k);
-    b.innerHTML = `<span class="rail ${d.mode}"></span>
-      <span class="ico">${SignalIcon(modeIcon[d.mode],26)}</span>
-      <div class="cat">${d.cat}</div><div class="nm">${d.name}</div>
-      <span class="modepill ${d.mode}">${modeNames[d.mode]}</span>
-      <div class="mini">${d.mini}</div>`;
-    grid.appendChild(b);
-  });
+  document.getElementById('grid').innerHTML = Object.entries(MED).map(([k, d]) => `
+    <a class="tile" role="listitem" href="entry.html?e=${encodeURIComponent(k)}"
+       data-name="${(d.name + ' ' + d.cat + ' ' + d.mini + ' ' + d.syndrome).toLowerCase().replace(/"/g,'')}"
+       data-mode="${d.mode}">
+      <span class="rail ${d.mode}" aria-hidden="true"></span>
+      <span class="tico" aria-hidden="true">${SignalIcon(d.mode === 'mixed' ? 'pill' : d.mode, 30)}</span>
+      <span class="meta">${d.cat}</span>
+      <span class="nm">${d.name}</span>
+      <span><span class="modepill ${d.mode}">${modeNames[d.mode]}</span></span>
+      <span class="mini">${d.mini}</span>
+    </a>`).join('');
   applyFilters();
 }
 function setMode(m){
   curMode = m;
-  document.querySelectorAll('.modebtn').forEach(b=>b.classList.toggle('active', b.dataset.m===m));
+  document.querySelectorAll('.modes .pill').forEach(b => b.classList.toggle('is-on', b.dataset.m === m));
   applyFilters();
 }
 function applyFilters(){
   const q = document.getElementById('q').value.trim().toLowerCase();
   let shown = 0;
-  document.querySelectorAll('.mtile').forEach(t=>{
-    const vis = (curMode==='all'||t.dataset.mode===curMode) && t.dataset.name.includes(q);
-    t.style.display = vis ? '' : 'none'; if(vis) shown++;
+  document.querySelectorAll('#grid .tile').forEach(t => {
+    const vis = (curMode === 'all' || t.dataset.mode === curMode) && t.dataset.name.includes(q);
+    t.style.display = vis ? '' : 'none';
+    if (vis) shown++;
   });
-  document.getElementById('empty').style.display = shown ? 'none' : 'block';
+  document.getElementById('empty').hidden = shown > 0;
   document.getElementById('countlabel').textContent =
-    curMode==='all' ? `Explore by medicine group — ${shown} shown`
-                    : `${modeNames[curMode]} — ${shown} group${shown===1?'':'s'}`;
+    curMode === 'all' ? `Explore by medicine group \u2014 ${shown} shown`
+                      : `${modeNames[curMode]} \u2014 ${shown} group${shown === 1 ? '' : 's'}`;
 }
 
 /* ═══ VIEW 2 — by pharmacological class ═══ */
 function renderClasses(q){
-  q = (q||'').trim().toLowerCase();
+  q = (q || '').trim().toLowerCase();
   const host = document.getElementById('fams');
   host.innerHTML = '';
   let total = 0, fams = 0;
-  Object.entries(PHARM).forEach(([fk,fam])=>{
-    const hits = Object.entries(fam.classes).filter(([ck,c])=>
-      !q || (c.name+' '+c.tag+' '+c.mech+' '+c.use+' '+fam.name).toLowerCase().includes(q));
-    if(!hits.length) return;
+
+  Object.entries(PHARM).forEach(([fk, fam]) => {
+    const hits = Object.entries(fam.classes).filter(([ck, c]) =>
+      !q || (c.name + ' ' + c.tag + ' ' + c.mech + ' ' + c.use + ' ' + fam.name).toLowerCase().includes(q));
+    if (!hits.length) return;
     total += hits.length; fams++;
-    const open = q ? 'open' : (fams===1 ? 'open' : '');
+
+    const open = q ? 'open' : (fams === 1 ? 'open' : '');
     const el = document.createElement('div');
-    el.className = 'fam sig-enter ' + open;
-    el.style.animationDelay = Math.min(fams*30,240)+'ms';
+    el.className = 'fam ' + open;
     el.innerHTML = `
-      <div class="famhead" role="button" tabindex="0" aria-expanded="${open?'true':'false'}" onclick="toggleFam(this)" onkeydown="famKey(event,this)">
-        <div class="famicon" aria-hidden="true">${SignalIcon(fam.icon,30)}</div>
-        <div class="famtext"><h3>${fam.name}</h3><p>${fam.blurb}</p></div>
-        <span class="famcount">${hits.length} class${hits.length===1?'':'es'}</span>
-        <svg class="chev" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      <div class="famhead" role="button" tabindex="0" aria-expanded="${open ? 'true' : 'false'}"
+           onclick="toggleFam(this)" onkeydown="famKey(event, this)">
+        <span class="famicon" aria-hidden="true">${SignalIcon(fam.icon, 34)}</span>
+        <span class="famtext"><h3>${fam.name}</h3><p>${fam.blurb}</p></span>
+        <span class="famcount">${hits.length} class${hits.length === 1 ? '' : 'es'}</span>
+        <svg class="chev" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
       </div>
       <div class="fambody"><div class="classgrid">${
-        hits.map(([ck,c])=>`
-          <button class="ctile" onclick="openClass('${fk}','${ck}')">
+        hits.map(([ck, c]) => {
+          const parent = MED[c.med];
+          return `<div class="ctile">
             <div class="ctag">${c.tag}</div>
             <div class="cnm">${c.name}</div>
             <div class="cmech">${c.mech}</div>
-            <div class="cfoot"><span class="minipill ${c.mode}">${modeNames[c.mode]}</span></div>
-          </button>`).join('')
+            <div class="cuse"><b>Used for:</b> ${c.use}</div>
+            <div class="cnote">${c.note}</div>
+            <div class="cfoot">
+              <span class="modepill ${c.mode}">${modeNames[c.mode]}</span>
+              ${parent ? `<a class="sig-rel-chip" href="entry.html?e=${encodeURIComponent(c.med)}">${parent.name} &rarr;</a>` : ''}
+            </div>
+          </div>`;
+        }).join('')
       }</div></div>`;
     host.appendChild(el);
   });
-  document.getElementById('emptyc').style.display = total ? 'none' : 'block';
+
+  document.getElementById('emptyc').hidden = total > 0;
   document.getElementById('classcount').textContent =
-    q ? `${total} class${total===1?'':'es'} matching` : `Pharmacological families — ${total} classes in ${fams} families`;
+    q ? `${total} class${total === 1 ? '' : 'es'} matching`
+      : `Pharmacological families \u2014 ${total} classes in ${fams} families`;
 }
 
 /* ═══ VIEW 3 — by condition ═══ */
 function renderSystems(q){
-  q = (q||'').trim().toLowerCase();
+  q = (q || '').trim().toLowerCase();
   const host = document.getElementById('systems');
   host.innerHTML = '';
   let total = 0, n = 0;
-  Object.entries(SYS).forEach(([sk,sys])=>{
-    const hits = sys.conditions.filter(c=>
-      !q || (c.name+' '+c.desc+' '+c.key+' '+sys.name).toLowerCase().includes(q));
-    if(!hits.length) return;
+
+  Object.entries(SYS).forEach(([sk, sys]) => {
+    const hits = sys.conditions.filter(c =>
+      !q || (c.name + ' ' + c.desc + ' ' + c.key + ' ' + sys.name).toLowerCase().includes(q));
+    if (!hits.length) return;
     total += hits.length; n++;
-    const open = q ? 'open' : (n===1 ? 'open' : '');
+
+    const open = q ? 'open' : (n === 1 ? 'open' : '');
     const el = document.createElement('div');
-    el.className = 'fam sig-enter ' + open;
-    el.style.animationDelay = Math.min(n*30,240)+'ms';
+    el.className = 'fam ' + open;
     el.innerHTML = `
-      <div class="famhead" role="button" tabindex="0" aria-expanded="${open?'true':'false'}" onclick="toggleFam(this)" onkeydown="famKey(event,this)">
-        <div class="famicon" aria-hidden="true">${SignalIcon(sys.icon,30)}</div>
-        <div class="famtext"><h3>${sys.name}</h3><p>${sys.blurb}</p></div>
-        <span class="famcount">${hits.length} condition${hits.length===1?'':'s'}</span>
-        <svg class="chev" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      <div class="famhead" role="button" tabindex="0" aria-expanded="${open ? 'true' : 'false'}"
+           onclick="toggleFam(this)" onkeydown="famKey(event, this)">
+        <span class="famicon" aria-hidden="true">${SignalIcon(sys.icon, 34)}</span>
+        <span class="famtext"><h3>${sys.name}</h3><p>${sys.blurb}</p></span>
+        <span class="famcount">${hits.length} condition${hits.length === 1 ? '' : 's'}</span>
+        <svg class="chev" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
       </div>
-      <div class="fambody">${hits.map(c=>`
+      <div class="fambody">${hits.map(c => `
         <div class="cond">
           <h4>${c.name}</h4>
           <div class="cdesc">${c.desc}</div>
           <div class="condkey"><b>Worth knowing:</b> ${c.key}</div>
           <div class="chiprow">
             <span class="chiplabel">Drug classes used</span>
-            ${c.classes.map(id=>{const f=findClass(id); return f
-              ? `<button class="chip" onclick="openClass('${f.fk}','${id}')">${f.c.name}</button>` : '';}).join('')}
+            ${c.classes.map(id => { const f = findClass(id); return f
+              ? `<button class="sig-rel-chip" type="button" onclick="showClass('${f.c.name.replace(/'/g, "\\'")}')">${f.c.name}</button>` : ''; }).join('')}
           </div>
           <div class="chiprow">
             <span class="chiplabel">Medicine groups on Signal</span>
-            ${c.meds.map(mk=>MED[mk]
-              ? `<button class="chip grp" onclick="openMed('${mk}')">${MED[mk].name} →</button>` : '').join('')}
+            ${c.meds.map(mk => MED[mk]
+              ? `<a class="sig-rel-chip" href="entry.html?e=${encodeURIComponent(mk)}">${MED[mk].name} &rarr;</a>` : '').join('')}
           </div>
         </div>`).join('')}</div>`;
     host.appendChild(el);
   });
-  document.getElementById('emptys').style.display = total ? 'none' : 'block';
+
+  document.getElementById('emptys').hidden = total > 0;
   document.getElementById('condcount').textContent =
-    q ? `${total} condition${total===1?'':'s'} matching` : `Body systems — ${total} conditions across ${n} systems`;
+    q ? `${total} condition${total === 1 ? '' : 's'} matching`
+      : `Body systems \u2014 ${total} conditions across ${n} systems`;
 }
+
 function findClass(id){
-  for(const [fk,fam] of Object.entries(PHARM)) if(fam.classes[id]) return {fk, c:fam.classes[id]};
+  for (const [fk, fam] of Object.entries(PHARM)) if (fam.classes[id]) return { fk, c: fam.classes[id] };
   return null;
 }
 
-/* ═══ modals ═══ */
-function ruleLabel(m){return {daily:"The rule · take every day",when:"The rule · take when needed",course:"The rule · take as a course",mixed:"The rule · it depends"}[m];}
+/* A class chip in the condition view jumps to that class in the drug-class view. */
+function showClass(name){
+  setView('class');
+  const input = document.getElementById('qc');
+  input.value = name;
+  renderClasses(name);
+  document.getElementById('v-class').scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
+
 function toggleFam(el){
   const open = el.parentNode.classList.toggle('open');
   el.setAttribute('aria-expanded', open);
 }
 function famKey(e, el){
-  if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleFam(el); }
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFam(el); }
 }
-function show(html, slug){
-  document.getElementById('sheet').innerHTML = html;
-  SignalModal.open(slug);
-}
-function openMed(k){
-  const d = MED[k];
-  const li = a => a.map(x=>`<li>${x}</li>`).join('');
-  /* which classes sit inside this group, and which conditions use it */
-  const inClasses = [];
-  Object.entries(PHARM).forEach(([fk,fam])=>Object.entries(fam.classes).forEach(([ck,c])=>{
-    if(c.med===k) inClasses.push(`<button class="chip" onclick="openClass('${fk}','${ck}')">${c.name}</button>`);}));
-  const inConds = [];
-  Object.values(SYS).forEach(s=>s.conditions.forEach(c=>{
-    if(c.meds.includes(k)) inConds.push(`<span class="chip" style="cursor:default">${c.name}</span>`);}));
-  show(`
-    <div class="sheet-head"><button class="x" onclick="close_()" aria-label="Close">&times;</button>
-      <div class="cat">${d.cat}</div><h2>${d.name}</h2>
-      <div class="rulebanner ${d.mode}">
-        <span class="rico">${SignalIcon(modeIcon[d.mode],30)}</span>
-        <div><div class="rl">${ruleLabel(d.mode)}</div><div class="rt">${d.rule}</div></div>
-      </div>
-    </div>
-    <div class="sheet-body">
-      <div class="blk"><p class="story">${d.story}</p></div>
-      <div class="blk"><div class="twocol">
-        <div class="infocard"><div class="ih">Why it's prescribed</div><div class="it">${d.why}</div></div>
-        <div class="infocard"><div class="ih">How it helps</div><div class="it">${d.how}</div></div>
-      </div></div>
-      ${inClasses.length?`<div class="blk"><h3>Drug classes within this group</h3><div class="chiprow">${inClasses.join('')}</div></div>`:''}
-      ${inConds.length?`<div class="blk"><h3>Conditions it's used in</h3><div class="chiprow">${inConds.join('')}</div></div>`:''}
-      <div class="blk"><h3>Where it's used</h3><div class="syn"><b>Conditions:</b> ${d.syndrome}<br><br><b>In practice:</b> ${d.examples}</div></div>
-      <div class="blk"><div class="mistakes"><div class="mh">Common — and sometimes dangerous — mistakes</div><ul>${li(d.mistakes)}</ul></div></div>
-      <div class="blk"><div class="flags"><div class="fh">When to seek advice</div><ul>${li(d.flags)}</ul></div></div>
-      <div class="blk"><div class="ask"><h4>Questions worth asking your doctor or pharmacist</h4><ul>${li(d.ask)}</ul></div></div>
-      ${SignalRelated(d,'medicines')}
-      ${SignalReview(d)}
-    </div>`, k);
-}
-function openClass(fk,ck){
-  const fam = PHARM[fk], c = fam.classes[ck], parent = MED[c.med];
-  const usedIn = [];
-  Object.values(SYS).forEach(s=>s.conditions.forEach(cd=>{
-    if(cd.classes.includes(ck)) usedIn.push(`<span class="chip" style="cursor:default">${cd.name}</span>`);}));
-  show(`
-    <div class="sheet-head"><button class="x" onclick="close_()" aria-label="Close">&times;</button>
-      <div class="cat">${fam.name} · ${c.tag}</div><h2>${c.name}</h2>
-      <div class="rulebanner ${c.mode}">
-        <span class="rico">${SignalIcon(modeIcon[c.mode],30)}</span>
-        <div><div class="rl">Typically · ${modeNames[c.mode].toLowerCase()}</div>
-        <div class="rt">This is the usual pattern for the class. <b>Your own prescription decides</b> — never change how you take something based on this page.</div></div>
-      </div>
-    </div>
-    <div class="sheet-body">
-      <div class="blk"><h3>How this class works</h3><p class="story">${c.mech}</p></div>
-      <div class="blk"><div class="twocol">
-        <div class="infocard"><div class="ih">What it's used for</div><div class="it">${c.use}</div></div>
-        <div class="infocard"><div class="ih">Worth knowing</div><div class="it">${c.note}</div></div>
-      </div></div>
-      ${usedIn.length?`<div class="blk"><h3>Conditions it appears in</h3><div class="chiprow">${usedIn.join('')}</div></div>`:''}
-      ${parent?`<div class="blk"><h3>The Signal group this belongs to</h3>
-        <div class="noteline">${parent.mini}
-        <div style="margin-top:12px"><button class="chip grp" onclick="openMed('${c.med}')">Open ${parent.name} →</button></div></div></div>`:''}
-      <div class="blk"><div class="mistakes sig-alert"><div class="mh">Remember</div>
-        <ul><li>Class names describe <i>how a medicine works</i> — they are not brand names, and no doses are given here.</li>
-        <li>Two medicines in the same class are not automatically interchangeable for you.</li>
-        <li>Never start, stop, swap or adjust anything based on this page.</li></ul></div></div>
-      ${SignalReview(window.CLASSIFICATION_REVIEW || {})}
-    </div>`);
-}
-function close_(){ SignalModal.close(); }
-
-/* lets shared.js open a sibling medicine group in place rather than reloading */
-window.SignalOpenLocal = openMed;
-
-document.addEventListener('keydown', e=>{if(e.key==='Escape')close_()});
 
 /* ── boot ── */
 renderMeds();
 renderClasses();
 renderSystems();
 document.getElementById('axishint').textContent = hints.rule;
-requestAnimationFrame(moveInd);
-SignalDeepLink(k=>!!MED[k], openMed);
+
+/* Deep links from Conditions A-Z arrive as ?view=cond&q=<condition name>. */
+(function () {
+  const p = new URLSearchParams(location.search);
+  const v = p.get('view');
+  const q = p.get('q') || '';
+  if (!['rule', 'class', 'cond'].includes(v)) return;
+  setView(v);
+  if (!q) return;
+  const box = { rule: 'q', class: 'qc', cond: 'qs' }[v];
+  const input = document.getElementById(box);
+  input.value = q;
+  if (v === 'rule') applyFilters();
+  if (v === 'class') renderClasses(q);
+  if (v === 'cond') renderSystems(q);
+})();
 </script>
 </body>
 </html>

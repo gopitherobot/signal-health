@@ -17,3 +17,6 @@ dist/
 
 # Local server / logs
 *.log
+
+# Design source archives — the unpacked folder is committed instead
+*.zip

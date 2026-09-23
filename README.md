@@ -18,7 +18,7 @@ The guiding idea: most health sites answer *"what could this be?"* Signal answer
 
 **Nothing in this repository has been signed off for public deployment yet.** Before any of this content goes live to real users, every entry needs:
 
-1. **Physician review and sign-off** — a named, qualified clinician accountable for each entry. This is now tracked in the data: every entry has `reviewedBy` / `lastReviewed`, and until `reviewedBy` is set the entry openly displays a **"Pending clinical review"** notice in its modal. As of today that is **all 84 entries**, plus the classification layer.
+1. **Physician review and sign-off** — a named, qualified clinician accountable for each entry. This is now tracked in the data: every entry has `reviewedBy` / `lastReviewed`, and until `reviewedBy` is set the entry openly displays a **"Pending clinical review"** notice on its page. As of today that is **all 84 entries**, plus the classification layer.
 2. **Cited clinical sources** — the frequency bands and risk descriptions here are *illustrative teaching devices*, deliberately qualitative ("common / uncommon / rare", "usually minor"), **not statistics**. A production version must replace these with sourced, referenced figures or keep them qualitative by explicit editorial policy.
 3. **A medico-legal review** — disclaimers, scope, and jurisdiction (this content leans India/South Asia-aware) should be checked by someone who understands the liability of publishing health information.
 
@@ -33,12 +33,16 @@ The persistent red banner, the "not a diagnosis" framing, and the footer disclai
 ```
 signal-health/
 ├── index.html              # Landing page + unified search across all three sections
+├── a-z.html                # Everything alphabetically — entries and conditions
 ├── symptoms/
-│   └── index.html          # Symptoms explorer (renders from ../data/symptoms.js)
+│   ├── index.html          # Tile grid (renders from ../data/symptoms.js)
+│   └── entry.html          # One full article, chosen by ?e=<slug>
 ├── procedures/
-│   └── index.html          # Procedures explainer (renders from ../data/procedures.js)
+│   ├── index.html          # Tile grid (renders from ../data/procedures.js)
+│   └── entry.html          # One full article, chosen by ?e=<slug>
 ├── medicines/
-│   └── index.html          # Medicines guide (renders from ../data/medicines.js)
+│   ├── index.html          # Three views (rule / class / condition)
+│   └── entry.html          # One full article, chosen by ?e=<slug>
 ├── data/
 │   ├── symptoms.js          # 30 symptom entries — window.SYMPTOMS
 │   ├── procedures.js        # 30 procedure entries — window.PROCEDURES
@@ -48,8 +52,8 @@ signal-health/
 ├── assets/
 │   ├── icons.js             # original animated SVG icon set — no third-party assets
 │   ├── anim.css             # shared keyframes; honours prefers-reduced-motion
-│   ├── shared.css           # review stamp, related block, focus styles
-│   └── signal.js            # review line, cross-links, accessible modal, deep links
+│   ├── theme.css            # the design system — tokens, chrome, components
+│   └── signal.js            # review stamp, cross-links, TOC, progress, read time
 ├── tools/
 │   ├── build-manifest.js    # regenerates data/manifest.js
 │   ├── sync-related.js      # mirrors `related` links; fails loudly on a bad slug
@@ -106,11 +110,17 @@ Every entry in all three sections begins with the same shared metadata:
 
 The two classification axes reference medicine keys and class ids rather than duplicating content, so all three views stay in sync from a single source of truth. Full schemas, invariants and safety rules are in [CLAUDE.md](CLAUDE.md).
 
+## Design
+
+One editorial system, in `assets/theme.css`: Instrument Serif for display, Geist for body and UI, Geist Mono for labels, on warm paper with a single rust accent. Sections are distinguished by an accent word rather than their own colour, which keeps the safety colours — green for *keep taking it*, amber for *only when needed*, rust for *act now* / *finish the course* — unambiguous wherever they appear.
+
+Every entry is a full article page with a reading-progress bar, a generated table of contents, and a rail carrying related links. Below 1200px the rail moves under the article rather than disappearing, because it is content.
+
 ## Accessibility
 
-Every page has a skip link, one `<main>` landmark, labelled search inputs, and live-region result counts. Modals are real dialogs: `role="dialog"`, Tab trapped inside, Escape to close, and focus returned to the tile that opened them. The medicines view switcher is a genuine tablist, and its collapsible headers are keyboard-operable. `prefers-reduced-motion: reduce` stops all motion, at both the icon and page level.
+Every page has a skip link, one `<main>` landmark, labelled search inputs, and live-region result counts. On phones the section nav becomes a scrollable row rather than hiding behind a menu, so nothing is unreachable. The medicines view switcher is a genuine tablist, and its collapsible headers are keyboard-operable. `prefers-reduced-motion: reduce` stops all motion, at both the icon and page level.
 
-Entries are individually addressable — `symptoms/index.html?e=chest` opens that entry directly — so a specific explainer can be linked or shared.
+Entries are individually addressable — `symptoms/entry.html?e=chest` is a real page — so an explainer can be linked, shared, bookmarked or printed. Each entry page carries print styles that drop the chrome and keep the content.
 
 ## Motion and imagery
 

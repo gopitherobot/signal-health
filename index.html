@@ -14,212 +14,312 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Signal · Health, explained plainly for everyone">
 <meta name="twitter:description" content="Signal explains symptoms, procedures and medicines in plain language — by how worried to be, what's changing inside you, and whether to keep taking a medicine or only when you have symptoms.">
-<meta name="theme-color" content="#f4f5f7">
+<meta name="theme-color" content="#F3EFE7">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/anim.css">
-<link rel="stylesheet" href="assets/shared.css">
+<link rel="stylesheet" href="assets/theme.css">
+
 <style>
-  :root{
-    --ink:#161d24;--ink-soft:#4a5560;--ink-faint:#7a8590;
-    --paper:#f4f5f7;--card:#ffffff;--line:#e1e5ea;
-    --accent:#33507e;--accent-bg:#e7ecf5;
-    --calm:#3f7d6e;--calm-bg:#e6f0ec;--deep:#33507e;--deep-bg:#e7ecf5;--plum:#6d4b86;--plum-bg:#efe8f4;
-    --shadow:0 1px 2px rgba(20,28,38,.04),0 10px 30px rgba(20,28,38,.08);
-    --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
-    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
-  .safety{background:#f7e4e0;border-bottom:1px solid #e6c9c3;color:#7a2a20;font-size:13.5px;padding:9px 24px;text-align:center;font-weight:500}
-  .safety b{font-weight:700}
-  header{padding:28px 0}
-  .brand{display:flex;align-items:baseline;gap:12px}
-  .mark{font-family:var(--serif);font-size:28px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
-  .mark .dot{color:var(--calm)}
-  .tag{font-size:13px;color:var(--ink-faint);font-weight:500}
-  .hero{padding:56px 0 30px;text-align:center;max-width:760px;margin:0 auto}
-  .hero h1{font-family:var(--serif);font-size:47px;line-height:1.1;font-weight:600;letter-spacing:-.02em}
-  .hero h1 em{font-style:italic;color:var(--calm)}
-  .hero p{margin:22px auto 0;font-size:19px;color:var(--ink-soft);max-width:620px}
-  .intro{margin:16px auto 0;font-size:15px;color:var(--ink-faint);max-width:560px}
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:36px 0 24px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 24px;text-decoration:none;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s;position:relative;overflow:hidden;display:flex;flex-direction:column}
-  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-  .card .accent{position:absolute;left:0;top:0;right:0;height:5px}
-  .card.sym .accent{background:var(--calm)}.card.sym:hover{border-color:var(--calm)}
-  .card.proc .accent{background:var(--deep)}.card.proc:hover{border-color:var(--deep)}
-  .card.med .accent{background:var(--plum)}.card.med:hover{border-color:var(--plum)}
-  .icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;transition:transform .2s}
-  .card:hover .icon{transform:scale(1.07)}
-  .card.sym .icon{background:var(--calm-bg)}.card.proc .icon{background:var(--deep-bg)}.card.med .icon{background:var(--plum-bg)}
-  .icon svg{width:30px;height:30px}
-  .card.sym .icon{color:var(--calm)}.card.proc .icon{color:var(--deep)}.card.med .icon{color:var(--plum)}
-  .card .kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
-  .card.sym .kicker{color:var(--calm)}.card.proc .kicker{color:var(--deep)}.card.med .kicker{color:var(--plum)}
-  .card h2{font-family:var(--serif);font-size:25px;font-weight:600;margin-top:7px;line-height:1.15}
-  .card .q{margin-top:12px;font-size:14px;color:var(--ink);font-weight:600;font-style:italic}
-  .card p{margin-top:8px;font-size:14px;color:var(--ink-soft);flex:1}
-  .card .go{margin-top:18px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
-  .card.sym .go{color:var(--calm)}.card.proc .go{color:var(--deep)}.card.med .go{color:var(--plum)}
-  .count{margin-top:4px;font-size:12.5px;color:var(--ink-faint)}
-  .principles{padding:26px 0 60px}
-  .principles h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:20px;text-align:center}
-  .prow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .p{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 20px}
-  .p .pt{font-family:var(--serif);font-size:18px;font-weight:600;margin-bottom:6px}
-  .p .pd{font-size:14px;color:var(--ink-soft)}
-  .foot{border-top:1px solid var(--line);padding:30px 0 70px;font-size:13px;color:var(--ink-faint);max-width:700px;margin:0 auto;text-align:center}
-  .foot b{color:var(--ink-soft)}
-  @media(max-width:760px){.hero h1{font-size:37px}.cards{grid-template-columns:1fr}.prow{grid-template-columns:1fr}}
-  /* ───────────── unified search across all three sections ───────────── */
-  .usearch{position:relative;max-width:620px;margin:40px auto 0}
-  .usearch svg{position:absolute;left:20px;top:50%;transform:translateY(-50%);
-    width:19px;height:19px;stroke:var(--ink-faint);fill:none;pointer-events:none}
-  .usearch input{width:100%;box-sizing:border-box;padding:17px 20px 17px 52px;
-    font:400 16px/1 var(--sans);color:var(--ink);background:var(--card);
-    border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
-    transition:border-color .16s ease,box-shadow .16s ease}
-  .usearch input::placeholder{color:var(--ink-faint)}
-  .usearch input:focus{outline:none;border-color:var(--deep);
-    box-shadow:0 0 0 4px var(--deep-bg),var(--shadow)}
-  .usearch input:focus-visible{outline:none}
+  /* ── landing-only layout ── */
+  .hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 64px; padding-top: 72px; padding-bottom: 80px; }
+  .hero h1 { font-size: 112px; line-height: 0.95; letter-spacing: -0.025em; }
+  .hero h1 em { font-style: italic; color: var(--rust); }
+  .hero .stand { font-size: 20px; line-height: 1.5; color: var(--ink-muted); max-width: 600px; }
+  .asking { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 14px; }
+  .asking .lbl { color: var(--ink-faint); padding: 10px 0; }
 
-  .uhint{max-width:620px;margin:11px auto 0;text-align:center;
-    font:400 13px/1.5 var(--sans);color:var(--ink-faint)}
+  .feature { align-self: start; overflow: hidden; padding: 0; gap: 0; }
+  .feature .art { position: relative; height: 300px; background: var(--warm-deep); display: flex; align-items: flex-end; justify-content: flex-end; padding: 20px; }
+  .feature .art svg.trace { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .feature .art .tag { position: relative; padding: 8px 14px; border-radius: 16px; background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 500; }
+  .feature .body { padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 14px; }
+  .feature .ttl { font-family: var(--display); font-size: 38px; line-height: 1.05; }
 
-  .uresults{max-width:620px;margin:18px auto 0;display:flex;flex-direction:column;gap:8px}
-  .ures{display:flex;gap:14px;align-items:flex-start;text-decoration:none;
-    background:var(--card);border:1px solid var(--line);border-radius:13px;
-    padding:14px 16px;transition:border-color .14s ease,transform .14s ease,box-shadow .14s ease}
-  .ures:hover,.ures.sel{border-color:var(--ink-faint);transform:translateY(-1px);box-shadow:var(--shadow)}
-  .usec{flex:none;font:600 10.5px/1.4 var(--sans);letter-spacing:.09em;text-transform:uppercase;
-    padding:5px 9px;border-radius:6px;margin-top:2px;min-width:74px;text-align:center}
-  .usec.symptoms{color:var(--calm);background:var(--calm-bg)}
-  .usec.procedures{color:var(--deep);background:var(--deep-bg)}
-  .usec.medicines{color:var(--plum);background:var(--plum-bg)}
-  .un{display:block;font:600 16px/1.3 var(--serif);color:var(--ink)}
-  .uc{display:block;font:500 11px/1.5 var(--sans);letter-spacing:.06em;text-transform:uppercase;
-    color:var(--ink-faint);margin-top:3px}
-  .um{display:block;font:400 13.5px/1.55 var(--sans);color:var(--ink-soft);margin-top:6px}
-  .unone{text-align:center;padding:26px 16px;font:400 15px/1.6 var(--sans);color:var(--ink-faint)}
+  /* unified search results */
+  .results { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+  .ures { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); transition: border-color .14s ease, transform .14s ease; }
+  .ures:hover, .ures.sel { border-color: var(--ink); transform: translateY(-1px); color: inherit; }
+  .usec { flex: none; min-width: 78px; text-align: center; padding: 5px 9px; margin-top: 2px; border-radius: 6px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; }
+  .usec.symptoms  { background: var(--rust-bg);  color: var(--rust-deep); }
+  .usec.procedures{ background: var(--warm);     color: var(--ink-muted); }
+  .usec.medicines { background: var(--green-bg); color: var(--green); }
+  .un { display: block; font-family: var(--display); font-size: 21px; line-height: 1.2; }
+  .uc { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); margin-top: 4px; }
+  .um { display: block; font-size: 13.5px; line-height: 1.55; color: var(--ink-muted); margin-top: 6px; }
 
-  @media (max-width:560px){
-    .ures{flex-direction:column;gap:9px}
-    .usec{min-width:0;align-self:flex-start}
+  .procband { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
+  .procband h2 em { font-style: italic; color: var(--green-light); }
+  .procband p { font-size: 18px; line-height: 1.55; color: var(--green-pale); max-width: 560px; }
+
+  .works { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .works .w { display: flex; flex-direction: column; gap: 12px; padding: 30px 32px; border-radius: var(--r-block); background: var(--card); border: 1px solid var(--line); }
+  .works .wt { font-family: var(--display); font-size: 30px; line-height: 1.1; }
+  .works .wd { font-size: 15.5px; line-height: 1.6; color: var(--ink-muted); }
+
+  @media (max-width: 1200px) { .hero h1 { font-size: 84px; } }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 40px; padding-bottom: 48px; }
+    .hero h1 { font-size: 44px; line-height: 1.02; }
+    .hero .stand { font-size: 17px; }
+    .feature .art { height: 200px; }
+    .feature .ttl { font-size: 28px; }
+    .procband { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .works { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
 </head>
 <body>
 <a class="sig-skip" href="#main">Skip to the main content</a>
-<div class="safety"><b>Signal is educational, not a doctor.</b> It never diagnoses, and never tells you to start or stop treatment. If something feels severe or sudden, contact emergency services now.</div>
-<header><div class="wrap brand">
-  <span class="mark">Signal<span class="dot">.</span></span>
-  <span class="tag">health, explained plainly</span>
-</div></header>
-<main class="wrap" id="main">
-  <section class="hero">
-    <h1>Understand your health — not just <em>Google</em> your fear.</h1>
-    <p>Three plain-language guides for everyday health, each built around the question you actually have — not a wall of jargon.</p>
-    <p class="intro">Written with the Indian and South Asian context in mind, for the most common problems people face.</p>
+
+<!-- Utility bar — the emergency line is always the first thing on the page -->
+<div class="utility">
+  <div class="shell wrap">
+    <div>EDUCATIONAL, NOT A DOCTOR &middot; IN AN EMERGENCY CALL 112</div>
+    <div class="utility-links">
+      <a href="#how-it-works">How entries are reviewed</a>
+      <a href="#limits">What Signal can't do</a>
+    </div>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="shell wrap">
+    <a href="index.html" class="mark" aria-label="Signal — home">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15h6l3-8 5 16 4-11 2 3h6"/></svg>
+      Signal
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="symptoms/index.html">Symptoms</a>
+      <a href="procedures/index.html">Procedures</a>
+      <a href="medicines/index.html">Medicines</a>
+      <a href="a-z.html">Conditions A&ndash;Z</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn--dark btn--sm" href="#search">Search everything</a>
+    </div>
+  </div>
+</header>
+
+<div class="safety">
+  <div class="shell wrap"><b>Signal is educational, not a doctor.</b> It never diagnoses, and never tells you to start or stop treatment. If something feels severe or sudden, contact emergency services now.</div>
+</div>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="shell wrap hero">
+    <div class="stack gap-28">
+      <div class="eyebrow"><span class="dot">&#9679;</span> Health, explained plainly</div>
+      <h1>Understand your health. <em>Don't just Google your fear.</em></h1>
+      <p class="stand">Plain-language answers to the questions people actually arrive with &mdash; how worried to be, what a procedure does to your body, and whether to keep taking a medicine or only when you have symptoms.</p>
+
+      <div id="search">
+        <div class="search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <label class="sr-only" for="uq">Search all of Signal — symptoms, procedures and medicines</label>
+          <input id="uq" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="uresults"
+                 placeholder="Search a symptom, a procedure or a medicine">
+        </div>
+        <p class="meta" id="uhint" role="status" aria-live="polite" style="margin-top:11px"></p>
+        <div class="results" id="uresults" role="listbox" aria-label="Search results" hidden></div>
+      </div>
+
+      <div class="asking" id="asking">
+        <span class="lbl">People are asking:</span>
+        <a class="pill" href="symptoms/entry.html?e=chest">Chest pain after exercise</a>
+        <a class="pill" href="medicines/entry.html?e=bp">Is my BP too high?</a>
+        <a class="pill" href="procedures/entry.html?e=csection">Before a C-section</a>
+        <a class="pill" href="medicines/entry.html?e=antibiotic">Antibiotics for a cold?</a>
+      </div>
+    </div>
+
+    <!-- Featured entry — a real one, chosen for how much harm the misunderstanding causes -->
+    <a class="card feature" href="medicines/entry.html?e=antitb">
+      <div class="art">
+        <svg class="trace" viewBox="0 0 520 300" preserveAspectRatio="none" fill="none" stroke="#C43E17" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M0 180h140l30-80 45 150 40-105 24 35h241"/></svg>
+        <span class="tag">Start here</span>
+      </div>
+      <div class="body">
+        <div class="meta">Medicines &middot; Take as a course</div>
+        <div class="ttl">You feel well within weeks. The treatment runs for months.</div>
+        <p class="card-body">Why finishing a TB course matters more than almost any other instruction in medicine &mdash; and what stopping early actually creates.</p>
+        <div class="sig-review pending" style="margin-top:4px">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span><b>Pending clinical review</b></span>
+        </div>
+      </div>
+    </a>
   </section>
 
-  <div class="usearch">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-    <label class="sr-only" for="uq">Search all of Signal — symptoms, procedures and medicines</label>
-    <input id="uq" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="uresults"
-           placeholder="Search everything — a symptom, a procedure, a medicine">
-  </div>
-  <p class="uhint" id="uhint">One search across all three sections &mdash; 56 entries.</p>
-  <div class="uresults" id="uresults" role="listbox" aria-label="Search results" hidden></div>
+  <!-- Three pillars -->
+  <section class="shell wrap band--tight stack gap-36">
+    <div class="row-between">
+      <h2 class="h-section">Start with your question</h2>
+      <a href="a-z.html" style="font-size:15px;font-weight:500;border-bottom:1.5px solid var(--ink);padding-bottom:2px">Browse everything A&ndash;Z &rarr;</a>
+    </div>
+    <div class="grid-3">
 
-  <div class="cards" id="cards">
-    <a href="symptoms/index.html" class="card sym">
-      <span class="accent"></span>
-      <div class="icon" id="ic-sym"></div>
-      <div class="kicker">Symptoms</div>
-      <h2>By urgency</h2>
-      <div class="q">&ldquo;How worried should I be?&rdquo;</div>
-      <p>Common symptoms sorted by real urgency — what's usually harmless, what's worth checking, and the red flags that mean act now.</p>
-      <span class="go">Explore symptoms &rarr;</span>
-      <span class="count" id="c-sym"></span>
-    </a>
+      <a class="card card--dark" href="symptoms/index.html">
+        <div class="eyebrow" style="color:var(--rust-light)">01 &middot; Symptoms</div>
+        <div class="card-title">How worried should I be?</div>
+        <p class="card-body">Common symptoms sorted by real urgency &mdash; what's usually harmless, what's worth checking, and the red flags that mean act now.</p>
+        <div class="card-foot">
+          <span class="chip chip--calm">Usually fine</span>
+          <span class="chip chip--watch">Get it checked</span>
+          <span class="chip chip--now">Act now</span>
+        </div>
+        <div class="meta" style="color:var(--on-dark)" id="n-sym"></div>
+      </a>
 
-    <a href="procedures/index.html" class="card proc">
-      <span class="accent"></span>
-      <div class="icon" id="ic-proc"></div>
-      <div class="kicker">Procedures</div>
-      <h2>From the inside</h2>
-      <div class="q">&ldquo;What will it do to my body?&rdquo;</div>
-      <p>Common procedures explained across structure, function and chemistry — flip between before and after to see the whole picture.</p>
-      <span class="go">Explore procedures &rarr;</span>
-      <span class="count" id="c-proc"></span>
-    </a>
+      <a class="card" href="procedures/index.html">
+        <div class="eyebrow">02 &middot; Procedures</div>
+        <div class="card-title">What will it do to my body?</div>
+        <p class="card-body">Common procedures explained across structure, function and chemistry &mdash; flip between before and after to see the whole picture.</p>
+        <div class="card-foot">
+          <span class="toggle" aria-hidden="true"><button type="button" class="on" tabindex="-1" style="background:var(--ink);color:var(--paper)">Before</button><button type="button" tabindex="-1">After</button></span>
+        </div>
+        <div class="meta" id="n-proc"></div>
+      </a>
 
-    <a href="medicines/index.html" class="card med">
-      <span class="accent"></span>
-      <div class="icon" id="ic-med"></div>
-      <div class="kicker">Medicines</div>
-      <h2>Keep taking, or not?</h2>
-      <div class="q">&ldquo;Every day, or only when I have symptoms?&rdquo;</div>
-      <p>Explore three ways: by whether to take it every day, when needed or as a course; by pharmacological drug class; or by the condition being treated.</p>
-      <span class="go">Explore medicines &rarr;</span>
-      <span class="count" id="c-med"></span>
-    </a>
-  </div>
+      <a class="card card--green" href="medicines/index.html">
+        <div class="eyebrow" style="color:var(--green-light)">03 &middot; Medicines</div>
+        <div class="card-title">Every day, or only when I need it?</div>
+        <p class="card-body">Find a medicine three ways &mdash; by how you take it, by drug class, or by the condition it treats.</p>
+        <div class="card-foot">
+          <span class="chip chip--outline">Daily</span>
+          <span class="chip chip--outline">As needed</span>
+          <span class="chip chip--outline">A course</span>
+        </div>
+        <div class="meta" style="color:var(--green-pale)" id="n-med"></div>
+      </a>
 
-  <section class="principles">
-    <h3>What makes Signal different</h3>
-    <div class="prow">
-      <div class="p"><div class="pt">The real question first</div><div class="pd">Each section leads with what you actually came to ask — how worried to be, what changes inside you, whether to keep taking something.</div></div>
-      <div class="p"><div class="pt">Honest about uncertainty</div><div class="pd">Relative descriptions, not invented numbers. Clear red flags. And a standing reminder that a website can't examine you or replace your doctor.</div></div>
-      <div class="p"><div class="pt">Built to prevent harm</div><div class="pd">Especially in medicines — the goal is to stop the dangerous, common habit of quitting a preventive treatment because you feel fine.</div></div>
     </div>
   </section>
+
+  <!-- Before your procedure -->
+  <section class="band band--green">
+    <div class="shell wrap procband">
+      <div class="stack gap-24">
+        <div class="eyebrow" style="color:var(--green-light)"><span class="dot" style="color:var(--green-light)">&#9679;</span> Before your procedure</div>
+        <h2 class="h-section">Signing a consent form you don't fully understand? <em>Start here.</em></h2>
+        <p>Every procedure on Signal answers the four things a consent conversation should cover &mdash; and gives you the questions worth asking before you sign.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <a class="btn btn--light" href="procedures/index.html">Browse procedures</a>
+          <a class="btn btn--on-green" href="procedures/entry.html?e=ga">Start with anaesthesia</a>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><span class="t">What will happen, step by step</span></div>
+        <div class="step"><span class="n">2</span><span class="t">Risks &mdash; common, rare and serious</span></div>
+        <div class="step"><span class="n">3</span><span class="t">What actually changes inside your body</span></div>
+        <div class="step"><span class="n">4</span><span class="t">Questions to ask before you sign</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="band band--card" id="how-it-works">
+    <div class="shell wrap stack gap-36">
+      <div class="stack gap-12">
+        <div class="eyebrow"><span class="dot">&#9679;</span> How Signal works</div>
+        <h2 class="h-section">Honest about what we know</h2>
+      </div>
+      <div class="works">
+        <div class="w" id="reviewed">
+          <div class="wt">Every entry is stamped</div>
+          <p class="wd">Each entry carries the name of the clinician who reviewed it and the date they did. Until that happens, the entry says so on its face &mdash; no entry quietly passes itself off as checked.</p>
+        </div>
+        <div class="w">
+          <div class="wt">No invented numbers</div>
+          <p class="wd">Frequency and risk are described in relative terms &mdash; common, uncommon, rare. We would rather say &ldquo;uncommon&rdquo; honestly than quote a precise-sounding figure we cannot source.</p>
+        </div>
+        <div class="w" id="limits">
+          <div class="wt">A website can't examine you</div>
+          <p class="wd">Signal explains. It does not diagnose, and it never tells you to start or stop a treatment. Every entry names the signs that mean stop reading and seek care.</p>
+        </div>
+      </div>
+      <div class="promise">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+        <span><strong>Where this stands today:</strong> Signal is an educational prototype. <span id="review-status">No entry has been signed off by a named clinician yet</span>, and every one of them says so when you open it. Nothing here is a substitute for care from your own doctor.</span>
+      </div>
+    </div>
+  </section>
+
 </main>
-<footer class="foot">
-  <p><b>Educational prototype — not yet for public use.</b> Every entry requires physician sign-off and cited clinical sources before deployment. Descriptions of frequency, risk and medicine use are illustrative teaching devices — not statistics, and not medical advice. Always follow the specific guidance you were given by your own clinician.</p>
+
+<footer class="footer">
+  <div class="shell wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-mark">Signal</div>
+        <p style="line-height:1.55;max-width:320px">Health, explained plainly. Educational information, not a substitute for your doctor.</p>
+      </div>
+      <div class="footer-col">
+        <div class="head">Read</div>
+        <a href="symptoms/index.html">Symptoms</a>
+        <a href="procedures/index.html">Procedures</a>
+        <a href="medicines/index.html">Medicines</a>
+        <a href="a-z.html">Conditions A&ndash;Z</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Trust</div>
+        <a href="#how-it-works">How entries are reviewed</a>
+        <a href="#limits">What Signal can't do</a>
+        <a href="#reviewed">Our review policy</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Project</div>
+        <a href="https://github.com/gopitherobot/signal-health">Source on GitHub</a>
+        <a href="https://github.com/gopitherobot/signal-health/blob/main/README.md">About this prototype</a>
+        <a href="https://github.com/gopitherobot/signal-health/blob/main/LICENSE">License</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; <span id="yr"></span> Signal Health &middot; educational prototype</span>
+      <span>If you think it's an emergency, call 112 or go to the nearest emergency department.</span>
+    </div>
+  </div>
 </footer>
+
 <script src="data/manifest.js"></script>
-<script src="assets/icons.js"></script>
 <script>
-  document.getElementById('ic-sym').innerHTML  = SignalIcon('heart', 30);
-  document.getElementById('ic-proc').innerHTML = SignalIcon('scan', 30);
-  document.getElementById('ic-med').innerHTML  = SignalIcon('pill', 30);
+  document.getElementById('yr').textContent = new Date().getFullYear();
 
   /* Counts come from the generated manifest so they can never go stale. */
-  (function(){
+  (function () {
     const c = window.SIGNAL_COUNTS || {};
-    document.getElementById('c-sym').textContent  = `${c.symptoms} symptoms`;
-    document.getElementById('c-proc').textContent = `${c.procedures} procedures`;
-    document.getElementById('c-med').textContent  =
+    document.getElementById('n-sym').textContent  = `${c.symptoms} symptoms`;
+    document.getElementById('n-proc').textContent = `${c.procedures} procedures`;
+    document.getElementById('n-med').textContent  =
       `${c.medicines} groups · ${c.classes} drug classes · ${c.conditions} conditions`;
   })();
 
   /* ───────────── unified search ─────────────
-   * Searches all three sections from the generated manifest (data/manifest.js),
-   * so the landing page stays light instead of loading every data file.
-   * Selecting a result deep-links straight into that entry's modal.
+   * Searches all three sections from the generated manifest, so the landing
+   * page stays light instead of loading every data file. Selecting a result
+   * goes straight to that entry's page.
    */
-  (function(){
+  (function () {
     const INDEX   = window.SIGNAL_INDEX || [];
-    const LABEL   = { symptoms:'Symptom', procedures:'Procedure', medicines:'Medicine' };
+    const LABEL   = { symptoms: 'Symptom', procedures: 'Procedure', medicines: 'Medicine' };
     const input   = document.getElementById('uq');
     const results = document.getElementById('uresults');
     const hint    = document.getElementById('uhint');
-    const cards   = document.getElementById('cards');
-    const princ   = document.querySelector('.principles');
-    const MAX     = 12;
+    const asking  = document.getElementById('asking');
+    const MAX     = 10;
     let sel = -1;
 
-    document.getElementById('uhint').textContent =
-      `One search across all three sections — ${INDEX.length} entries.`;
+    const idle = () => `Searches all three sections — ${INDEX.length} entries`;
+    hint.textContent = idle();
 
-    function esc(s){ return String(s).replace(/[&<>"]/g, c =>
-      ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-    /* Rank: a name that starts with the query beats one that merely contains it,
-       which in turn beats a match found only in the category or the hook. */
-    function score(r, q){
+    /* Rank: a name that starts with the query beats one that merely contains
+       it, which beats a match found only in the category or the hook. */
+    function score(r, q) {
       const n = r.n.toLowerCase();
       if (n.startsWith(q)) return 0;
       if (n.includes(q))   return 1;
@@ -228,70 +328,71 @@
       return -1;
     }
 
-    function search(q){
+    function search(q) {
       q = q.trim().toLowerCase();
-      if (!q){ reset(); return; }
+      if (!q) { reset(); return; }
 
       const hits = INDEX
         .map(r => ({ r, s: score(r, q) }))
         .filter(x => x.s >= 0)
-        .sort((a,b) => a.s - b.s || a.r.n.localeCompare(b.r.n))
+        .sort((a, b) => a.s - b.s || a.r.n.localeCompare(b.r.n))
         .slice(0, MAX);
 
-      cards.style.display = 'none';
-      if (princ) princ.style.display = 'none';
       results.hidden = false;
-      input.setAttribute('aria-expanded','true');
+      asking.style.display = 'none';
+      input.setAttribute('aria-expanded', 'true');
       sel = -1;
 
-      if (!hits.length){
-        results.innerHTML = '<p class="unone">Nothing on Signal matches that yet. ' +
-          'Try a plainer word — &ldquo;cough&rdquo;, &ldquo;scan&rdquo;, &ldquo;inhaler&rdquo;.</p>';
-        hint.textContent = '';   /* the empty-state line below already says it */
+      if (!hits.length) {
+        results.innerHTML = '<p class="empty">Nothing on Signal matches that yet. Try a plainer word &mdash; &ldquo;cough&rdquo;, &ldquo;scan&rdquo;, &ldquo;inhaler&rdquo;.</p>';
+        hint.textContent = '';
         return;
       }
 
-      results.innerHTML = hits.map(({r}) =>
-        `<a class="ures" role="option" aria-selected="false" href="${r.s}/index.html?e=${encodeURIComponent(r.k)}">
+      results.innerHTML = hits.map(({ r }) =>
+        `<a class="ures" role="option" aria-selected="false" href="${r.s}/entry.html?e=${encodeURIComponent(r.k)}">
            <span class="usec ${r.s}">${LABEL[r.s]}</span>
-           <span class="utext"><span class="un">${esc(r.n)}</span><span class="uc">${esc(r.c)}</span><span class="um">${esc(r.m)}</span></span>
+           <span><span class="un">${esc(r.n)}</span><span class="uc">${esc(r.c)}</span><span class="um">${esc(r.m)}</span></span>
          </a>`).join('');
 
-      hint.textContent = `${hits.length} match${hits.length===1?'':'es'}` +
-        (hits.length === MAX ? ' (showing the closest ' + MAX + ')' : '');
+      hint.textContent = `${hits.length} match${hits.length === 1 ? '' : 'es'}` +
+        (hits.length === MAX ? ` (closest ${MAX})` : '');
     }
 
-    function reset(){
+    function reset() {
       results.hidden = true;
       results.innerHTML = '';
-      input.setAttribute('aria-expanded','false');
-      cards.style.display = '';
-      if (princ) princ.style.display = '';
-      hint.textContent = `One search across all three sections — ${INDEX.length} entries.`;
+      asking.style.display = '';
+      input.setAttribute('aria-expanded', 'false');
+      hint.textContent = idle();
       sel = -1;
     }
 
     /* Arrow keys move through results; Enter opens the highlighted one. */
-    function move(step){
+    function move(step) {
       const items = results.querySelectorAll('.ures');
       if (!items.length) return;
-      if (sel >= 0) { items[sel].classList.remove('sel'); items[sel].setAttribute('aria-selected','false'); }
+      if (sel >= 0) { items[sel].classList.remove('sel'); items[sel].setAttribute('aria-selected', 'false'); }
       sel = (sel + step + items.length) % items.length;
       items[sel].classList.add('sel');
-      items[sel].setAttribute('aria-selected','true');
-      items[sel].scrollIntoView({ block:'nearest' });
+      items[sel].setAttribute('aria-selected', 'true');
+      items[sel].scrollIntoView({ block: 'nearest' });
     }
 
     input.addEventListener('input', e => search(e.target.value));
     input.addEventListener('keydown', e => {
-      if (e.key === 'ArrowDown'){ e.preventDefault(); move(1); }
-      else if (e.key === 'ArrowUp'){ e.preventDefault(); move(-1); }
-      else if (e.key === 'Enter'){
+      if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+      else if (e.key === 'Enter') {
         const items = results.querySelectorAll('.ures');
         const target = sel >= 0 ? items[sel] : items[0];
-        if (target){ e.preventDefault(); location.href = target.href; }
+        if (target) { e.preventDefault(); location.href = target.href; }
       }
-      else if (e.key === 'Escape'){ input.value = ''; reset(); }
+      else if (e.key === 'Escape') { input.value = ''; reset(); }
+    });
+
+    document.querySelector('a[href="#search"]').addEventListener('click', () => {
+      setTimeout(() => input.focus(), 60);
     });
   })();
 </script>
