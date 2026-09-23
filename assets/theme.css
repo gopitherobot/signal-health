@@ -587,7 +587,8 @@ a.card--dark:hover, a.card--green:hover { border-color: currentColor; }
 .region { padding: 24px 28px; border-radius: var(--r-soft); background: var(--warm); font-size: 16.5px; line-height: 1.6; color: var(--ink-body); }
 .region .rn { margin-top: 12px; font-size: 14px; font-style: italic; color: var(--ink-faint); }
 
-/* Clinical review stamp — two honest states. */
+/* Authorship + educational-use stamp. Calm, not alarming: it states who
+   wrote the entry and that it does not replace the reader's own doctor. */
 .sig-review {
   display: flex; gap: 12px; align-items: flex-start;
   padding: 16px 20px; border-radius: 16px;
@@ -595,8 +596,10 @@ a.card--dark:hover, a.card--green:hover { border-color: currentColor; }
 }
 .sig-review svg { width: 18px; height: 18px; flex: none; margin-top: 1px; stroke: currentColor; fill: none; }
 .sig-review b { font-weight: 600; }
-.sig-review.pending { background: var(--watch-bg); border-color: #E3D2AB; color: #6E5116; }
-.sig-review.done    { background: var(--green-bg); border-color: #BCD9CC; color: var(--green); }
+.sig-review.authored { background: var(--green-bg); border-color: #BCD9CC; color: var(--green); }
+/* retained so an older cached page still renders sensibly */
+.sig-review.pending  { background: var(--warm);     border-color: var(--line); color: var(--ink-muted); }
+.sig-review.done     { background: var(--green-bg); border-color: #BCD9CC; color: var(--green); }
 
 /* Cross-section related links. */
 .sig-rel { display: flex; flex-direction: column; }

@@ -4,7 +4,7 @@
 // This is a CONCEPTS layer, not a drug index: no brand names, no doses. It exists to
 // correct the single most dangerous public misunderstanding — stopping a preventive
 // medicine because you "feel fine".
-// Every entry needs physician sign-off before any public deployment. Nothing here is
+// Authored by the named clinician in data/editorial.js. Nothing here is
 // individual advice; a person's own doctor's instructions always override it.
 // mode: 'daily' | 'when' | 'course' | 'mixed'
 

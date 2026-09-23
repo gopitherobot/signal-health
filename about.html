@@ -116,7 +116,7 @@
     <div class="mh-label">About Signal</div>
     <h1 class="mh-name">Who writes this</h1>
     <p class="mh-kicker">And on what authority?</p>
-    <p class="mh-intro">On a health site that is a fair question, and it deserves a direct answer rather than a page of mission statements. Signal is written and edited by one named clinician, and every entry says plainly whether it has been independently reviewed yet.</p>
+    <p class="mh-intro">On a health site that is a fair question, and it deserves a direct answer rather than a page of mission statements. Signal is written and edited by one named, practising clinician &mdash; and it is educational information, not a replacement for the doctor who is actually looking after you.</p>
   </section>
 
   <!-- ── The author ── -->
@@ -193,8 +193,8 @@
         <div class="rv">Dr. Gopi Krishnan Palanivel, MD (Anaesthesia), MBA (Healthcare &amp; Hospital Management) &mdash; specialist anaesthesiologist and intensivist at St. Isabel's Hospital, Mylapore, Chennai, and a practising geriatrician. Every entry on Signal is authored and edited by a named clinician, not assembled anonymously.</div>
       </div>
       <div class="row">
-        <div class="rk">Independently reviewed</div>
-        <div class="rv"><b>Not yet.</b> Authorship and review are deliberately kept separate. An entry counts as reviewed only when a second named clinician has checked that specific entry &mdash; and until that happens, the entry says so on its face, in an amber notice you cannot miss. <span id="reviewCount"></span></div>
+        <div class="rk">What this is</div>
+        <div class="rv"><b>Educational information, not personal medical advice.</b> Signal explains concepts. It cannot examine you, and it does not know your history, your other medicines or your kidney function &mdash; all of which change the answer. Where Signal and your own doctor differ, your doctor is right. <span id="reviewCount"></span></div>
       </div>
       <div class="row">
         <div class="rk">No invented numbers</div>
@@ -222,7 +222,7 @@
     <p>So Signal never diagnoses, and never tells anyone to start or stop a treatment. Every symptom and every medicine names the signs that mean stop reading and seek care. Where an entry and your own clinician disagree, your clinician is right: they have the one thing this site will never have, which is you in front of them.</p>
     <div class="promise" style="background:var(--warm);margin-top:8px">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
-      <span><strong>Where this stands today:</strong> Signal is an educational prototype. It is authored by a clinician, and it is not yet independently reviewed &mdash; and it tells you which of those is true on every single page.</span>
+      <span><strong>In one line:</strong> written by a practising anaesthesiologist, intensivist and geriatrician, to be read alongside your own doctor's advice &mdash; never instead of it.</span>
     </div>
   </section>
 
@@ -269,7 +269,7 @@
     const c = window.SIGNAL_COUNTS || {};
     const n = (c.symptoms || 0) + (c.procedures || 0) + (c.medicines || 0);
     if (n) document.getElementById('reviewCount').textContent =
-      `All ${n} entries are currently awaiting that second read.`;
+      `That caveat applies to all ${n} entries equally.`;
   })();
 </script>
 </body>

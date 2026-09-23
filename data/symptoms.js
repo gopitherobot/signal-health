@@ -1,7 +1,8 @@
 // Signal · Symptoms — content database
 // 20 highest-anxiety, highest-search symptoms across organ systems.
 // Frequency bands (common/some/rare) are RELATIVE and illustrative, not statistics.
-// Every entry needs physician sign-off before any public deployment.
+// Authored by the named clinician in data/editorial.js. Educational content:
+// it explains, it never diagnoses, and it never replaces the reader's own doctor.
 // rail: visual urgency spread — 'calm' | 'watch' | 'now' | 'mix'
 
 window.SYMPTOMS = {

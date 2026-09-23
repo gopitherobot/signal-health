@@ -7,10 +7,16 @@
  * one source, quoted identically in the footer of every page, on the About
  * page, and in the byline of all 84 entries.
  *
- * NOTE ON REVIEW STATUS: the author being a clinician is not the same thing
- * as an entry being reviewed. `reviewedBy` in the entry data means an
- * independent, named clinician has checked that specific entry. Authorship
- * and review are deliberately kept apart — see CLAUDE.md §7.6.
+ * WHAT THE SITE CLAIMS, AND WHAT IT DOES NOT: Signal is authored by the
+ * practising clinician named below. That is the clinical authority behind the
+ * content, and there is no separate review gate. What the site does claim, on
+ * every entry, is the thing that actually protects a reader — this is
+ * educational information about concepts, and it does not replace the doctor
+ * who has their history, their medicines and them in front of them.
+ *
+ * The per-entry `reviewedBy` / `lastReviewed` fields remain as an OPTIONAL
+ * extra credit, for the case where a specialist contributes to a particular
+ * entry. They are a credit, not a gate. See CLAUDE.md §7.6.
  */
 
 window.EDITORIAL = {

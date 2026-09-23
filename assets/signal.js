@@ -5,7 +5,7 @@
  * around it lives here and the three entry templates stay thin.
  *
  *   SignalSlug()              — the ?e=<slug> the page was opened with
- *   SignalReview(entry)       — the "reviewed by / pending review" stamp
+ *   SignalReview(entry)       — the authorship + educational-use stamp
  *   SignalRelated(entry, sec) — cross-section links, resolved via the manifest
  *   SignalKeepReading(entry)  — the card row at the foot of an article
  *   SignalReadTime(entry)     — an honest minutes estimate from the real text
@@ -52,46 +52,45 @@
   }
   window.SignalFormatDate = formatDate;
 
-  /* Authorship and review are two different claims, and the site keeps them
-     apart. Signal is written by a named clinician; an entry counts as
-     *reviewed* only once a SECOND named clinician has checked that entry.
-     Saying "unreviewed" without naming the author undersells it; saying
-     "written by a doctor" without the review status oversells it. Both. */
+  /* Signal is written by a named clinician. The stamp at the foot of every
+     entry states that, and then states the thing that actually protects the
+     reader: this is education, and it does not replace the doctor who has
+     your history, your medicines and you in front of them.
+
+     `reviewedBy` / `lastReviewed` remain available as an OPTIONAL extra
+     credit — if a specialist ever contributes to a particular entry, set
+     them and the stamp adds that line. They are not a gate. */
   function author() {
     var e = window.EDITORIAL && window.EDITORIAL.author;
     return e ? e : null;
   }
 
   window.SignalReview = function (d) {
-    if (d && d.reviewedBy) {
-      var when = d.lastReviewed ? ' &middot; ' + esc(formatDate(d.lastReviewed)) : '';
-      return '<div class="sig-review done">' +
-        '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-          '<path d="M20 6 9 17l-5-5"/></svg>' +
-        '<span>Independently reviewed by <b>' + esc(d.reviewedBy) + '</b>' + when + '</span></div>';
-    }
     var a = author();
-    var written = a
-      ? 'Written by <b>' + esc(a.name) + '</b>, ' + esc(a.credentials.split(' · ')[0]) + '. '
-      : '';
-    return '<div class="sig-review pending">' +
+    var who = '';
+    if (a) {
+      who = 'Written by <b>' + esc(a.name) + '</b>, ' + esc(a.credentials.split(' · ')[0]) +
+            (a.primaryRole ? ' &mdash; ' + esc(a.primaryRole) : '') + '. ';
+    }
+    var extra = '';
+    if (d && d.reviewedBy) {
+      extra = ' Additionally reviewed by <b>' + esc(d.reviewedBy) + '</b>' +
+              (d.lastReviewed ? ' &middot; ' + esc(formatDate(d.lastReviewed)) : '') + '.';
+    }
+    return '<div class="sig-review authored">' +
       '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' +
-      '<span>' + written + '<b>Independent review pending</b> &mdash; a second clinician has not yet ' +
-      'checked this entry. Treat it as a draft explainer, not as guidance.</span></div>';
+        '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>' +
+      '<span>' + who + '<b>This is educational information</b> &mdash; it does not replace advice from ' +
+      'your own doctor, who knows your history, your medicines and your examination.' + extra +
+      '</span></div>';
   };
 
   /* The two-line byline in the article header. */
   window.SignalReviewLine = function (d) {
     var a = author();
-    var who = a
-      ? 'Written by <strong>' + esc(a.name) + '</strong>'
-      : '<strong>Signal</strong>';
-    if (d && d.reviewedBy) {
-      return who + '<br>Reviewed by ' + esc(d.reviewedBy) +
-        (d.lastReviewed ? ' &middot; ' + esc(formatDate(d.lastReviewed)) : '');
-    }
-    return who + '<br>Independent review pending';
+    if (!a) return '<strong>Signal</strong><br>Educational information';
+    return 'Written by <strong>' + esc(a.name) + '</strong><br>' +
+      esc(a.primaryRole || a.credentials.split(' · ')[0]);
   };
 
   /* ─────────────── cross-section links ─────────────── */

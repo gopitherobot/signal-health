@@ -141,7 +141,7 @@ section('Medicines taxonomy');
   const noCond = Object.keys(MEDICINES).filter(k => !inCond.has(k));
   check('every medicine group is reachable from the drug-class view', !noClass.length, noClass.join(', '));
   check('every medicine group is reachable from the condition view', !noCond.length, noCond.join(', '));
-  check('classification carries a review stamp', !!global.window.CLASSIFICATION_REVIEW);
+  check('classification carries its optional credit field', !!global.window.CLASSIFICATION_REVIEW);
 }
 
 /* ───────────────────────── 4. safety rules (CLAUDE.md §7) ───────────────────────── */
@@ -165,7 +165,7 @@ section('Safety rules');
 
   /* §7.5 is about framing, not a fixed sentence: every page must say, somewhere,
      that this is education and does not replace the reader's own clinician. */
-  const SUBORDINATE = /not a substitute for|doesn't replace|does not replace|physician sign-off|instructions always come first/i;
+  const SUBORDINATE = /not a substitute for|doesn't replace|does not replace|instructions always come first/i;
   const noFooter = pages.filter(p => !SUBORDINATE.test(read(p)));
   check('every page defers to the reader and their own clinician (§7.5)',
     !noFooter.length, noFooter.join(', '));
@@ -394,15 +394,17 @@ section('Authorship and the care arc');
   if (!about.includes('Anaesthesiologist')) wrong.push('primary role');
   check('About page matches data/editorial.js', !wrong.length, wrong.join(', '));
 
-  /* Authorship is not review. The site must never imply otherwise. */
-  const signed = [];
-  SECTIONS.forEach(s => {
-    for (const [k, d] of Object.entries(DATA[s])) {
-      if (d.reviewedBy && d.reviewedBy === a.name) signed.push(`${s}/${k}`);
-    }
-  });
-  check('the author is not recorded as their own independent reviewer',
-    !signed.length, signed.slice(0, 5).join(', ') + ' — authorship and review are separate (CLAUDE.md §7.6)');
+  /* The claim the site makes on every entry: written by a named clinician,
+     and educational rather than a replacement for the reader's own doctor.
+     Both halves must be in the stamp — the first without the second would be
+     an overclaim, the second without the first is anonymous. */
+  const sig = read('assets/signal.js');
+  check('the entry stamp names the author',
+    /Written by <b>' \+ esc\(a\.name\)/.test(sig) || /Written by <b>/.test(sig));
+  check('the entry stamp states it does not replace their own doctor',
+    /does not replace advice from/.test(sig) && /educational information/i.test(sig));
+  check('the entry stamp no longer implies a pending review gate',
+    !/review pending|Pending clinical review|signed this entry off/i.test(sig));
 
   const noEditorial = ['symptoms/entry.html', 'procedures/entry.html', 'medicines/entry.html']
     .filter(p => !/data\/editorial\.js/.test(read(p)));
@@ -460,18 +462,19 @@ section('Generated manifest');
     JSON.stringify(counts));
 }
 
-/* ───────────────────────── 8. review status ───────────────────────── */
-section('Clinical review status');
+/* ───────────────────────── 8. editorial status ───────────────────────── */
+section('Editorial status');
 {
-  let reviewed = 0, pending = 0;
-  for (const sec of SECTIONS)
-    for (const d of Object.values(DATA[sec])) d.reviewedBy ? reviewed++ : pending++;
   const a = global.window.EDITORIAL && global.window.EDITORIAL.author;
-  console.log(`  note  ${reviewed} entr${reviewed === 1 ? 'y' : 'ies'} independently reviewed, ${pending} pending`);
-  if (a) console.log(`        All entries are authored by ${a.name}, ${a.credentials.split(' · ')[0]}.`);
-  if (pending) console.log('        Pending entries display a visible "Independent review pending" notice');
-  if (pending) console.log('        alongside the author name. Authorship is not review (CLAUDE.md §7.6).');
-  if (!global.window.CLASSIFICATION_REVIEW.reviewedBy) console.log('        The classification layer is also awaiting independent review.');
+  const total = SECTIONS.reduce((n, s) => n + Object.keys(DATA[s]).length, 0);
+  if (a) {
+    console.log(`  note  All ${total} entries authored by ${a.name}, ${a.credentials.split(' · ')[0]}`);
+    console.log(`        ${a.primaryRole}, ${a.affiliation}.`);
+  }
+  let credited = 0;
+  SECTIONS.forEach(s => Object.values(DATA[s]).forEach(d => { if (d.reviewedBy) credited++; }));
+  console.log(`        Educational content, not a replacement for their own doctor.`);
+  if (credited) console.log(`        ${credited} entr${credited === 1 ? 'y carries' : 'ies carry'} an additional contributor credit.`);
 }
 
 /* ───────────────────────── result ───────────────────────── */

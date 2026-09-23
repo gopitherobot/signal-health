@@ -1,8 +1,8 @@
 // Signal · Procedures — content database
 // 20 highest-anxiety procedures, each with the structural / functional / chemical
 // before-and-after model, risks, benefits, journey, myths, and questions to ask.
-// Risk descriptions are illustrative and qualitative — a production version cites a
-// clinical source for every figure and carries named physician review.
+// Risk descriptions are illustrative and qualitative rather than statistical.
+// Authored by the named clinician in data/editorial.js; educational, not advice.
 
 window.PROCEDURES = {
   ga: {

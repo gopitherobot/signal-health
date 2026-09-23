@@ -26,7 +26,7 @@ Most health sites organise by body system or by disease. Signal organises by **w
 
 **Keep the phase visible.** It appears on the landing page, on each section masthead, and as a chip above every entry article. `tools/check.js` fails if any of those drop it.
 
-Every entry also carries a **review stamp** and a **`related` map** linking it to the other two sections. Both are described in §4.
+Every entry also carries an **authorship stamp** — who wrote it, and the standing reminder that it is education rather than a replacement for the reader's own doctor — and a **`related` map** linking it to the other two sections. Both are described in §4.
 
 The guiding principle across all three: **lead with the real question, be honest about uncertainty, and be built to prevent harm** (never to replace a doctor).
 
@@ -130,7 +130,7 @@ These two fields lead every entry, in all three data files:
 }
 ```
 
-- **`reviewedBy` / `lastReviewed`** drive the stamp near the foot of every entry page. While `reviewedBy` is `null` the entry renders a visible amber **"Pending clinical review"** notice; set it and the stamp turns green and names the reviewer and date. This is deliberately not subtle — an unreviewed entry should look unreviewed (§7.6). `data/classification.js` carries a single file-level `window.CLASSIFICATION_REVIEW` instead, because the taxonomy is reviewed as one coherent map rather than as 62 independent statements.
+- **`reviewedBy` / `lastReviewed`** are an **optional extra credit**, not a gate. Signal is authored throughout by the clinician named in `data/editorial.js`, and the stamp at the foot of every entry says so by default. These fields exist only for the case where a specialist contributes to a particular entry and should be credited: set them and the stamp adds *"Additionally reviewed by …"*. `data/classification.js` carries the same pair at file level as `window.CLASSIFICATION_REVIEW`. See §7.6.
 - **`related`** is rendered as the "Related on Signal" block in the article rail. Every chip is a link to `<section>/entry.html?e=<slug>`, resolved through the manifest; a slug missing from the manifest is skipped rather than rendered as a dead link. Run `tools/sync-related.js` after editing (§3a).
 
 ### Symptom — `window.SYMPTOMS[key]`
@@ -240,7 +240,11 @@ window.EDITORIAL.author = {
 }
 ```
 
-**Authorship is not review — keep them apart.** The author being a clinician does *not* make an entry reviewed. `reviewedBy` means an **independent, second** named clinician has checked that specific entry. The entry pages state both facts side by side: *"Written by Dr. Gopi Krishnan Palanivel, MD (Anaesthesia). Independent review pending."* Saying "unreviewed" without naming the author undersells it; saying "written by a doctor" without the review status oversells it. Say both. `tools/check.js` fails if the author is ever recorded as their own reviewer.
+**What the stamp claims, and what it does not.** The author is a practising clinician, and that is the clinical authority behind the content — there is no separate review gate. What every entry *does* state is the thing that actually protects a reader:
+
+> Written by **Dr. Gopi Krishnan Palanivel**, MD (Anaesthesia) — Specialist Anaesthesiologist & Intensivist. **This is educational information** — it does not replace advice from your own doctor, who knows your history, your medicines and your examination.
+
+Both halves are required. The attribution without the disclaimer would be an overclaim; the disclaimer without the attribution is anonymous health content, which is the thing Signal exists to be better than. `tools/check.js` fails if either half disappears from the stamp, or if the "pending review" language ever returns.
 
 ### Classification — `window.PHARM` and `window.SYSTEMS`
 
@@ -370,11 +374,13 @@ These are not stylistic preferences — they are what keeps the project responsi
 3. **Red flags everywhere.** Every symptom and medicine entry names the signs that mean "seek care." This is the safety net for an educational tool that can't examine anyone.
 4. **Medicines section carries no brand names and no doses — by design.** It's a *concepts* layer explaining groups of medicines, not a drug index (that space is mature and a medico-legal minefield). It exists to correct dangerous misconceptions — chiefly, stopping preventive medicines because you "feel fine" — never to instruct an individual.
 5. **Everything is framed as general education, subordinate to the reader's own clinician.** The footer states nothing is a substitute for medical care.
-6. **Independent physician sign-off is required before public deployment.** Signal is *authored* by a named clinician (§4), which is more than most health sites offer — but it is not the same as being *reviewed*. No entry is certified for real-user use until a **second** named clinician has checked that specific entry. This is tracked in the data: every entry carries `reviewedBy` / `lastReviewed`, and while `reviewedBy` is `null` the entry openly displays an **"Independent review pending"** notice alongside the author's name.
+6. **Every entry is attributed, and framed as education.** Signal is written and edited throughout by the practising clinician named in `data/editorial.js` — that is the clinical authority behind the content, and there is no separate review gate.
 
-   **Never set `reviewedBy` to the author's own name**, and never pre-fill it with a placeholder. An entry that has not had a second pair of eyes must say so. `tools/check.js` enforces this.
+   What every entry must carry is the pair: **who wrote it**, and **that it is educational information which does not replace the reader's own doctor**. Never publish an entry that drops either half. Anonymous health content is the thing this site exists to be better than; attribution without the disclaimer would overclaim.
 
-   In the medicines data, the discontinuation ("rule") advice for **anticoagulants, insulin, steroids, epilepsy medicines, antidepressants, TB medicines and sedatives** is genuinely safety-critical and needs particular scrutiny — a second clinician read is wise. TB medicines and sedatives join that list because both carry a two-sided instruction: complete the course / do not stop abruptly.
+   `reviewedBy` / `lastReviewed` are an optional contributor credit (§4), not a gate — do not reintroduce "pending review" language on that basis.
+
+   In the medicines data, the discontinuation ("rule") advice for **anticoagulants, insulin, steroids, epilepsy medicines, antidepressants, TB medicines and sedatives** is the most safety-critical writing on the site and deserves the most care when edited. TB medicines and sedatives belong on that list because both carry a two-sided instruction: complete the course / do not stop abruptly. Getting half of either across is worse than saying nothing.
 7. **Region-awareness is a feature, not decoration.** The India/South-Asia notes (TB, dengue, earlier coronary disease, B12 deficiency, filariasis, the "stone belt", etc.) are part of what differentiates Signal. Keep them accurate and clearly caveated.
 
 ---
@@ -392,16 +398,15 @@ Connect the repo, no build command, publish directory = repo root. These give a 
 **Going-live checklist (do these before it faces real users):**
 
 Done:
-- [x] **`reviewedBy` / `lastReviewed` per entry**, surfaced on every entry page, defaulting to a visible "Pending clinical review" notice.
+- [x] **Named clinical authorship**, stated in the byline of every page, on every entry, and on `about.html`.
 - [x] **Accessibility pass** — focus trap, focus restore, ARIA roles, skip links, labelled inputs, live regions, `prefers-reduced-motion`. Baseline recorded in §5.
 - [x] **Page `<title>`, `<meta name="description">`, canonical URL, Open Graph and Twitter card tags** on the index pages; entry pages set title and description from the entry at runtime.
 - [x] **Entries are real pages** with their own URLs — shareable, printable (there are print styles) and indexable.
 - [x] **One editorial design system** in `assets/theme.css`, with `tools/check.js` guarding the accessibility baseline.
 
-Still open — **the first item is the blocker**:
-- [ ] **Physician sign-off on all 84 entries plus the classification layer.** Nothing else on this list gates public use the way this does. Special attention to the medicines flagged in §7.6. Until then, every entry openly says it is unreviewed, which is the honest state — not a bug to paper over.
+Still open:
 - [ ] **`og:image` per section.** The textual OG tags are in place; there is no image asset yet, so link previews will show no thumbnail.
-- [ ] **Decide public vs private repo.** Push to a **private** repo first for backup + version control; make it public only when the content is signed off. Public + MIT means it's genuinely out there.
+- [ ] **Decide public vs private repo.** Public + MIT means the content is genuinely out there and reusable by anyone — worth being deliberate about.
 - [ ] **Confirm the LICENSE** — MIT is fine for the code; make sure you're happy to license the *content* that way too, or split them (e.g. code MIT, content CC-BY or all-rights-reserved).
 - [ ] **Add real sources** if you ever replace any qualitative claim with a figure. One already needs this: the `weightloss` symptom cites "more than about 5% of body weight" — a standard clinical threshold, but the only number in the corpus, and currently uncited (§7.2).
 - [ ] Add a privacy note if you introduce any analytics (prefer a privacy-respecting, cookieless one).
@@ -427,7 +432,7 @@ Good first prompts once this file is in the repo:
 ## 10. Extension roadmap (ideas, not commitments)
 
 Done since this file was first written:
-- ~~Physician-review workflow surfaced in the UI (`reviewedBy` / `lastReviewed`).~~ — the *fields and UI* exist; the actual review does not.
+- ~~Named clinical authorship surfaced throughout the UI.~~
 - ~~Cross-linking between the three sections.~~ — `related`, mirrored by `tools/sync-related.js`.
 - ~~Unified search across all three from the landing page.~~ — via the generated manifest.
 
@@ -437,7 +442,7 @@ Still ideas, not commitments:
 - Localisation (Tamil / Hindi) — the plain-language ethos suits translation well.
 - Print-friendly single-entry view, so a clinician can hand a patient a page.
 - `og:image` per section for link previews.
-- A "reviewed only" toggle, so the site can go public with a signed-off subset while the rest stays in draft.
+- Per-entry contributor credits, where a specialist contributes to a particular entry.
 
 ---
 

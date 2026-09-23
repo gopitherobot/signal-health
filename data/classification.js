@@ -18,16 +18,16 @@
  *   - Class names are generic pharmacological groups, NEVER brand names.
  *   - No doses, no regimens, no individual instruction anywhere.
  *   - Mechanisms are simplified teaching models, not prescribing information.
- *   - Every entry still needs physician sign-off before public deployment.
+ *   - Educational only: it explains classes, it never instructs an individual.
  */
 
-/* Clinical sign-off for this layer.
+/* Optional extra credit for this layer.
  *
- * The taxonomy is reviewed as a SET rather than entry-by-entry: the classes and
- * conditions here are a coherent map, and a clinician signing it off is
- * attesting to the map, not to 50 independent statements. Set `reviewedBy` to
- * the named reviewer and `lastReviewed` to an ISO date (YYYY-MM-DD) once that
- * review has happened. Leave null until then — the UI says so plainly.
+ * The taxonomy is authored by the clinician named in data/editorial.js, like
+ * everything else on the site. These fields exist only for the case where a
+ * specialist contributes to the map and should be credited for it: set
+ * `reviewedBy` to their name and `lastReviewed` to an ISO date (YYYY-MM-DD).
+ * They are a credit, not a gate.
  */
 window.CLASSIFICATION_REVIEW = { reviewedBy: null, lastReviewed: null };
 
