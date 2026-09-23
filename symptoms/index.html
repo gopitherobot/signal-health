@@ -5,11 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Signal · Symptoms — understand your symptom by urgency</title>
 <meta name="description" content="Plain-language symptom explainer organised by real urgency: what's usually harmless, what's worth checking, and what needs care now.">
+<link rel="canonical" href="https://gopitherobot.github.io/signal-health/symptoms/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Signal">
+<meta property="og:title" content="Signal · Symptoms — understand your symptom by urgency">
+<meta property="og:description" content="Plain-language symptom explainer organised by real urgency: what's usually harmless, what's worth checking, and what needs care now.">
+<meta property="og:url" content="https://gopitherobot.github.io/signal-health/symptoms/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Signal · Symptoms — understand your symptom by urgency">
+<meta name="twitter:description" content="Plain-language symptom explainer organised by real urgency: what's usually harmless, what's worth checking, and what needs care now.">
+<meta name="theme-color" content="#f4f5f7">
 <link rel="stylesheet" href="../assets/anim.css">
+<link rel="stylesheet" href="../assets/shared.css">
 <style>
   :root{
     --ink:#14201d;--ink-soft:#4a5a54;--ink-faint:#7d8b85;
     --paper:#f6f3ec;--card:#fffdf8;--line:#e3ddd0;
+    --accent:#3f7d6e;--accent-bg:#e6f0ec;
     --calm:#3f7d6e;--calm-bg:#e6f0ec;--watch:#b8842b;--watch-bg:#f6eddb;--now:#b23b2e;--now-bg:#f7e4e0;
     --shadow:0 1px 2px rgba(20,32,29,.04),0 8px 24px rgba(20,32,29,.06);
     --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
@@ -92,6 +104,7 @@
 </style>
 </head>
 <body>
+<a class="sig-skip" href="#main">Skip to the symptom list</a>
 <div class="safety"><b>Not a diagnosis.</b> This explains symptoms in plain language — it can't examine you. If something feels severe or sudden, contact emergency services or a doctor now.</div>
 <header><div class="wrap brand">
   <a href="../index.html" class="mark">Signal<span class="dot">.</span></a>
@@ -99,7 +112,7 @@
   <a href="../procedures/index.html" class="navlink">Procedures →</a>
   <a href="../medicines/index.html" class="navlink" style="margin-left:16px">Medicines →</a>
 </div></header>
-<main class="wrap">
+<main class="wrap" id="main">
   <section class="hero">
     <h1>Every symptom tells a <em>story</em>. Some are whispers. A few are alarms.</h1>
     <p>Most sites list what a symptom could mean. We start with the question you actually have: how worried should I be, and when do I need to act?</p>
@@ -111,38 +124,65 @@
   </section>
   <div class="search">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-    <input id="q" type="text" placeholder="Search a symptom — try &ldquo;chest pain&rdquo; or &ldquo;headache&rdquo;" oninput="filter(this.value)">
+    <label class="sr-only" for="q">Search symptoms by name or body system</label>
+    <input id="q" type="text" autocomplete="off" placeholder="Search a symptom — try &ldquo;chest pain&rdquo; or &ldquo;headache&rdquo;" oninput="filter(this.value)">
   </div>
-  <div class="section-label">Explore by symptom — 20 entries</div>
-  <div class="grid" id="grid"></div>
+  <div class="section-label" id="countlabel" role="status" aria-live="polite">Explore by symptom</div>
+  <div class="grid" id="grid" role="list"></div>
+  <p class="empty" id="empty" hidden>No symptom matches that search. Try a plainer word — &ldquo;tired&rdquo;, &ldquo;rash&rdquo;, &ldquo;cough&rdquo;.</p>
 </main>
 <footer class="wrap foot">
   <p><b>Educational prototype.</b> Frequency bands (&ldquo;common / uncommon / rare&rdquo;) are relative and illustrative, not statistics. Every entry requires physician sign-off and a cited clinical source before any public deployment.</p>
 </footer>
-<div class="scrim" id="scrim" onclick="if(event.target===this)close_()"><div class="sheet" id="sheet"></div></div>
+<div class="scrim" id="scrim" aria-hidden="true" onclick="if(event.target===this)close_()"><div class="sheet" id="sheet"></div></div>
 
 <script src="../data/symptoms.js"></script>
+<script src="../data/manifest.js"></script>
 <script src="../assets/icons.js"></script>
+<script src="../assets/signal.js"></script>
 <script>
-const grid=document.getElementById('grid');
+const grid = document.getElementById('grid');
+const SYM  = window.SYMPTOMS;
+
 function render(){
   grid.innerHTML='';
-  Object.entries(window.SYMPTOMS).forEach(([k,d])=>{
+  Object.entries(SYM).forEach(([k,d])=>{
     const b=document.createElement('button');
-    b.className='stile';b.dataset.name=(d.name+' '+d.system).toLowerCase();b.onclick=()=>open_(k);
+    b.className='stile';
+    b.dataset.name=(d.name+' '+d.system+' '+d.mini).toLowerCase();
     b.dataset.rail=d.rail;
-    b.innerHTML=`<span class="rail ${d.rail}"></span><div class="tico">${SignalIconFor(d.system,24)}</div><div class="sys">${d.system}</div><div class="nm">${d.name}</div><div class="mini">${d.mini}</div>`;
+    b.dataset.k=k;
+    b.setAttribute('role','listitem');
+    b.setAttribute('aria-label',d.name+' — '+d.system+'. Open full explainer.');
+    b.onclick=()=>open_(k);
+    b.innerHTML=`<span class="rail ${d.rail}" aria-hidden="true"></span><div class="tico" aria-hidden="true">${SignalIconFor(d.system,24)}</div><div class="sys">${d.system}</div><div class="nm">${d.name}</div><div class="mini">${d.mini}</div>`;
     grid.appendChild(b);
   });
+  filter('');
 }
-function filter(v){v=v.trim().toLowerCase();document.querySelectorAll('.stile').forEach(t=>{t.style.display=t.dataset.name.includes(v)?'':'none';});}
+
+function filter(v){
+  v=v.trim().toLowerCase();
+  let shown=0;
+  document.querySelectorAll('.stile').forEach(t=>{
+    const vis=t.dataset.name.includes(v);
+    t.style.display=vis?'':'none';
+    if(vis) shown++;
+  });
+  document.getElementById('empty').hidden = shown>0;
+  document.getElementById('countlabel').textContent = v
+    ? `${shown} symptom${shown===1?'':'s'} matching “${v}”`
+    : `Explore by symptom — ${shown} entries`;
+}
+
 function open_(k){
-  const d=window.SYMPTOMS[k];
+  const d=SYM[k];
+  if(!d) return;
   const causes=d.causes.map(c=>`<div class="cause"><div class="freq ${c.f}">${c.f}</div><div><div class="cn">${c.n}</div><div class="cd">${c.d}</div></div></div>`).join('');
   const flags=d.flags.map(f=>`<li>${f}</li>`).join('');
   const types=d.types.map(t=>`<div class="type"><div class="tn">${t.n}</div><div class="td">${t.d}</div></div>`).join('');
   document.getElementById('sheet').innerHTML=`
-    <div class="sheet-head"><button class="x" onclick="close_()" aria-label="Close">&times;</button>
+    <div class="sheet-head"><button class="x" onclick="close_()" aria-label="Close ${d.name}">&times;</button>
       <div class="sys">${d.system}</div><h2>${d.name}</h2><p class="story">${d.story}</p></div>
     <div class="sheet-body">
       <div class="blk"><div class="urg"><span class="badge">${d.urgency.badge}</span><div class="utxt">${d.urgency.text}</div></div></div>
@@ -150,12 +190,21 @@ function open_(k){
       <div class="blk"><h3>What's usually behind it</h3>${causes}</div>
       <div class="blk"><h3>The different kinds</h3><div class="types">${types}</div></div>
       <div class="blk"><h3>Regional note</h3><div class="region"><b>Where you are can shift the odds.</b> ${d.region.t}<div class="note">${d.region.note}</div></div></div>
+      ${SignalRelated(d,'symptoms')}
+      ${SignalReview(d)}
     </div>`;
-  document.getElementById('scrim').classList.add('open');document.body.style.overflow='hidden';
+  SignalModal.open(k);
 }
-function close_(){document.getElementById('scrim').classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')close_()});
+
+function close_(){ SignalModal.close(); }
+
+/* lets shared.js open a sibling symptom in place rather than reloading */
+window.SignalOpenLocal = open_;
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') close_(); });
+
 render();
+SignalDeepLink(k=>!!SYM[k], open_);
 </script>
 </body>
 </html>

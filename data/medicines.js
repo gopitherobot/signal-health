@@ -10,6 +10,8 @@
 
 window.MEDICINES = {
   bp: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['dizzy','swelling','headache','chest','cough','palpitations'], procedures: ['pci','dialysis','bypass','ecg','pacemaker'], medicines: ['statin','heartfailure','diabetesoral','diuretic'] },
     cat: "Heart & circulation", name: "Blood-pressure medicines", mode: "daily",
     modeText: "Take every day — even when you feel completely well",
     mini: "High blood pressure has no symptoms. That's exactly why the tablets must continue.",
@@ -29,6 +31,8 @@ window.MEDICINES = {
   },
 
   statin: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['jointpain','chest'], procedures: ['pci','bypass'], medicines: ['bp','antiplatelet'] },
     cat: "Heart & circulation", name: "Cholesterol medicines (statins)", mode: "daily",
     modeText: "Take every day — the benefit is invisible but real",
     mini: "They don't make you feel different. They lower the odds of a future heart attack or stroke.",
@@ -48,6 +52,8 @@ window.MEDICINES = {
   },
 
   diabetesoral: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['urinary','fatigue','numbness','dizzy','visionloss','weightloss'], procedures: ['ctcontrast','dialysis','cataract'], medicines: ['insulin','bp'] },
     cat: "Hormones & metabolism", name: "Diabetes tablets", mode: "daily",
     modeText: "Take every day — steady control prevents long-term damage",
     mini: "High sugar quietly damages nerves, eyes, kidneys and vessels. Steady treatment prevents that.",
@@ -67,6 +73,8 @@ window.MEDICINES = {
   },
 
   insulin: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['urinary','fatigue','confusion','dizzy','numbness','visionloss'], procedures: ['dialysis'], medicines: ['diabetesoral'] },
     cat: "Hormones & metabolism", name: "Insulin", mode: "daily",
     modeText: "Take as prescribed — never simply stop",
     mini: "For some, insulin is not optional — stopping it can be life-threatening within hours to days.",
@@ -86,6 +94,8 @@ window.MEDICINES = {
   },
 
   heartfailure: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['breathless','swelling','fatigue'], procedures: ['pacemaker','pci'], medicines: ['bp','anticoag','diuretic'] },
     cat: "Heart & circulation", name: "Heart-failure medicines", mode: "daily",
     modeText: "Take every day — they protect the heart and prolong life",
     mini: "These don't just ease symptoms; several of them help the heart last longer. Continuity is the point.",
@@ -105,6 +115,8 @@ window.MEDICINES = {
   },
 
   anticoag: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['bloodstool','swelling','breathless','bruising','palpitations'], procedures: ['pacemaker','colonoscopy','kneereplace','hipreplace','spinal'], medicines: ['antiplatelet','heartfailure'] },
     cat: "Heart & circulation", name: "Blood thinners (anticoagulants)", mode: "daily",
     modeText: "Take exactly as prescribed — never start or stop on your own",
     mini: "They prevent dangerous clots. Both stopping them and doubling them carry real risk.",
@@ -124,6 +136,8 @@ window.MEDICINES = {
   },
 
   antiplatelet: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['chest','bloodstool','bruising'], procedures: ['pci','bypass','ecg'], medicines: ['anticoag','statin'] },
     cat: "Heart & circulation", name: "Antiplatelet medicines", mode: "daily",
     modeText: "Take every day — usually protecting a heart or brain event",
     mini: "Low-dose aspirin and its relatives keep platelets from clumping after a heart attack, stent or stroke.",
@@ -143,6 +157,8 @@ window.MEDICINES = {
   },
 
   thyroid: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['fatigue','weightloss','palpitations'], procedures: [], medicines: [] },
     cat: "Hormones & metabolism", name: "Thyroid replacement", mode: "daily",
     modeText: "Take every day — it replaces a hormone you can't make enough of",
     mini: "This is pure replacement: your body needs the hormone daily, so the tablet is needed daily.",
@@ -162,6 +178,8 @@ window.MEDICINES = {
   },
 
   reliever: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['breathless','cough'], procedures: ['ventilation'], medicines: ['preventer','steroid'] },
     cat: "Lungs & breathing", name: "Reliever inhaler", mode: "when",
     modeText: "Take WHEN you need it — for sudden breathlessness or wheeze",
     mini: "This is the genuine 'when-needed' one: it opens tight airways within minutes during symptoms.",
@@ -181,6 +199,8 @@ window.MEDICINES = {
   },
 
   preventer: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['cough','breathless'], procedures: [], medicines: ['reliever','steroid'] },
     cat: "Lungs & breathing", name: "Preventer inhaler", mode: "daily",
     modeText: "Take every day — even when your breathing feels perfectly fine",
     mini: "The one people wrongly skip. It calms airway inflammation you can't feel, preventing attacks.",
@@ -200,6 +220,8 @@ window.MEDICINES = {
   },
 
   acid: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['chest','abdopain','nausea','diarrhoea','swallowing'], procedures: ['endoscopy'], medicines: ['painkiller'] },
     cat: "Stomach & digestion", name: "Acid & reflux medicines", mode: "mixed",
     modeText: "Depends on the type — some for symptoms, some for a planned course",
     mini: "Antacids are true 'when-needed'. Acid-blockers (PPIs) are often a defined course, sometimes longer.",
@@ -219,6 +241,8 @@ window.MEDICINES = {
   },
 
   painkiller: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['backpain','jointpain','headache','abdopain','bloodstool','earpain'], procedures: ['kneereplace','hipreplace','appendectomy','colonoscopy','csection','endoscopy'], medicines: ['acid','steroid','laxative'] },
     cat: "Pain & inflammation", name: "Everyday painkillers", mode: "when",
     modeText: "Usually when needed — but with real limits and cautions",
     mini: "Mostly for symptoms, at the lowest dose that works — but 'over-the-counter' doesn't mean risk-free.",
@@ -238,6 +262,8 @@ window.MEDICINES = {
   },
 
   epilepsy: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['confusion','numbness'], procedures: ['lp','ctcontrast'], medicines: [] },
     cat: "Brain & nerves", name: "Epilepsy medicines", mode: "daily",
     modeText: "Take every day, on time — never stop abruptly",
     mini: "They prevent seizures by keeping a steady level in the blood. Missed doses are the commonest trigger.",
@@ -257,6 +283,8 @@ window.MEDICINES = {
   },
 
   antibiotic: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['fever','cough','urinary','diarrhoea','earpain','jaundice'], procedures: ['appendectomy','catheter','centralline','chemotherapy','csection','gallbladder'], medicines: ['antitb'] },
     cat: "Infections", name: "Antibiotics", mode: "course",
     modeText: "Take as a defined course — follow the plan you're given",
     mini: "Not a 'take-till-you-feel-better' medicine. Complete the course your prescriber sets, and don't demand them for viruses.",
@@ -276,6 +304,8 @@ window.MEDICINES = {
   },
 
   antidepressant: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['fatigue','confusion','anxiety','sleep'], procedures: [], medicines: ['sleepanxiety'] },
     cat: "Mind & mood", name: "Antidepressant medicines", mode: "daily",
     modeText: "Take every day — they work gradually, not on the day you feel low",
     mini: "Not a 'take-when-sad' pill. They build up over weeks, and stopping should always be gradual.",
@@ -296,6 +326,8 @@ window.MEDICINES = {
   },
 
   steroid: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['rash','jointpain','breathless','bruising','fever','itching'], procedures: ['cataract','chemotherapy','ventilation'], medicines: ['preventer','painkiller','antifungal','antihistamine','calciumvitd','reliever'] },
     cat: "Inflammation & immunity", name: "Steroid tablets (corticosteroids)", mode: "course",
     modeText: "Take as directed — and never stop a longer course suddenly",
     mini: "Powerful anti-inflammatories. Short courses end simply; longer ones must be tapered, never stopped abruptly.",
@@ -312,5 +344,296 @@ window.MEDICINES = {
     ],
     flags: ["Feeling very unwell, faint, or vomiting when doses are reduced or missed", "Signs of infection (steroids can mask them)", "Mood changes, high sugars, or stomach pain on higher doses"],
     ask: ["Is this a short course or long-term?", "Do I need to taper, and to what schedule?", "Should I carry a steroid card?", "What do I do about doses if I get ill or need surgery?"]
+  },
+
+  antihistamine: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['itching','rash','sorethroat'], procedures: [], medicines: ['steroid','antifungal'] },
+    cat: "Allergy & immunity", name: "Antihistamines", mode: "when",
+    modeText: "Usually when symptoms are there — though some people take them daily through a season",
+    mini: "They block the chemical behind itch, sneeze and swelling — and they do nothing for an asthma attack.",
+    story: "Histamine is released by immune cells when they meet something they have decided is a threat, and it produces the familiar package: itching, sneezing, a streaming nose, watering eyes, raised weals. Antihistamines occupy the receptors histamine would otherwise act on, so the message never lands. The most important distinction to understand is between the older drowsy ones and the newer non-drowsy ones — they treat the same thing, but they affect your day very differently. The second is that antihistamines are not a rescue treatment for breathing problems.",
+    why: "To control the itching, sneezing, runny nose, watering eyes and hives caused by allergic reactions, hay fever and urticaria.",
+    how: "They block histamine receptors, so the histamine released by allergy cells cannot deliver its message. The symptoms ease because the signal is interrupted, not because the allergy has gone.",
+    rule: "<b>Usually taken when you have symptoms, and stopped when you don't.</b> Through a known allergy season, or for ongoing hives, a doctor may advise taking one every day — which works better than chasing symptoms after they start. Neither pattern is wrong; follow the one you were given.",
+    syndrome: "Hay fever and other allergic rhinitis, hives and urticaria, itching from insect bites and some skin conditions, and as one part of the treatment of an allergic reaction.",
+    examples: "Older ones cause noticeable drowsiness and are sometimes used deliberately for that; newer ones are designed not to. Some are taken once daily, some more often. Available as tablets, syrups, nasal sprays and eye drops.",
+    mistakes: [
+      "Using an antihistamine to treat an asthma attack or breathing difficulty — it does not open the airways, and relying on it wastes critical time.",
+      "Assuming a severe allergic reaction with facial swelling or breathing difficulty can be managed with a tablet. That is an emergency needing adrenaline and emergency services.",
+      "Driving or operating machinery after an older, sedating antihistamine without realising how much it slows reactions.",
+      "Giving adult preparations to young children, or repeating doses because the first did not work quickly enough.",
+      "Using them long-term for sleep, which is not what they are designed for and works poorly over time."
+    ],
+    flags: [
+      "Swelling of the lips, tongue or throat, or any difficulty breathing — emergency, not an antihistamine",
+      "Hives lasting more than six weeks, which need proper assessment",
+      "Marked drowsiness affecting work, driving or safety",
+      "Symptoms not controlled despite regular use through a season",
+      "Needing them every day for months without ever having been reviewed"
+    ],
+    ask: [
+      "Should I take this only when I have symptoms, or every day through the season?",
+      "Is this one likely to make me drowsy — can I drive on it?",
+      "Is it safe alongside my other medicines?",
+      "What should I do if a reaction ever involves my breathing?",
+      "Is a nasal spray or eye drop better than a tablet for my symptoms?"
+    ]
+  },
+
+  diuretic: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['swelling','breathless','urinary'], procedures: ['dialysis'], medicines: ['bp','heartfailure'] },
+    cat: "Heart & circulation", name: "Water tablets (diuretics)", mode: "daily",
+    modeText: "Usually every day — some people are taught to adjust the dose, always under instruction",
+    mini: "They make the kidneys shed salt and water — which relieves swelling and breathlessness, and dehydrates you if you're already losing fluid.",
+    story: "Diuretics act on the kidney's filtering tubes to stop salt being reabsorbed. Water follows the salt out, so the total fluid in the circulation falls — which is why swollen legs go down and a waterlogged lung becomes easier to breathe through. They work, often dramatically. The catch is that the same mechanism that helps when you are holding too much fluid is a liability when you are losing it: during fever, vomiting or diarrhoea, a diuretic keeps pulling fluid out while you are already running dry. Many people are given specific instructions for those days, and those instructions matter.",
+    why: "To remove excess fluid in heart failure, liver or kidney disease, and to lower blood pressure by reducing the volume the heart has to push around.",
+    how: "They block salt reabsorption in the kidney tubules, so more salt and water leave in the urine. Less circulating fluid means less swelling, less congestion in the lungs, and lower pressure in the arteries.",
+    rule: "<b>Usually every day, and not something to skip because it is inconvenient.</b> Some people with heart failure are taught to take extra on days their weight rises — and to pause during vomiting, diarrhoea or high fever. Those are specific, individual instructions from your own clinician; never invent them for yourself.",
+    syndrome: "Heart failure; high blood pressure; fluid retention from liver or kidney disease; and some are used to prevent kidney stones or to treat raised pressure in the eye or brain.",
+    examples: "Some act strongly and briefly, so people take them in the morning to avoid a night of interruptions. Others are milder and longer-acting. Some also conserve potassium while others deplete it, which is why blood tests are checked periodically.",
+    mistakes: [
+      "Stopping because of the frequent urination, without telling anyone. Fluid then re-accumulates, sometimes ending in a hospital admission for breathlessness.",
+      "Continuing the usual dose through vomiting, diarrhoea or high fever, when the body is already losing fluid — a common route to kidney injury.",
+      "Taking a second dose late in the day to 'catch up', then being awake all night.",
+      "Restricting fluid drastically as well, on the assumption that less drinking means less swelling.",
+      "Using someone else's water tablets for swollen ankles — the cause of swelling matters enormously, and not all of it is fluid overload."
+    ],
+    flags: [
+      "Dizziness on standing, or fainting",
+      "Passing much less urine than usual, or none",
+      "Sudden weight gain of two kilograms or more over a few days",
+      "Increasing breathlessness, or swelling climbing up the legs",
+      "Muscle cramps, marked weakness, or palpitations — these can signal low potassium",
+      "Vomiting or diarrhoea while taking one — ask what to do that day"
+    ],
+    ask: [
+      "What time of day should I take this?",
+      "What should I do on days I have fever, vomiting or diarrhoea?",
+      "Should I weigh myself daily, and what change should I report?",
+      "How often do my kidney function and potassium need checking?",
+      "How much should I be drinking — more, less, or the same?"
+    ]
+  },
+
+  ironfolate: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['fatigue','breathless','bruising'], procedures: ['bloodtransfusion','colonoscopy','hysterectomy'], medicines: [] },
+    cat: "Blood & nutrition", name: "Iron & folic acid", mode: "course",
+    modeText: "A defined course — and usually for months longer than you feel you need it",
+    mini: "Feeling better comes early; refilling the body's iron stores takes months. Stopping at the first is why anaemia keeps coming back.",
+    story: "Iron is needed to build haemoglobin, the protein that carries oxygen in red cells. When iron runs short the body prioritises circulating haemoglobin over its reserves, which means blood counts can look nearly normal while the stores behind them are empty. That is why treatment works in two stages: the first few weeks lift how you feel, and the several months after that refill the tank. People almost universally stop after the first stage, and the anaemia returns. There is also a question that matters as much as the tablets: <i>why</i> the iron ran out in the first place.",
+    why: "To treat and prevent iron-deficiency anaemia — the commonest nutritional deficiency in the world — and, in pregnancy, to support the mother's increased needs and the baby's neural development.",
+    how: "Iron is absorbed in the upper gut and used by the bone marrow to build haemoglobin, so red cells can carry oxygen properly. Folic acid is needed for cells to divide and mature, which is why it matters in pregnancy and alongside rapid red-cell production.",
+    rule: "<b>A course — and a longer one than most people expect.</b> Typically continued for around three months <i>after</i> the blood count returns to normal, to rebuild stores rather than just the circulating level. Stopping when you feel better is the single commonest reason anaemia recurs. Finding the cause of the deficiency is a separate and equally important task.",
+    syndrome: "Iron-deficiency anaemia from any cause — heavy periods, poor dietary intake, pregnancy, blood loss from the gut, hookworm and other parasitic infections. Folic acid is also given routinely before and during early pregnancy.",
+    examples: "Taken on an empty stomach where tolerated, since food reduces absorption; vitamin C or citrus improves it, while tea, coffee, milk and calcium supplements taken at the same time substantially reduce it. Black stools are expected and harmless.",
+    mistakes: [
+      "Stopping as soon as the tiredness lifts, leaving the stores unfilled — the reason anaemia so often returns a few months later.",
+      "Treating the anaemia without ever asking what caused it. In an adult, and particularly over 45, unexplained iron deficiency needs the gut investigated.",
+      "Taking it with tea, milk or a calcium tablet, which markedly reduces how much iron is actually absorbed.",
+      "Giving up because of constipation or nausea rather than asking about a different preparation, a lower frequency, or taking it with a little food.",
+      "Mistaking the normal black stools for bleeding — or, the reverse, dismissing genuinely black tarry stools as 'just the iron'."
+    ],
+    flags: [
+      "Black tarry stools with abdominal pain, dizziness or feeling faint — this may be bleeding, not the tablets",
+      "No improvement in the blood count after a reasonable period",
+      "Severe constipation or vomiting that stops you taking it",
+      "Unexplained iron deficiency in a man, or in a woman past menopause",
+      "Breathlessness at rest, chest pain, or fainting",
+      "Accidental overdose, particularly in a child — iron is genuinely dangerous in overdose and needs emergency care"
+    ],
+    ask: [
+      "How long exactly should I take this, and how will we know when to stop?",
+      "Why did my iron run low — does anything need investigating?",
+      "What should I avoid taking it with?",
+      "What do I do if it upsets my stomach?",
+      "When will my blood count be rechecked?"
+    ]
+  },
+
+  antitb: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['cough','weightloss','fever'], procedures: ['xray'], medicines: ['antibiotic'] },
+    cat: "Infections", name: "TB medicines", mode: "course",
+    modeText: "A long, fixed, uninterrupted course — months, not weeks, and finishing it is the whole treatment",
+    mini: "You feel well within weeks and the treatment runs for months. That gap is exactly where drug resistance is created.",
+    story: "Tuberculosis is treated with several medicines together, for months, and the reason is biological rather than bureaucratic. TB bacteria divide extremely slowly and some lie almost dormant; short courses kill the active ones and leave the sleepers behind. Using several drugs at once means a bacterium resistant to one is still killed by the others. Both principles collapse if doses are missed or the course is stopped early — the survivors are precisely the ones the treatment struggled with, and what grows back is harder to treat, takes far longer, and is more dangerous to everyone around. Feeling completely well after a few weeks is expected, and is not the finish line.",
+    why: "To cure tuberculosis — in the lungs or elsewhere in the body — and to prevent its spread to others.",
+    how: "Different drugs attack the bacterium in different ways, and are given together so that no single resistant organism survives. The long duration is needed to reach the slow-dividing and dormant bacteria that short courses leave behind.",
+    rule: "<b>Every dose, for the full duration, without interruption.</b> This is the most important 'course' on this page. Stopping early does not simply risk relapse — it actively selects for drug-resistant TB, which is far harder to cure. If side effects are making it difficult, the answer is to contact your TB clinic, not to stop.",
+    syndrome: "Pulmonary tuberculosis and TB affecting lymph nodes, bone, abdomen, the lining of the brain and other sites; also preventive treatment for latent infection in people at high risk.",
+    examples: "Usually several medicines taken together, often as combined tablets to make the regimen simpler. An intensive initial phase is followed by a continuation phase. Treatment is monitored, and support to complete it is part of the programme rather than an optional extra.",
+    mistakes: [
+      "Stopping once the cough and fever settle — the commonest and most damaging error, and the main driver of drug-resistant TB.",
+      "Missing doses intermittently, which is more dangerous than people realise for exactly the same reason.",
+      "Taking only some of the prescribed medicines — for example dropping the one thought to cause nausea — which removes the protection the combination provides.",
+      "Not reporting yellowing of the eyes, which can signal liver injury and needs immediate attention.",
+      "Not telling the team about other medicines: TB drugs interact with many, including hormonal contraception, HIV treatment and some epilepsy medicines.",
+      "Hiding the diagnosis so that household contacts are never screened — they may be infected and treatable."
+    ],
+    flags: [
+      "Yellowing of the eyes or skin, dark urine, or persistent vomiting — possible liver injury, stop and seek advice the same day",
+      "New problems with vision or colour perception",
+      "Numbness or tingling in the hands or feet",
+      "A rash, especially if widespread or with fever",
+      "Coughing blood, or worsening breathlessness",
+      "Any missed doses — report them rather than doubling up"
+    ],
+    ask: [
+      "Exactly how many months is my course, and when is the finish date?",
+      "What do I do if I miss a dose, or vomit one back up?",
+      "Which side effects mean I should stop and call you immediately?",
+      "Do my household contacts need screening?",
+      "Do these interact with anything else I take, including contraception?",
+      "How and when will we confirm the treatment has worked?"
+    ]
+  },
+
+  antifungal: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['itching','rash'], procedures: [], medicines: ['steroid','antihistamine'] },
+    cat: "Infections", name: "Antifungal medicines", mode: "course",
+    modeText: "A course — and skin and nail infections need far longer courses than people expect",
+    mini: "Fungal skin infections look better long before they are gone, and a steroid cream makes them dramatically worse.",
+    story: "Fungi grow slowly and live in the outer layers of skin, nail and hair, which are themselves slow to turn over. That combination is why antifungal courses are measured in weeks for skin and in months for nails — the treatment has to outlast the tissue it lives in. The specific trap, and it is a widespread one, is the combination cream containing a strong steroid: it calms the redness and itch within days, which feels like success, while suppressing the local immune response and letting the fungus spread further and deeper. Recognising that pattern is one of the most useful things on this page.",
+    why: "To clear fungal infections of the skin, nails, scalp, mouth or genital area, and in serious illness to treat fungal infection affecting internal organs.",
+    how: "They damage the fungal cell membrane or block its construction, so the fungus cannot maintain itself and dies. Because they act on growing organisms in slow-turnover tissue, they need sustained contact over time.",
+    rule: "<b>A defined course, completed — usually well beyond the point where the skin looks normal.</b> For skin, that often means continuing for one to two weeks after it appears clear; for nails, months. Stopping when it looks better is the main reason fungal infections come back and become steadily harder to treat.",
+    syndrome: "Ringworm and other tinea infections of the body, groin and feet; scalp and nail infections; thrush of the mouth and genital area; and serious systemic fungal infection in people with weakened immunity.",
+    examples: "Creams and shampoos for localised skin and scalp infections; tablets where the infection is widespread, involves the nails or scalp, or has not responded to topical treatment. Choice depends on the site and how deep the infection sits.",
+    mistakes: [
+      "Using a combination cream containing a strong steroid. It relieves itch quickly while letting the infection spread and become far harder to treat — a very common and avoidable problem.",
+      "Stopping as soon as the rash looks clear, leaving live fungus in the skin to regrow.",
+      "Treating only the visible patch and not the feet, groin, scalp or nails that are reseeding it.",
+      "Sharing towels, combs or footwear within a household without treating everyone affected.",
+      "Assuming any itchy ring-shaped rash is fungal — some are not, and antifungals will not help those.",
+      "Taking antifungal tablets without mentioning other medicines, since several interact significantly."
+    ],
+    flags: [
+      "A rash that is spreading despite treatment",
+      "Increasing pain, swelling, warmth or pus — that suggests bacterial infection instead",
+      "Scalp involvement with hair loss, which needs oral treatment rather than cream",
+      "Yellowing of the eyes, or persistent nausea, while on antifungal tablets",
+      "Recurrent or unusually widespread infection, which can point to diabetes or reduced immunity",
+      "No improvement at all after a properly completed course"
+    ],
+    ask: [
+      "Exactly how long should I use this, including after it looks clear?",
+      "Is the cream I have a plain antifungal, or does it contain a steroid?",
+      "Do I need tablets rather than a cream for this site?",
+      "Does anyone else in my household need treating?",
+      "Should anything be tested to confirm it is fungal?"
+    ]
+  },
+
+  laxative: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['abdopain','bloodstool'], procedures: ['colonoscopy'], medicines: ['painkiller'] },
+    cat: "Stomach & digestion", name: "Laxatives", mode: "when",
+    modeText: "Mostly when needed — but some are taken regularly, and that is a legitimate plan",
+    mini: "Different types work in completely different ways, and the real question is why the constipation is there at all.",
+    story: "Constipation is a symptom, not a diagnosis, and laxatives treat the symptom. Some add bulk, some draw water into the stool, some stimulate the bowel wall to contract, and some soften from within — and choosing the wrong type for the situation is why people often conclude that laxatives do not work for them. Two things matter more than the choice of product. First, whether something is causing it: medicines, particularly strong painkillers, are a very common cause. Second, whether the constipation is new — because a lasting change in bowel habit in an adult is a symptom that needs looking at, not managing.",
+    why: "To relieve constipation, to prevent it where a medicine or condition makes it likely, and to empty the bowel before procedures such as a colonoscopy.",
+    how: "Bulk-forming types hold water in the stool so it is larger and softer; osmotic types draw water into the bowel; stimulant types prompt the bowel wall to contract; softeners let water mix into the stool. The right one depends on the cause.",
+    rule: "<b>Usually when needed, and stopped when things are moving.</b> But some situations genuinely call for a regular laxative — alongside strong painkillers, in long-standing constipation, or in some neurological conditions — and taking one every day on that advice is correct, not a failure. What matters is that new constipation gets a cause before it gets a routine.",
+    syndrome: "Constipation from diet, dehydration or inactivity; constipation caused by medicines, especially opioid painkillers; irritable bowel syndrome; pregnancy; and bowel preparation before investigations.",
+    examples: "Bulk-forming types need plenty of water to work and are unsuitable if there is any suspicion of obstruction. Osmotic types are often preferred for regular use. Stimulants act faster and are generally for shorter-term use. Suppositories and enemas act locally and quickly.",
+    mistakes: [
+      "Treating new, persistent constipation in an adult over 45 with laxatives instead of getting it investigated — a change in bowel habit is a symptom that matters.",
+      "Starting a strong painkiller without a laxative alongside it, then becoming severely constipated.",
+      "Taking a bulk-forming laxative without enough fluid, which can make the blockage worse rather than better.",
+      "Escalating the dose steadily without ever reviewing why the constipation is there.",
+      "Using laxatives for weight control, which does not work and causes real harm.",
+      "Continuing to push laxatives through severe abdominal pain, vomiting or a completely blocked bowel — that needs assessment, not more laxative."
+    ],
+    flags: [
+      "Blood in the stool, or black tarry stools",
+      "A persistent change in bowel habit, particularly over 45",
+      "Unintended weight loss alongside it",
+      "Severe abdominal pain, a distended belly, or vomiting",
+      "Complete inability to pass stool or wind",
+      "Constipation that started soon after a new medicine"
+    ],
+    ask: [
+      "Which type is right for my situation, and why that one?",
+      "Should I take it regularly or only when needed?",
+      "Does one of my other medicines cause this?",
+      "How much fluid should I be drinking with it?",
+      "At what point should this be investigated rather than treated?"
+    ]
+  },
+
+  sleepanxiety: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['sleep','anxiety','confusion'], procedures: [], medicines: ['antidepressant'] },
+    cat: "Mind & mood", name: "Sleep & anxiety sedatives", mode: "when",
+    modeText: "Short-term and sparing — yet never stopped abruptly once taken regularly",
+    mini: "They work quickly, they stop working over weeks, and the body adapts to them — which is why both starting and stopping need care.",
+    story: "This group calms the nervous system, and it does so effectively — which is exactly the problem. Used for a few nights in a crisis they are genuinely useful. Used for months, three things happen: the effect fades as the body adapts, the dose creeps up, and stopping produces rebound anxiety and insomnia worse than the original complaint. That rebound is often misread as proof the medicine is still needed. The unusual feature of this entry is that it carries two opposite warnings at once — do not take them for longer than intended, and do not stop them suddenly once you have.",
+    why: "For short-term relief of severe anxiety or insomnia, for specific situations such as before a procedure, and in some conditions such as alcohol withdrawal or certain seizure and muscle-spasm problems.",
+    how: "They enhance the brain's main calming signal, reducing the excitability of nerve circuits. That produces sedation, muscle relaxation and reduced anxiety — and, with repeated use, an adapted nervous system that now expects the drug to be there.",
+    rule: "<b>Intended for short-term use — typically days to a few weeks, not months.</b> But once taken regularly, <b>never stop abruptly</b>: sudden withdrawal can cause severe rebound anxiety, confusion and, at higher doses, seizures. Coming off is done by gradual reduction, planned with your doctor. Both halves of this rule matter equally.",
+    syndrome: "Severe short-term anxiety, crisis insomnia, premedication before procedures, alcohol withdrawal, muscle spasm, and some seizure situations.",
+    examples: "Some act briefly and are used for sleep; others last longer and are used for daytime anxiety. Related non-benzodiazepine sleep medicines behave similarly enough that the same cautions apply. For ongoing anxiety, other treatments — talking therapies and non-sedating medicines — are generally preferred precisely because they do not carry this pattern.",
+    mistakes: [
+      "Continuing well beyond the intended few weeks, so that tolerance and dependence develop quietly.",
+      "Stopping suddenly after regular use — this can be genuinely dangerous, not merely uncomfortable.",
+      "Combining with alcohol or with strong painkillers, which together can suppress breathing.",
+      "Driving the morning after a longer-acting one, while still measurably impaired.",
+      "Using them as the main treatment for long-term anxiety, where they work poorly and other treatments work better.",
+      "Taking someone else's, or an old leftover supply, without any review."
+    ],
+    flags: [
+      "Needing more than before to get the same effect",
+      "Anxiety, sweating, tremor, confusion or a seizure after missing doses — seek help urgently",
+      "Falls, unsteadiness or confusion, particularly in an older person",
+      "Excessive daytime drowsiness affecting work or driving",
+      "Low mood or thoughts of self-harm",
+      "Still taking it months after it was first prescribed, with no review"
+    ],
+    ask: [
+      "How many days or weeks is this meant to be for?",
+      "What is the plan for coming off it, and when do we start?",
+      "What are the non-medicine options for my situation?",
+      "Is it safe with my other medicines, and with alcohol?",
+      "Can I drive while taking this?"
+    ]
+  },
+
+  calciumvitd: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['jointpain','backpain','fatigue'], procedures: ['hipreplace','kneereplace'], medicines: ['steroid'] },
+    cat: "Bones & joints", name: "Calcium & vitamin D", mode: "daily",
+    modeText: "Every day — they work slowly, silently, and only over years",
+    mini: "Nothing about taking them feels like anything. The benefit is a fracture that never happens.",
+    story: "Vitamin D allows the gut to absorb calcium, and calcium is the mineral bone is built from — so the two are prescribed together because one without the other achieves little. Like blood-pressure tablets, they belong to the category of treatment you cannot feel working, and for the same reason they are among the most frequently abandoned. It is also worth being honest about the limits: they support bone health and correct a deficiency, but in established osteoporosis they are the foundation for a specific bone-strengthening treatment rather than a substitute for it.",
+    why: "To correct vitamin D deficiency, to support bone strength in osteoporosis and in people at risk of it, and alongside long-term steroid treatment which thins bone.",
+    how: "Vitamin D enables calcium absorption from the gut and helps maintain the blood calcium level; calcium provides the raw material for bone. Together they support bone density and muscle function, and reduce fracture risk over years rather than weeks.",
+    rule: "<b>Every day, long-term, and you will not feel any difference — that is expected.</b> The benefit is measured in fractures that do not happen. If you are also on a specific osteoporosis treatment, these support it rather than replace it. A high loading dose of vitamin D is sometimes given to correct a marked deficiency, followed by a regular daily maintenance dose.",
+    syndrome: "Vitamin D deficiency; osteoporosis and osteopenia; prevention of bone loss during long-term steroid treatment; pregnancy and breastfeeding; and some kidney and parathyroid conditions.",
+    examples: "Often a single combined tablet or chewable preparation. Calcium is absorbed better in divided amounts than all at once, and it interferes with the absorption of several other medicines — including iron, thyroid replacement and some antibiotics — so spacing them apart matters.",
+    mistakes: [
+      "Stopping because nothing feels different — the entire benefit is silent and long-term.",
+      "Taking calcium at the same time as thyroid replacement, iron or certain antibiotics, which reduces how much of those is absorbed.",
+      "Assuming these alone treat established osteoporosis, when a specific bone-strengthening medicine is what reduces fracture risk most.",
+      "Taking very high doses of vitamin D bought without advice, on the assumption that more is better. It is fat-soluble and accumulates.",
+      "Continuing calcium without review in someone with kidney stones or a high blood calcium level."
+    ],
+    flags: [
+      "Nausea, vomiting, constipation, excessive thirst or confusion — these can indicate a high calcium level",
+      "Kidney stones, or pain in the flank",
+      "Bone pain, or a fracture from a minor fall",
+      "Loss of height, or a new stoop",
+      "Taking high-dose vitamin D bought over the counter without it being checked"
+    ],
+    ask: [
+      "Has my vitamin D level actually been measured?",
+      "Do I need a bone density scan?",
+      "Should I be on a specific osteoporosis treatment as well as this?",
+      "Which of my other medicines should I space apart from the calcium?",
+      "How long am I expected to take this for, and when is it reviewed?"
+    ]
   }
 };

@@ -5,11 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Signal · Procedures — what actually changes in your body</title>
 <meta name="description" content="Plain-language explainer of common medical procedures: what changes structurally, functionally and chemically — before and after — plus risks, benefits and what to ask.">
+<link rel="canonical" href="https://gopitherobot.github.io/signal-health/procedures/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Signal">
+<meta property="og:title" content="Signal · Procedures — what actually changes in your body">
+<meta property="og:description" content="Plain-language explainer of common medical procedures: what changes structurally, functionally and chemically — before and after — plus risks, benefits and what to ask.">
+<meta property="og:url" content="https://gopitherobot.github.io/signal-health/procedures/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Signal · Procedures — what actually changes in your body">
+<meta name="twitter:description" content="Plain-language explainer of common medical procedures: what changes structurally, functionally and chemically — before and after — plus risks, benefits and what to ask.">
+<meta name="theme-color" content="#f4f5f7">
 <link rel="stylesheet" href="../assets/anim.css">
+<link rel="stylesheet" href="../assets/shared.css">
 <style>
   :root{
     --ink:#141c26;--ink-soft:#48545f;--ink-faint:#7a8590;
     --paper:#f3f5f8;--card:#ffffff;--line:#e0e4ea;
+    --accent:#33507e;--accent-bg:#e7ecf5;
     --deep:#33507e;--deep-bg:#e7ecf5;--good:#2f7d63;--good-bg:#e3f0ea;--warn:#b23b2e;--warn-bg:#f7e4e0;
     --before:#8a6a3a;--before-bg:#f3ead9;--after:#33507e;--after-bg:#e7ecf5;
     --shadow:0 1px 2px rgba(20,28,38,.04),0 8px 24px rgba(20,28,38,.07);
@@ -115,6 +127,7 @@
 </style>
 </head>
 <body>
+<a class="sig-skip" href="#main">Skip to the procedure list</a>
 <div class="safety"><b>Not medical advice.</b> This explains what procedures do in general terms. Your own care, risks and options must come from the team treating you.</div>
 <header><div class="wrap brand">
   <a href="../index.html" class="mark">Signal<span class="dot">.</span></a>
@@ -122,55 +135,88 @@
   <a href="../symptoms/index.html" class="navlink">Symptoms →</a>
   <a href="../medicines/index.html" class="navlink" style="margin-left:16px">Medicines →</a>
 </div></header>
-<main class="wrap">
+<main class="wrap" id="main">
   <section class="hero">
     <h1>What actually <em>changes</em> inside you — before, and after.</h1>
     <p>Most explainers tell you what a procedure is called. We show you what it changes in your body across three layers: structure, function, and chemistry. Flip between before and after, and the picture completes itself.</p>
   </section>
   <div class="search">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-    <input id="q" type="text" placeholder="Search a procedure — try &ldquo;anaesthesia&rdquo; or &ldquo;stent&rdquo;" oninput="filter(this.value)">
+    <label class="sr-only" for="q">Search procedures by name or category</label>
+    <input id="q" type="text" autocomplete="off" placeholder="Search a procedure — try &ldquo;anaesthesia&rdquo; or &ldquo;stent&rdquo;" oninput="filter(this.value)">
   </div>
-  <div class="section-label">Explore by procedure — 20 entries</div>
-  <div class="grid" id="grid"></div>
+  <div class="section-label" id="countlabel" role="status" aria-live="polite">Explore by procedure</div>
+  <div class="grid" id="grid" role="list"></div>
+  <p class="empty" id="empty" hidden>No procedure matches that search. Try a plainer word — &ldquo;scan&rdquo;, &ldquo;surgery&rdquo;, &ldquo;anaesthesia&rdquo;.</p>
 </main>
 <footer class="wrap foot">
   <p><b>Educational prototype.</b> The structural / functional / chemical model is a teaching device, simplified for clarity. Risk and benefit descriptions are qualitative and illustrative; every entry requires physician sign-off and cited clinical sources before any public deployment.</p>
 </footer>
-<div class="scrim" id="scrim" onclick="if(event.target===this)close_()"><div class="sheet" id="sheet"></div></div>
+<div class="scrim" id="scrim" aria-hidden="true" onclick="if(event.target===this)close_()"><div class="sheet" id="sheet"></div></div>
 
 <script src="../data/procedures.js"></script>
+<script src="../data/manifest.js"></script>
 <script src="../assets/icons.js"></script>
+<script src="../assets/signal.js"></script>
 <script>
-const grid=document.getElementById('grid');
-let cur=null,state='after';
+const grid = document.getElementById('grid');
+const PROC = window.PROCEDURES;
+let cur = null, state = 'after';
+
 function render(){
   grid.innerHTML='';
-  Object.entries(window.PROCEDURES).forEach(([k,d])=>{
+  Object.entries(PROC).forEach(([k,d])=>{
     const b=document.createElement('button');
-    b.className='ptile';b.dataset.name=(d.name+' '+d.cat+' '+d.mini).toLowerCase();b.onclick=()=>open_(k);
-    b.innerHTML=`<div class="tico">${SignalIconFor(d.cat,24)}</div><div class="cat">${d.cat}</div><div class="nm">${d.name}</div><div class="mini">${d.mini}</div>`;
+    b.className='ptile';
+    b.dataset.name=(d.name+' '+d.cat+' '+d.mini).toLowerCase();
+    b.dataset.k=k;
+    b.setAttribute('role','listitem');
+    b.setAttribute('aria-label',d.name+' — '+d.cat+'. Open full explainer.');
+    b.onclick=()=>open_(k);
+    b.innerHTML=`<div class="tico" aria-hidden="true">${SignalIconFor(d.cat,24)}</div><div class="cat">${d.cat}</div><div class="nm">${d.name}</div><div class="mini">${d.mini}</div>`;
     grid.appendChild(b);
   });
+  filter('');
 }
-function filter(v){v=v.trim().toLowerCase();document.querySelectorAll('.ptile').forEach(t=>{t.style.display=t.dataset.name.includes(v)?'':'none';});}
+
+function filter(v){
+  v=v.trim().toLowerCase();
+  let shown=0;
+  document.querySelectorAll('.ptile').forEach(t=>{
+    const vis=t.dataset.name.includes(v);
+    t.style.display=vis?'':'none';
+    if(vis) shown++;
+  });
+  document.getElementById('empty').hidden = shown>0;
+  document.getElementById('countlabel').textContent = v
+    ? `${shown} procedure${shown===1?'':'s'} matching “${v}”`
+    : `Explore by procedure — ${shown} entries`;
+}
+
 function axesHTML(d){
-  const arr=state==='before'?d.axes.before:d.axes.after;
+  const arr = state==='before' ? d.axes.before : d.axes.after;
   return arr.map(a=>`<div class="axis"><div class="al">${a.l}</div><div class="ab">${a.b}</div></div>`).join('');
 }
+
 function setState(s){
-  state=s;const d=window.PROCEDURES[cur];
-  document.getElementById('axesWrap').className='axes state-'+s;
-  document.getElementById('axesWrap').innerHTML=axesHTML(d);
-  document.getElementById('bBefore').classList.toggle('on',s==='before');
-  document.getElementById('bAfter').classList.toggle('on',s==='after');
-  const sl=document.getElementById('slider');
-  const bw=document.getElementById('bBefore').offsetWidth;
-  if(s==='before'){sl.style.transform='translateX(0)';sl.style.width=bw+'px';sl.style.background='var(--before)';}
-  else{sl.style.transform=`translateX(${bw}px)`;sl.style.width=document.getElementById('bAfter').offsetWidth+'px';sl.style.background='var(--after)';}
+  state=s;
+  const d=PROC[cur];
+  if(!d) return;
+  const wrap=document.getElementById('axesWrap');
+  wrap.className='axes state-'+s;
+  wrap.innerHTML=axesHTML(d);
+  const bB=document.getElementById('bBefore'), bA=document.getElementById('bAfter');
+  bB.classList.toggle('on',s==='before'); bA.classList.toggle('on',s==='after');
+  bB.setAttribute('aria-pressed', s==='before'); bA.setAttribute('aria-pressed', s==='after');
+  const sl=document.getElementById('slider'), bw=bB.offsetWidth;
+  if(s==='before'){ sl.style.transform='translateX(0)'; sl.style.width=bw+'px'; sl.style.background='var(--before)'; }
+  else { sl.style.transform=`translateX(${bw}px)`; sl.style.width=bA.offsetWidth+'px'; sl.style.background='var(--after)'; }
 }
+
 function open_(k){
-  cur=k;state='after';const d=window.PROCEDURES[k];
+  const d=PROC[k];
+  if(!d) return;
+  cur=k; state='after';
   const badges=d.urgency.map(u=>`<span class="ubadge ${u.c}">${u.t}</span>`).join('');
   const benefits=d.benefits.map(x=>`<li>${x}</li>`).join('');
   const risks=d.risks.map(x=>`<li>${x}</li>`).join('');
@@ -178,22 +224,22 @@ function open_(k){
   const myths=d.myths.map(m=>`<div class="myth"><div class="m">${m.m}</div><div class="t">${m.t}</div></div>`).join('');
   const ask=d.ask.map(a=>`<li>${a}</li>`).join('');
   document.getElementById('sheet').innerHTML=`
-    <div class="sheet-head"><button class="x" onclick="close_()" aria-label="Close">&times;</button>
+    <div class="sheet-head"><button class="x" onclick="close_()" aria-label="Close ${d.name}">&times;</button>
       <div class="cat">${d.cat}</div><h2>${d.name}</h2>
       <div class="badges">${badges}</div>
       <p class="story">${d.story}</p></div>
     <div class="sheet-body">
       <div class="blk"><h3>When it's used</h3><div class="indic">${d.indications}</div></div>
       <div class="blk">
-        <h3>What changes in your body</h3>
+        <h3 id="axesTitle">What changes in your body</h3>
         <div class="toggle-head">
-          <div class="toggle"><span class="slider" id="slider"></span>
-            <button id="bBefore" onclick="setState('before')">Before</button>
-            <button id="bAfter" onclick="setState('after')">After</button>
+          <div class="toggle" role="group" aria-labelledby="axesTitle"><span class="slider" id="slider" aria-hidden="true"></span>
+            <button id="bBefore" type="button" aria-pressed="false" onclick="setState('before')">Before</button>
+            <button id="bAfter" type="button" aria-pressed="true" onclick="setState('after')">After</button>
           </div>
           <span class="toggle-hint">Flip to compare across all three layers</span>
         </div>
-        <div class="axes state-after" id="axesWrap"></div>
+        <div class="axes state-after" id="axesWrap" aria-live="polite"></div>
       </div>
       <div class="blk"><h3>The trade-off</h3>
         <div class="cols">
@@ -205,13 +251,22 @@ function open_(k){
       <div class="blk"><h3>The journey</h3><div class="journey">${journey}</div></div>
       <div class="blk"><h3>Myths, cleared up</h3>${myths}</div>
       <div class="blk"><div class="ask"><h4>Questions worth asking your doctor</h4><ul>${ask}</ul></div></div>
+      ${SignalRelated(d,'procedures')}
+      ${SignalReview(d)}
     </div>`;
-  document.getElementById('scrim').classList.add('open');document.body.style.overflow='hidden';
+  SignalModal.open(k);
   requestAnimationFrame(()=>setState('after'));
 }
-function close_(){document.getElementById('scrim').classList.remove('open');document.body.style.overflow='';cur=null;}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')close_()});
+
+function close_(){ SignalModal.close(); cur=null; }
+
+/* lets shared.js open a sibling procedure in place rather than reloading */
+window.SignalOpenLocal = open_;
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') close_(); });
+
 render();
+SignalDeepLink(k=>!!PROC[k], open_);
 </script>
 </body>
 </html>

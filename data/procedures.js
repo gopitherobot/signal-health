@@ -6,6 +6,8 @@
 
 window.PROCEDURES = {
   ga: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['nausea'], procedures: ['spinal','ventilation','appendectomy','bypass','catheter','colonoscopy'], medicines: ['painkiller'] },
     cat: "Anaesthesia", name: "General anaesthesia",
     mini: "Not sleep — a reversible, controlled, closely-watched shutdown of consciousness.",
     story: "People fear anaesthesia more than the surgery it enables, and almost always for the wrong reasons. It isn't sleep, and it isn't a coma. It's a drug-induced, carefully titrated and continuously monitored state in which consciousness, memory, movement and pain response are switched off — and then deliberately switched back on. Someone watches your breathing and circulation second by second, the entire time. That person is the reason it is now extraordinarily safe.",
@@ -43,6 +45,8 @@ window.PROCEDURES = {
   },
 
   spinal: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['backpain'], procedures: ['ga','csection','herniarepair','hipreplace','hysterectomy','kneereplace'], medicines: ['painkiller','anticoag'] },
     cat: "Anaesthesia", name: "Spinal anaesthesia",
     mini: "You stay awake; a single injection numbs everything below the waist.",
     story: "Spinal anaesthesia unsettles people because they stay awake while being operated on — but for the right operations it is often safer than being put fully under. A fine needle places local anaesthetic into the fluid around the spinal cord, and within minutes the lower half of the body goes numb and heavy. You feel pressure and movement, but no pain. It's the standard for most caesareans, and many hip, knee and lower-limb operations.",
@@ -80,6 +84,8 @@ window.PROCEDURES = {
   },
 
   pci: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['chest','breathless'], procedures: ['bypass','ctcontrast','ecg','pacemaker'], medicines: ['antiplatelet','statin','bp','heartfailure'] },
     cat: "Cardiac", name: "Angioplasty & stent",
     mini: "A blocked heart artery is reopened from the inside, through a wrist puncture.",
     story: "A coronary artery narrowed by plaque starves heart muscle of blood — that's angina, and when it blocks completely, a heart attack. Angioplasty threads a fine wire from your wrist to your heart, inflates a balloon inside the narrowing, and leaves a metal scaffold to hold it open. In a heart attack it is a race: muscle dies every minute the artery stays shut. Done fast enough, it saves heart that would otherwise be lost forever.",
@@ -117,6 +123,8 @@ window.PROCEDURES = {
   },
 
   csection: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['abdopain'], procedures: ['spinal','ga'], medicines: ['antibiotic','painkiller'] },
     cat: "Obstetric / surgical", name: "Caesarean section",
     mini: "Delivery through a cut in the abdomen and womb — sometimes planned, sometimes an emergency.",
     story: "A caesarean delivers a baby through a surgical incision rather than the birth canal. It can be carefully planned (for the baby's position, a previous caesarean, or other reasons) or decided in minutes when labour becomes unsafe for mother or baby. Most are done under a spinal, so the mother is awake to meet her baby. It's one of the most common major operations in the world, and understanding it removes much of the fear.",
@@ -154,6 +162,8 @@ window.PROCEDURES = {
   },
 
   endoscopy: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['abdopain','nausea','bloodstool','chest','swallowing','weightloss'], procedures: ['colonoscopy','ga','biopsy','gallbladder'], medicines: ['acid','painkiller'] },
     cat: "Diagnostic", name: "Endoscopy (gastroscopy)",
     mini: "A thin camera passed through the mouth to see the gullet, stomach and upper bowel directly.",
     story: "An endoscopy lets a doctor look directly inside your upper digestive tract with a slim, flexible camera — no cuts, no scars. It's how the cause of persistent indigestion, swallowing trouble, or suspected bleeding is found, and it allows biopsies and even treatment (stopping a bleed, stretching a narrowing) in the same sitting. Most people dread it more than it deserves; with throat spray or light sedation, it's usually brief and tolerable.",
@@ -191,6 +201,8 @@ window.PROCEDURES = {
   },
 
   ventilation: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['breathless','confusion','cough'], procedures: ['ga','centralline','bypass'], medicines: ['antibiotic','steroid','reliever'] },
     cat: "Critical care", name: "Mechanical ventilation",
     mini: "A machine breathes for you when your own lungs or drive can't — a support, not a treatment in itself.",
     story: "A ventilator is one of the most misunderstood machines in medicine. It does not cure anything — it buys time, taking over the work of breathing so the body can survive while the underlying problem (pneumonia, injury, a drug overdose, surgery) is treated or recovers. A tube in the windpipe connects to the machine, which delivers carefully controlled breaths. Families often fear 'being on a ventilator'; understanding what it does, and doesn't, changes that conversation.",
@@ -228,6 +240,8 @@ window.PROCEDURES = {
   },
 
   gallbladder: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['abdopain','nausea'], procedures: ['ga','endoscopy'], medicines: ['painkiller','antibiotic'] },
     cat: "Surgical", name: "Gallbladder removal",
     mini: "Keyhole removal of a small organ whose stones cause big pain — you live perfectly well without it.",
     story: "The gallbladder stores bile, but when it fills with stones it causes attacks of severe pain, and sometimes dangerous complications like infection or blockage. The reassuring truth is that you don't need it: removing it (usually by keyhole surgery) cures the problem, and the liver simply drips bile straight into the gut instead. It's one of the most common operations, and most people go home within a day.",
@@ -265,6 +279,8 @@ window.PROCEDURES = {
   },
 
   dialysis: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['swelling','fatigue','urinary','confusion'], procedures: ['centralline','catheter'], medicines: ['bp','insulin','diabetesoral','diuretic'] },
     cat: "Renal", name: "Dialysis",
     mini: "A machine or the belly lining does the kidneys' filtering job when they can no longer cope.",
     story: "When kidneys fail, waste and fluid build up in the blood to dangerous levels. Dialysis takes over their core filtering role — either by pumping blood through an external filter (haemodialysis) or by using the lining of the abdomen as a natural filter (peritoneal dialysis). It's life-sustaining, often several times a week, and it reshapes daily life. Understanding it helps people and families make the choices that fit their lives, not just their kidneys.",
@@ -302,6 +318,8 @@ window.PROCEDURES = {
   },
 
   kneereplace: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['jointpain'], procedures: ['hipreplace','spinal','ga'], medicines: ['painkiller','anticoag','calciumvitd'] },
     cat: "Orthopaedic", name: "Knee replacement",
     mini: "A worn-out joint's surfaces are resurfaced with metal and plastic to end the pain and restore movement.",
     story: "When arthritis wears the cartilage of the knee down to bare bone, every step hurts and movement shrinks. A knee replacement doesn't remove the whole knee — it resurfaces the damaged ends of the bones with metal and a plastic spacer, recreating a smooth, gliding joint. It's one of the most successful operations in medicine for quality of life, but it demands real rehabilitation: the result depends as much on the physiotherapy afterwards as on the surgery itself.",
@@ -339,6 +357,8 @@ window.PROCEDURES = {
   },
 
   ctcontrast: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['chest','headache','abdopain','backpain','breathless','confusion'], procedures: ['colonoscopy','lp','appendectomy','mri','pci','ultrasound'], medicines: ['diabetesoral','epilepsy'] },
     cat: "Diagnostic", name: "CT scan with contrast",
     mini: "A fast, detailed X-ray cross-section; a dye injection lights up blood vessels and abnormalities.",
     story: "A CT scanner takes X-rays from many angles and reconstructs detailed cross-sectional 'slices' of the body — far more than a plain X-ray shows. A contrast dye, injected into a vein, highlights blood vessels and many abnormalities, making them stand out. People worry about the dye and the radiation; both are worth understanding plainly, because for the right question a CT can be genuinely life-saving and fast.",
@@ -379,6 +399,8 @@ window.PROCEDURES = {
 // ---- Procedures 11–20 ----
 Object.assign(window.PROCEDURES, {
   bypass: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['chest','breathless'], procedures: ['pci','ga','ventilation'], medicines: ['antiplatelet','statin','bp'] },
     cat: "Cardiac", name: "Bypass surgery (CABG)",
     mini: "Blocked heart arteries are bypassed with grafts — open-heart surgery for advanced disease.",
     story: "When several coronary arteries are severely narrowed, or the disease is in a critical location, stents may not be enough — a bypass reroutes blood around the blockages using vessels borrowed from the chest, arm or leg. It's major open-heart surgery, often using a heart-lung machine, and the recovery is substantial. But for the right patient it can outperform stents, relieving angina and prolonging life.",
@@ -416,6 +438,8 @@ Object.assign(window.PROCEDURES, {
   },
 
   centralline: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: [], procedures: ['ventilation','dialysis','bloodtransfusion','chemotherapy'], medicines: ['antibiotic'] },
     cat: "Critical care", name: "Central line",
     mini: "A long catheter into a large vein — for drugs, fluids and monitoring that small veins can't handle.",
     story: "A central line is a thin catheter placed into one of the body's large veins, usually in the neck, chest or groin. It's a workhorse of intensive care and cancer treatment — allowing powerful drugs, large volumes of fluid, feeding, and pressure monitoring that ordinary arm cannulas can't manage. Families often see it and fear the worst; in reality it's a routine, enabling tool, placed under sterile conditions with ultrasound guidance.",
@@ -453,6 +477,8 @@ Object.assign(window.PROCEDURES, {
   },
 
   colonoscopy: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['bloodstool','abdopain','weightloss','diarrhoea'], procedures: ['endoscopy','ga','ctcontrast'], medicines: ['painkiller','anticoag','ironfolate','laxative'] },
     cat: "Diagnostic", name: "Colonoscopy",
     mini: "A camera examines the large bowel from below — the gold standard for finding and removing polyps.",
     story: "A colonoscopy inspects the entire large bowel with a flexible camera passed through the back passage. It's how bowel cancer is caught early — often by finding and removing polyps before they ever turn cancerous, making it both a test and a treatment. The preparation (clearing the bowel) is the part people dread most; the procedure itself, usually done with sedation, is generally well-tolerated and hugely worthwhile.",
@@ -490,6 +516,8 @@ Object.assign(window.PROCEDURES, {
   },
 
   hipreplace: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['jointpain'], procedures: ['kneereplace','spinal','ga'], medicines: ['painkiller','anticoag','calciumvitd'] },
     cat: "Orthopaedic", name: "Hip replacement",
     mini: "A worn hip joint's ball and socket are replaced — one of surgery's great quality-of-life wins.",
     story: "Arthritis of the hip turns walking, sleeping and even putting on shoes into daily pain. A hip replacement removes the worn ball at the top of the thigh bone and the damaged socket, replacing them with a smooth artificial joint. It is among the most reliably successful operations in all of medicine — most people are astonished by how completely the pain lifts, and are walking within a day.",
@@ -527,6 +555,8 @@ Object.assign(window.PROCEDURES, {
   },
 
   cataract: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['visionloss'], procedures: [], medicines: ['diabetesoral','steroid'] },
     cat: "Ophthalmic", name: "Cataract surgery",
     mini: "A clouded natural lens is replaced with a clear artificial one — quick, and often transformative.",
     story: "A cataract is the gradual clouding of the eye's natural lens, blurring vision as though looking through frosted glass. Surgery removes the cloudy lens and slips a clear artificial one into its place — usually in under half an hour, under local anaesthetic, with the person awake. It is the most commonly performed operation in the world, and for many people it restores vision they'd quietly given up on.",
@@ -564,6 +594,8 @@ Object.assign(window.PROCEDURES, {
   },
 
   appendectomy: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['abdopain','fever','nausea'], procedures: ['ga','ctcontrast'], medicines: ['antibiotic','painkiller'] },
     cat: "Surgical", name: "Appendix removal",
     mini: "Emergency removal of an inflamed appendix — usually keyhole, and usually straightforward.",
     story: "The appendix is a small pouch off the large bowel that, when it becomes inflamed (appendicitis), causes worsening pain that classically shifts to the lower right abdomen. Left untreated it can burst, spilling infection into the belly — so removal is usually an emergency. The good news: it's a common, well-practised operation, generally done by keyhole, and the appendix serves no essential function you'll miss.",
@@ -601,6 +633,8 @@ Object.assign(window.PROCEDURES, {
   },
 
   bloodtransfusion: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['fatigue','breathless','bloodstool','bruising','fever','jaundice'], procedures: ['centralline','chemotherapy'], medicines: ['ironfolate'] },
     cat: "Haematology", name: "Blood transfusion",
     mini: "Donated blood replaces what's been lost or isn't being made — carefully matched and monitored.",
     story: "A transfusion gives you blood, or a specific component of it, from a screened donor — to replace serious blood loss, correct severe anaemia, or supply clotting factors. It's tightly regulated, meticulously matched to your blood group, and given slowly under observation. Fears about safety are understandable but largely outdated: modern screening and cross-matching make transfusion very safe, and for the right patient it's genuinely life-saving.",
@@ -638,6 +672,8 @@ Object.assign(window.PROCEDURES, {
   },
 
   chemotherapy: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['nausea','fatigue','weightloss','breastlump'], procedures: ['centralline','bloodtransfusion','biopsy'], medicines: ['steroid','antibiotic'] },
     cat: "Oncology", name: "Chemotherapy",
     mini: "Drugs that target rapidly dividing cells to kill cancer — powerful, and given in carefully planned cycles.",
     story: "Chemotherapy uses medicines that attack rapidly dividing cells, the hallmark of cancer. Because some healthy cells also divide fast — hair, gut lining, blood-forming marrow — the familiar side effects follow, though modern supportive care has softened many of them. It's given in cycles, allowing the body to recover between doses. Understanding the logic behind it — why the cycles, why the side effects, why the blood tests — makes a daunting treatment far less frightening.",
@@ -675,6 +711,8 @@ Object.assign(window.PROCEDURES, {
   },
 
   pacemaker: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['palpitations','dizzy'], procedures: ['ga','pci','ecg'], medicines: ['anticoag','bp','heartfailure'] },
     cat: "Cardiac", name: "Pacemaker",
     mini: "A small device that steps in when the heart's own electrical timing fails or slows dangerously.",
     story: "The heart has its own electrical wiring that sets the beat. When that system falters — beating too slowly, or with dangerous pauses — a pacemaker takes over the timing, delivering tiny electrical impulses to keep the rhythm steady. It's implanted under the skin near the collarbone in a short procedure, usually under local anaesthetic. For people plagued by blackouts or exhausting slow heartbeats, it can be quietly transformative.",
@@ -712,6 +750,8 @@ Object.assign(window.PROCEDURES, {
   },
 
   lp: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['headache','fever','confusion','backpain','numbness','visionloss'], procedures: ['ctcontrast'], medicines: ['antibiotic','epilepsy'] },
     cat: "Diagnostic", name: "Lumbar puncture",
     mini: "A needle samples the fluid around the spinal cord — vital for diagnosing meningitis and more.",
     story: "A lumbar puncture ('spinal tap') collects a small sample of the cerebrospinal fluid that bathes the brain and spinal cord, from the lower back — safely below where the cord ends. It's the definitive test for meningitis and several neurological conditions, and can also relieve pressure or deliver medication. The image is scarier than the reality: done under local anaesthetic, it's usually brief, and the information it gives can be genuinely life-saving.",
@@ -746,5 +786,385 @@ Object.assign(window.PROCEDURES, {
       { m: "\u201cA headache afterwards means something went wrong.\u201d", t: "<b>A post-procedure headache is a known, treatable effect</b>, not a sign of damage." }
     ],
     ask: ["Why is this test needed for my diagnosis?", "Do I need a scan before it?", "How is the headache risk reduced and treated?", "When will results be back, and will treatment start before then?", "What should I watch for afterwards?"]
+  },
+
+  xray: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['chest','cough','backpain','jointpain'], procedures: ['ctcontrast','mri'], medicines: ['antitb'] },
+    cat: "Diagnostic", name: "X-ray",
+    mini: "A shadow picture made in a fraction of a second — and it changes nothing about you except a very small radiation dose.",
+    story: "An X-ray is the oldest medical image there is, and still the most used, because it answers a narrow question extremely fast: is the bone broken, is there fluid or infection in the lung, is something where it should not be. It works by shadow — dense tissue such as bone blocks the beam and appears white, air passes it and appears black. The most useful thing to understand is how little is done to you: you stand or lie still, nothing enters your body, and the entire exposure lasts a fraction of a second.",
+    urgency: [{ c: "planned", t: "Usually planned" }, { c: "urgent", t: "Often urgent" }, { c: "emerg", t: "Used in emergencies" }],
+    indications: "Suspected fracture, chest infection, fluid around the lung, bowel obstruction, swallowed objects, and as the first look before deciding whether a more detailed scan is needed.",
+    axes: {
+      before: [
+        { l: "Structural", b: "The question is unanswered. A bone may or may not be broken; a lung may or may not be full of fluid — and <b>nothing on the outside reliably tells you which</b>." },
+        { l: "Functional", b: "Treatment is on hold, or is being chosen by guesswork. Pain relief can start, but the decision that matters is waiting on information." },
+        { l: "Chemical", b: "Nothing has been introduced into the body. Your usual medicines continue unchanged." }
+      ],
+      after: [
+        { l: "Structural", b: "<b>Nothing in your body has been altered.</b> No incision, no instrument, no contact beyond lying against a plate. The change is to what is known, not to you." },
+        { l: "Functional", b: "The decision is unblocked — a fracture can be set, an infection treated, an obstruction acted on. <b>Function is restored by what follows the image, not by the image.</b>" },
+        { l: "Chemical", b: "A very small dose of ionising radiation has passed through. A chest X-ray is roughly comparable to a few days of ordinary background radiation; the risk from one image is extremely small, but it is not zero, which is why they are not taken casually." }
+      ]
+    },
+    benefits: ["Fast — often minutes from request to answer", "Painless, with nothing entering the body", "Widely available and inexpensive", "Answers many urgent questions definitively", "Guides whether a bigger scan is even needed"],
+    risks: ["A small dose of ionising radiation", "Cumulative dose matters if repeated often", "Avoided where possible in pregnancy", "Can miss what it is not designed to show — soft tissue, early fractures, small tumours", "A normal X-ray does not always mean nothing is wrong"],
+    rbnote: "The dose from a single X-ray is very small; the real judgement is whether the image will change what happens next. If it will, it is almost always worth taking.",
+    journey: [
+      { n: "Beforehand", d: "Remove metal from the area — jewellery, belts, some clothing. Tell the radiographer if you are or might be pregnant." },
+      { n: "Positioning", d: "You are placed against a plate or table. Getting the angle right takes longer than the picture itself." },
+      { n: "The exposure", d: "You hold still, sometimes hold a breath. It lasts a fraction of a second and you feel nothing at all." },
+      { n: "Afterwards", d: "You leave immediately. There is nothing to recover from and no restriction on your day." },
+      { n: "The report", d: "The image is read by a radiologist. The urgency of the question decides how quickly you are told." }
+    ],
+    myths: [
+      { m: "“An X-ray leaves radiation in my body.”", t: "<b>It does not.</b> The beam passes through and stops. You are not radioactive afterwards and pose no risk to anyone around you." },
+      { m: "“A normal X-ray means nothing is wrong.”", t: "<b>Not necessarily.</b> X-rays show bone and air well and soft tissue poorly. Some fractures only become visible days later." },
+      { m: "“It's dangerous, so I should refuse one.”", t: "<b>The dose is very small.</b> The greater risk in most situations is treating a serious problem blind." }
+    ],
+    ask: ["What question is this X-ray meant to answer?", "Will the result change my treatment?", "How many X-rays have I had recently?", "Could I be pregnant — does that change anything?", "When and how will I get the result?"]
+  },
+
+  ultrasound: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['abdopain','jaundice','swelling','breastlump'], procedures: ['ctcontrast','biopsy','hysterectomy'], medicines: [] },
+    cat: "Diagnostic", name: "Ultrasound scan",
+    mini: "Sound, not radiation — a live moving picture of soft tissue that adds nothing to your body at all.",
+    story: "Ultrasound sends high-frequency sound into the body and listens to the echoes coming back from the boundaries between tissues. Because it uses no radiation, it can be repeated as often as needed and is the first choice in pregnancy and in children. Its other distinguishing feature is that it is live: the person scanning is watching movement in real time — blood flowing, a heart valve opening, a baby shifting — rather than reading a still image afterwards.",
+    urgency: [{ c: "planned", t: "Usually planned" }, { c: "urgent", t: "Often urgent" }],
+    indications: "Gallstones, kidney and bladder problems, liver disease, pregnancy monitoring, thyroid and breast lumps, clots in leg veins, and guiding a needle accurately during a biopsy or drainage.",
+    axes: {
+      before: [
+        { l: "Structural", b: "A lump, an organ or a swelling is unexplained. It can be felt, or suspected, but its internal character — solid or fluid-filled, smooth or irregular — is unknown." },
+        { l: "Functional", b: "Flow and movement are invisible. Whether a vein is blocked, or a heart valve leaking, cannot be judged from outside." },
+        { l: "Chemical", b: "Nothing introduced. In most scans no injection of any kind is involved." }
+      ],
+      after: [
+        { l: "Structural", b: "The internal structure is visible — and crucially, <b>a fluid-filled cyst can be told apart from a solid mass</b>, which is often the entire question being asked." },
+        { l: "Functional", b: "Movement and flow are seen directly and in real time: blood direction and speed, valve motion, a fetal heartbeat. <b>Your own function is unchanged</b>; only what is known about it has changed." },
+        { l: "Chemical", b: "Nothing has been added to the body and no radiation has been used. You may simply be left with cool gel on the skin, which wipes off." }
+      ]
+    },
+    benefits: ["No ionising radiation at all", "Safe in pregnancy and in children", "Shows movement and blood flow live", "Painless and usually quick", "Can be repeated as often as needed", "Can guide a needle precisely during a biopsy"],
+    risks: ["Very few — there is no known harm from diagnostic ultrasound", "Limited by gas and by body habitus; bowel gas can obscure the view", "Cannot see through bone or air, so lungs and brain are poorly assessed in adults", "Highly dependent on the skill of the operator", "May raise questions that then need a CT or MRI anyway"],
+    rbnote: "Ultrasound is about as low-risk as a medical test gets. Its limitation is not safety but reach — some areas simply cannot be seen with sound.",
+    journey: [
+      { n: "Preparation", d: "Depends on the area. A gallbladder scan usually needs several hours without food; a pelvic scan often needs a full bladder." },
+      { n: "The gel", d: "Cool gel is spread on the skin so sound passes in rather than reflecting off air. This is the only unpleasant part for most people." },
+      { n: "Scanning", d: "The probe is pressed and angled across the area. It can be firm over a tender spot, but it is not cutting or piercing anything." },
+      { n: "Afterwards", d: "Gel is wiped off and you go straight back to normal. No recovery, no restrictions." },
+      { n: "The result", d: "Often discussed immediately by the person scanning, with a formal report following." }
+    ],
+    myths: [
+      { m: "“Ultrasound uses radiation like an X-ray.”", t: "<b>It does not.</b> It uses sound waves, which is exactly why it is the scan of choice in pregnancy." },
+      { m: "“If the ultrasound is clear, nothing can be wrong.”", t: "<b>Not so.</b> Sound does not travel through gas or bone, so some areas are simply not visible to it." },
+      { m: "“An ultrasound can tell whether a lump is cancer.”", t: "<b>It narrows it down.</b> It can distinguish fluid from solid and describe the shape — but only tissue, from a biopsy, gives a definite answer." }
+    ],
+    ask: ["What are you hoping to see?", "Do I need to fast or fill my bladder first?", "Will I be told the result today?", "If this is unclear, what is the next test?", "Does this need repeating, and when?"]
+  },
+
+  mri: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['backpain','headache','numbness','jointpain','breastlump'], procedures: ['ctcontrast','xray'], medicines: [] },
+    cat: "Diagnostic", name: "MRI scan",
+    mini: "A powerful magnet, no radiation, and the best view of soft tissue in medicine — at the cost of noise, time and stillness.",
+    story: "MRI works by putting the body inside a very strong magnetic field, nudging the water molecules in your tissues with radio waves, and listening to the signal they give back as they settle. Different tissues settle at different rates, and that difference is what produces astonishing detail in things X-rays barely register — brain, spinal cord, ligaments, cartilage, muscle. The trade is comfort: it is loud, it is slow, and it requires you to lie still in a tunnel, which some people find genuinely difficult.",
+    urgency: [{ c: "planned", t: "Usually planned" }, { c: "urgent", t: "Sometimes urgent" }],
+    indications: "Spinal cord and nerve compression, stroke and brain conditions, knee and shoulder ligament injuries, tumour staging, and any question where soft-tissue detail matters more than speed.",
+    axes: {
+      before: [
+        { l: "Structural", b: "Soft tissue detail is unknown. A disc may be pressing on a nerve, a ligament may be torn — <b>and an X-ray will show none of it</b>." },
+        { l: "Functional", b: "Symptoms are present without an explanation precise enough to act on. Surgery in particular cannot be planned without knowing exactly what and where." },
+        { l: "Chemical", b: "Nothing introduced, unless contrast is planned. Metal implants and devices need to be declared before you go anywhere near the magnet." }
+      ],
+      after: [
+        { l: "Structural", b: "Soft tissue is mapped in fine detail — nerve, cord, cartilage, tumour margins. <b>Nothing in you has been altered by the scan itself.</b>" },
+        { l: "Functional", b: "A precise target exists. An operation can be planned to the correct level, or avoided because the picture shows it would not help." },
+        { l: "Chemical", b: "No ionising radiation has been used. If gadolinium contrast was given, it is cleared by the kidneys over the following day — which is why kidney function is checked first." }
+      ]
+    },
+    benefits: ["The clearest view of soft tissue available", "No ionising radiation", "Can often distinguish scar tissue from active disease", "Allows precise surgical planning", "Can image in any plane without moving you"],
+    risks: ["Absolutely unsuitable for some metal implants and devices — declare everything", "Claustrophobia is common and worth raising in advance", "Very noisy; ear protection is provided", "Long — often 20 to 45 minutes of lying still", "Contrast, when used, needs adequate kidney function", "Expensive and less widely available than CT"],
+    rbnote: "MRI gives more detail than anything else and costs you no radiation. What it asks in return is time, stillness and tolerance of a loud, enclosed space.",
+    journey: [
+      { n: "Safety screening", d: "The most important step. Every implant, clip, pacemaker, stent, metal fragment or piercing must be declared — the magnet is always on." },
+      { n: "Changing", d: "Metal-free clothing, no jewellery, no cards with magnetic strips in the room." },
+      { n: "In the scanner", d: "You lie on a table that slides into the tunnel. You are given ear protection and a buzzer to call the staff at any time." },
+      { n: "The scan", d: "Loud knocking and buzzing in bursts. Staying still is the whole job — movement blurs the images and may mean repeating a sequence." },
+      { n: "Afterwards", d: "You get up and leave. No recovery is needed unless you were sedated for claustrophobia." }
+    ],
+    myths: [
+      { m: "“MRI is a stronger X-ray.”", t: "<b>Different physics entirely.</b> It uses magnetism and radio waves, and involves no ionising radiation." },
+      { m: "“I can just get through it if I'm claustrophobic.”", t: "<b>Say so beforehand.</b> Open scanners, sedation or a different test may be options — an abandoned scan helps nobody." },
+      { m: "“My old implant is probably fine.”", t: "<b>Never assume.</b> Bring the details. Some devices are absolutely incompatible with the magnet, and the consequences are serious." }
+    ],
+    ask: ["What will this show that a cheaper or faster scan would not?", "How long will I need to lie still?", "I find enclosed spaces difficult — what are my options?", "Will I need contrast, and is my kidney function adequate?", "How long until the result?"]
+  },
+
+  biopsy: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['breastlump','weightloss','bruising','swallowing'], procedures: ['ultrasound','endoscopy','chemotherapy'], medicines: [] },
+    cat: "Diagnostic", name: "Biopsy",
+    mini: "Taking a small piece of tissue to look at under a microscope — the only test that gives a definite answer.",
+    story: "Every scan describes shape, size and density. None of them can say what a thing actually is. A biopsy answers that by taking a genuine sample of the tissue and examining its cells directly — which is why, however good the imaging, a diagnosis of cancer is almost never made without one. People understandably fear the procedure and fear the result, and the two often blur together. Worth separating: the procedure itself is usually brief, done under local anaesthetic, and far less dramatic than the wait that follows it.",
+    urgency: [{ c: "planned", t: "Usually planned" }, { c: "urgent", t: "Often urgent" }],
+    indications: "Any lump, mass or abnormal area where the cell type must be known — breast, liver, kidney, lymph node, bone marrow, skin, prostate — and to monitor rejection or disease activity in a transplanted or diseased organ.",
+    axes: {
+      before: [
+        { l: "Structural", b: "A lesion is visible on a scan but its nature is unknown. <b>Benign and malignant can look identical from the outside.</b>" },
+        { l: "Functional", b: "No treatment can be started properly. Cancer treatment in particular depends entirely on cell type — the wrong assumption means the wrong drug." },
+        { l: "Chemical", b: "No tissue-level information exists. Blood markers may hint, but they do not name what is there." }
+      ],
+      after: [
+        { l: "Structural", b: "A small tract has been made and a sample removed. <b>A little bleeding and bruising along that track is expected</b>; the defect itself heals over days." },
+        { l: "Functional", b: "The organ continues working — the sample is tiny relative to the whole. What changes is that treatment now has a target and a name." },
+        { l: "Chemical", b: "The cells can be typed, graded and tested for the specific markers that decide which treatments will work. <b>This is the information that personalises everything that follows.</b>" }
+      ]
+    },
+    benefits: ["Gives a definite diagnosis where imaging can only suggest", "Identifies the exact cell type, which selects the treatment", "Can show that a worrying lesion is benign — ending the uncertainty", "Usually quick, and usually under local anaesthetic", "Allows testing for markers that predict treatment response"],
+    risks: ["Bleeding or bruising at the site — usually minor", "Infection, uncommon", "Pain for a day or two", "An inconclusive sample, sometimes needing a repeat", "Rarely, damage to a nearby structure — reduced by image guidance", "The wait for results is, for most people, the hardest part"],
+    rbnote: "The procedure is usually small; the information is usually decisive. Treating a cancer without knowing its type is the larger risk by far.",
+    journey: [
+      { n: "Beforehand", d: "Blood-thinning medicines are often paused — this must be arranged by the team who prescribed them, never by you alone." },
+      { n: "Local anaesthetic", d: "The skin and deeper tissue are numbed. The sting of the injection is usually the worst of it." },
+      { n: "Taking the sample", d: "Often guided by ultrasound or CT so the needle reaches exactly the right spot. You may feel pushing and a sharp click." },
+      { n: "Immediately after", d: "Pressure over the site, then observation for a period depending on which organ was sampled." },
+      { n: "The wait", d: "Tissue is processed, stained and examined — typically several days to a couple of weeks. Ask who will contact you, and when." }
+    ],
+    myths: [
+      { m: "“A biopsy makes cancer spread.”", t: "<b>This is not supported by evidence</b>, and the fear delays diagnosis. The risk of not knowing what you are treating is far greater." },
+      { m: "“The scan already showed it's cancer.”", t: "<b>A scan raises the suspicion; tissue confirms it.</b> Treatment depends on the cell type, which only a biopsy provides." },
+      { m: "“A benign result could be wrong, so it's pointless.”", t: "<b>Sampling error is uncommon and accounted for.</b> If a result does not fit the picture, your team repeats or escalates rather than ignoring it." }
+    ],
+    ask: ["Which organ is being sampled, and how will you guide the needle?", "Do I need to stop any blood thinners, and who arranges that?", "What are the specific risks for this site?", "When will I get the result, and who will tell me?", "What happens if the sample is inconclusive?"]
+  },
+
+  ecg: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['chest','palpitations','dizzy','breathless','anxiety'], procedures: ['pci','pacemaker'], medicines: ['bp','antiplatelet'] },
+    cat: "Cardiac / diagnostic", name: "ECG (heart tracing)",
+    mini: "Ten stickers, ten seconds, no current entering you — it only listens to the electricity your heart already makes.",
+    story: "The heart runs on its own electrical signal, and that signal is strong enough to be detected at the skin. An ECG places electrodes at standard points and records that activity from several angles at once, producing the familiar trace. It is one of the fastest and most informative tests in medicine, and the source of most confusion about it is a single misunderstanding: nothing is sent into you. The machine only listens.",
+    urgency: [{ c: "planned", t: "Often routine" }, { c: "urgent", t: "Frequently urgent" }, { c: "emerg", t: "First test in a suspected heart attack" }],
+    indications: "Chest pain, palpitations, blackouts, breathlessness, before surgery, monitoring the effect of certain medicines, and as the immediate first test whenever a heart attack is suspected.",
+    axes: {
+      before: [
+        { l: "Structural", b: "The heart's chambers and conduction pathways are unassessed. A previous silent heart attack, or a thickened muscle, leaves electrical traces nobody has looked for." },
+        { l: "Functional", b: "Rhythm and rate are unknown beyond a pulse at the wrist — which cannot distinguish the many rhythms that feel similar." },
+        { l: "Chemical", b: "Potassium and other salt disturbances that alter the heart's electrical behaviour are not yet visible." }
+      ],
+      after: [
+        { l: "Structural", b: "The trace reveals strain, thickening, conduction blocks and the scars of previous damage. <b>Your heart is entirely unchanged by the recording</b> — ten seconds of listening alters nothing." },
+        { l: "Functional", b: "The rhythm is named rather than guessed — atrial fibrillation, heart block, a fast rhythm from above or below. <b>In a heart attack this single tracing decides whether you go straight to the cath lab.</b>" },
+        { l: "Chemical", b: "Characteristic patterns can flag dangerously high or low potassium, and the effects of certain medicines, before a blood result has returned." }
+      ]
+    },
+    benefits: ["Fast — under a minute to record", "Completely painless, with nothing entering the body", "No radiation whatsoever", "Can be repeated as often as needed", "In a heart attack, it is the test that decides immediate treatment", "Inexpensive and available almost everywhere"],
+    risks: ["Essentially none from the recording itself", "Skin irritation from the sticky electrodes, occasionally", "A normal ECG does not exclude heart disease — it is a ten-second snapshot", "An abnormal ECG in a well person can cause unnecessary alarm and further tests", "Intermittent rhythm problems are easily missed and may need longer monitoring"],
+    rbnote: "An ECG carries no meaningful physical risk. Its real limitation is time: it shows ten seconds of a heart that has to be right every minute of every day.",
+    journey: [
+      { n: "Preparation", d: "The upper body is exposed and electrode sites may be shaved or wiped. Dignity is easy to arrange — ask." },
+      { n: "Placing electrodes", d: "Ten sticky electrodes go on the chest, arms and legs in standard positions. Placement accuracy matters more than people realise." },
+      { n: "Recording", d: "You lie still and breathe normally for about ten seconds. You feel nothing at all." },
+      { n: "Afterwards", d: "Electrodes come off and you resume immediately. There is nothing to recover from." },
+      { n: "Interpretation", d: "In an emergency it is read within minutes. Routinely it is reviewed alongside your symptoms — the trace alone means little without them." }
+    ],
+    myths: [
+      { m: "“The machine sends electricity through me.”", t: "<b>It does not.</b> An ECG only records the heart's own electrical activity. You are being listened to, not stimulated." },
+      { m: "“A normal ECG means my heart is fine.”", t: "<b>Not reliably.</b> It captures ten seconds. Angina, and intermittent rhythm problems, are frequently invisible on a resting trace." },
+      { m: "“An abnormal ECG means a heart attack.”", t: "<b>Often not.</b> Many variations are benign or long-standing. It is interpreted with your symptoms, your history and sometimes a previous tracing." }
+    ],
+    ask: ["What did this tracing show?", "Is there an older ECG of mine to compare it with?", "If it's normal but my symptoms continue, what is the next step?", "Would longer monitoring help catch what I'm feeling?", "Do any of my medicines affect this trace?"]
+  },
+
+  herniarepair: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['abdopain'], procedures: ['ga','spinal'], medicines: ['painkiller','antibiotic'] },
+    cat: "Surgical", name: "Hernia repair",
+    mini: "A gap in the abdominal wall that lets something push through — closed, and usually reinforced with mesh.",
+    story: "A hernia is a hole, not a lump. The bulge you can see or feel is abdominal contents pushing through a weak point in the muscle wall, which is why it appears on standing or straining and often disappears on lying down. Hernias do not heal themselves and belts do not fix them. The real decision is timing: many can safely be watched, but a hernia that becomes stuck and painful is an emergency, because the trapped tissue can lose its blood supply within hours.",
+    urgency: [{ c: "planned", t: "Usually planned" }, { c: "emerg", t: "Emergency if trapped" }],
+    indications: "A hernia causing pain or limiting activity, one that is enlarging, and urgently any hernia that becomes firm, tender and cannot be pushed back — which suggests the contents are trapped.",
+    axes: {
+      before: [
+        { l: "Structural", b: "There is a defect in the abdominal wall, and fat or bowel protrudes through it — more on standing, coughing or lifting. <b>The gap does not close on its own.</b>" },
+        { l: "Functional", b: "Lifting, coughing and exercise may be uncomfortable or limited. If contents become trapped, the bowel can obstruct and its blood supply can be cut off." },
+        { l: "Chemical", b: "Nothing systemic, unless strangulation has begun — then inflammatory and metabolic markers rise sharply as tissue starts to die." }
+      ],
+      after: [
+        { l: "Structural", b: "The contents are returned and <b>the defect is closed, usually reinforced with a synthetic mesh</b> that your own tissue grows into over the following weeks, creating a repair stronger than stitching alone." },
+        { l: "Functional", b: "The bulge is gone and the risk of strangulation is largely removed. <b>Full strength returns gradually</b> — lifting restrictions for several weeks are about protecting the repair while it integrates." },
+        { l: "Chemical", b: "Ordinary post-surgical inflammation as the mesh integrates and tissue heals. This settles over weeks." }
+      ]
+    },
+    benefits: ["Removes the risk of the bowel becoming trapped", "The bulge and its discomfort are gone", "Return to lifting, work and exercise", "Mesh repair has a low recurrence rate", "Keyhole repair often means a faster recovery"],
+    risks: ["Recurrence — uncommon with mesh, but possible", "Chronic groin pain in a minority, which can persist", "Infection, occasionally requiring mesh removal", "Injury to nearby nerves, bowel or blood vessels — uncommon", "Fluid collection (seroma) at the site, usually settling by itself", "Anaesthetic risks, which depend on your general health"],
+    rbnote: "For a painful or enlarging hernia, repair prevents a genuine emergency. For a small painless one, watchful waiting is often a legitimate choice — ask which situation you are in.",
+    journey: [
+      { n: "The decision", d: "Size, symptoms, your work and your general health decide between watching and repairing, and between open and keyhole surgery." },
+      { n: "Anaesthetic", d: "General anaesthetic for keyhole; open repair is sometimes done under spinal or even local anaesthetic." },
+      { n: "The repair", d: "Contents are reduced, the defect closed, and mesh placed to reinforce it. Usually under an hour." },
+      { n: "Going home", d: "Often the same day. Walking is encouraged straight away — early movement helps rather than harms." },
+      { n: "Recovery", d: "Desk work within one to two weeks for many; heavy lifting restricted for around four to six weeks. Your surgeon's instruction overrides any general figure." }
+    ],
+    myths: [
+      { m: "“A truss or belt will cure it.”", t: "<b>It will not.</b> A support may make a hernia more comfortable, but the defect remains and so does the risk of trapping." },
+      { m: "“It doesn't hurt, so it's fine.”", t: "<b>Painless hernias can still strangulate.</b> Watchful waiting is reasonable, but it is a decision made with a surgeon, not by default." },
+      { m: "“Mesh is dangerous.”", t: "<b>Mesh substantially reduces recurrence</b> and is standard practice. Complications exist but are uncommon — discuss your specific situation." }
+    ],
+    ask: ["Does mine need repairing now, or can it be watched?", "Open or keyhole, and why that choice for me?", "Will mesh be used?", "How long off work, and when can I lift again?", "What exactly should make me come back urgently?"]
+  },
+
+  hysterectomy: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['abdopain'], procedures: ['ga','spinal','ultrasound'], medicines: ['painkiller','ironfolate'] },
+    cat: "Gynaecological / surgical", name: "Hysterectomy",
+    mini: "Removal of the uterus — definitive for several conditions, and irreversible, which is why alternatives come first.",
+    story: "A hysterectomy ends menstruation and the ability to carry a pregnancy, permanently. That finality is precisely why it sits at the end of a list of options rather than the start of one: medicines, hormonal coils, fibroid-specific procedures and ablation can resolve many of the problems it is offered for. When those have failed, or when the condition demands it, it is highly effective — and many people describe substantial relief. The single most important thing to establish beforehand is exactly what is being removed, because 'hysterectomy' covers several quite different operations.",
+    urgency: [{ c: "planned", t: "Usually planned" }, { c: "emerg", t: "Rarely, an emergency" }],
+    indications: "Heavy bleeding that has not responded to other treatment, large or symptomatic fibroids, endometriosis or adenomyosis, prolapse, cancer of the uterus, cervix or ovary, and rarely uncontrollable bleeding after childbirth.",
+    axes: {
+      before: [
+        { l: "Structural", b: "The uterus is in place — perhaps enlarged by fibroids, thickened by adenomyosis, or prolapsing. Ovaries and cervix are present unless previously removed." },
+        { l: "Functional", b: "Periods continue, often heavily. Pregnancy remains possible. Pain, pressure, bleeding or prolapse symptoms may be limiting daily life." },
+        { l: "Chemical", b: "If the ovaries are working, the normal hormonal cycle continues. Chronic heavy bleeding may have driven iron levels and haemoglobin down." }
+      ],
+      after: [
+        { l: "Structural", b: "The uterus is removed, with the cervix depending on the type of operation. <b>The ovaries are a separate decision</b> and are often left in place — establish this beforehand, because it changes everything below." },
+        { l: "Functional", b: "<b>Menstruation stops permanently and pregnancy is no longer possible.</b> Bleeding, pressure and pain from the uterus resolve. Bladder, bowel and sexual function are usually unaffected in the long run." },
+        { l: "Chemical", b: "<b>If the ovaries are kept, hormones continue and menopause arrives naturally.</b> If they are removed, menopause begins immediately — a different experience, and one that should be planned for, not discovered." }
+      ]
+    },
+    benefits: ["Definitive — the bleeding cannot return", "Resolves fibroid and prolapse pressure symptoms", "Curative for early cancer of the uterus", "Ends the anaemia that chronic heavy bleeding causes", "No further need for contraception", "Many report a marked improvement in quality of life"],
+    risks: ["Permanent and irreversible loss of fertility", "Immediate surgical menopause if the ovaries are also removed", "Bleeding, infection, or injury to bladder, bowel or ureter — uncommon but serious", "Blood clots in the legs or lungs", "Weeks of recovery, longer after open surgery", "Some experience a sense of loss that deserves to be acknowledged rather than dismissed"],
+    rbnote: "It is highly effective and it is permanent. Both halves of that sentence matter — make sure the less drastic options have genuinely been considered and named.",
+    journey: [
+      { n: "Exploring alternatives", d: "Hormonal treatment, a hormone-releasing coil, fibroid embolisation or endometrial ablation may resolve the problem without surgery." },
+      { n: "Choosing the route", d: "Vaginal, keyhole or open — decided by the reason, the size of the uterus and previous surgery. Keyhole and vaginal recover faster." },
+      { n: "The operation", d: "Under general anaesthetic, typically one to two hours. What is removed depends on the plan agreed with you." },
+      { n: "In hospital", d: "Usually one to three days, longer after open surgery. Early walking reduces the risk of clots." },
+      { n: "Recovery", d: "Around two to six weeks depending on the route, with restrictions on lifting. Emotional recovery can run on a different timetable — that is normal." }
+    ],
+    myths: [
+      { m: "“Hysterectomy always causes menopause.”", t: "<b>Only if the ovaries are removed too.</b> With the ovaries kept, hormones continue and menopause arrives at its natural time. Ask exactly what is planned." },
+      { m: "“It's the only answer for heavy bleeding.”", t: "<b>Often it is not.</b> A hormone-releasing coil, medicines or ablation resolve many cases. Ask what has been tried and what remains." },
+      { m: "“Sex will be worse afterwards.”", t: "<b>Most people report it is unchanged or better</b>, particularly when pain and bleeding were the problem. Raise this directly — it is a legitimate question." }
+    ],
+    ask: ["Exactly what will be removed — uterus, cervix, ovaries?", "What less drastic options are there, and why not those?", "Will I need hormone treatment afterwards?", "Which route, and what is the recovery for it?", "How will this affect menopause timing for me?"]
+  },
+
+  tonsillectomy: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['sorethroat','earpain'], procedures: ['ga'], medicines: ['painkiller','antibiotic'] },
+    cat: "ENT / surgical", name: "Tonsil removal",
+    mini: "A short operation with a famously uncomfortable recovery — reserved for when tonsillitis is genuinely frequent, or breathing is obstructed.",
+    story: "Tonsils are lymphoid tissue at the back of the throat, and they are part of the immune system's early warning network — which is why they are not removed casually. Two situations justify it: infections frequent enough to disrupt school, work or life, and tonsils large enough to obstruct breathing during sleep. The second is the more important in children, and the more commonly missed. The recovery is genuinely sore for one to two weeks, and being told that honestly in advance changes how people experience it.",
+    urgency: [{ c: "planned", t: "Almost always planned" }],
+    indications: "Recurrent tonsillitis at a frequency that disrupts daily life, obstructive sleep apnoea caused by enlarged tonsils, recurrent abscess beside the tonsil, and rarely to biopsy an asymmetrically enlarged tonsil.",
+    axes: {
+      before: [
+        { l: "Structural", b: "Enlarged or repeatedly infected tonsils sit either side of the throat, sometimes narrowing the airway substantially during sleep." },
+        { l: "Functional", b: "Repeated painful infections, days lost, repeated antibiotic courses. Where the tonsils obstruct, sleep is fragmented — often with snoring, pauses, and daytime tiredness or behavioural problems in children." },
+        { l: "Chemical", b: "Recurrent inflammatory episodes and repeated antibiotic exposure, with all that implies for resistance and for gut flora." }
+      ],
+      after: [
+        { l: "Structural", b: "The tonsils are removed from their beds, leaving raw surfaces that heal with a white slough over one to two weeks. <b>That white coating is normal healing, not infection.</b>" },
+        { l: "Functional", b: "Episodes of tonsillitis largely stop. <b>Where obstruction was the problem, the airway opens and sleep quality improves markedly</b> — often the most striking benefit of all." },
+        { l: "Chemical", b: "Inflammatory episodes and repeated antibiotic courses fall away. Immune function is not meaningfully impaired — the rest of the immune system more than compensates." }
+      ]
+    },
+    benefits: ["Substantially fewer throat infections", "Opens the airway where tonsils obstructed sleep", "Fewer antibiotic courses and days lost", "In children with sleep apnoea, often marked gains in sleep, behaviour and growth", "Removes the risk of recurrent peritonsillar abscess"],
+    risks: ["Significant throat pain for one to two weeks — expect this", "Bleeding, including a delayed bleed around days five to ten, which is an emergency", "Dehydration if pain stops adequate drinking", "Anaesthetic risks", "Referred ear pain during healing, which is normal but alarming", "Sore throats can still occur afterwards, just far less often"],
+    rbnote: "The operation is short; the recovery is the hard part. It earns its place when infections are genuinely frequent or the airway is genuinely obstructed — not for occasional sore throats.",
+    journey: [
+      { n: "Deciding", d: "Frequency and severity of episodes are counted over one to two years, or sleep-disordered breathing is assessed. Thresholds exist for a reason." },
+      { n: "The operation", d: "Under general anaesthetic, usually around 30 minutes, entirely through the mouth — there is no external cut." },
+      { n: "First hours", d: "Often home the same day. Drinking is encouraged early, and regular pain relief is started before the pain builds." },
+      { n: "Days 1-10", d: "Pain frequently peaks around days four to seven, and ear pain is common. Eating normally — even coarse food — actually helps the beds heal." },
+      { n: "Bleeding watch", d: "Any bleeding from the mouth after the operation means going straight to hospital, day or night. This is the one non-negotiable instruction." }
+    ],
+    myths: [
+      { m: "“Removing tonsils weakens the immune system.”", t: "<b>Not meaningfully.</b> Tonsils are one small part of a large immune network, and no significant increase in infections elsewhere follows." },
+      { m: "“Soft food helps it heal.”", t: "<b>The opposite is usually advised.</b> Eating normally keeps the healing surfaces clean; many surgeons specifically encourage ordinary food." },
+      { m: "“The white patches mean it's infected.”", t: "<b>They are normal healing slough.</b> Fever, worsening pain or bleeding are the things to report — not the white coating." }
+    ],
+    ask: ["How many episodes have I actually had, and do I meet the threshold?", "Is sleep-disordered breathing part of the reason?", "What pain relief will I have, and for how long?", "What exactly do I do if there is any bleeding?", "How long off school or work?"]
+  },
+
+  rootcanal: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['earpain'], procedures: [], medicines: ['painkiller','antibiotic'] },
+    cat: "Dental", name: "Root canal treatment",
+    mini: "It removes the pain rather than causing it — the infected nerve inside the tooth is taken out and the space sealed.",
+    story: "Root canal treatment has a reputation it no longer deserves. The pain people associate with it is the pain of the infected nerve that brings them in — a genuinely severe, throbbing, sleep-destroying ache — and the treatment is what stops it. Inside every tooth is a chamber containing nerve and blood vessels; when decay or trauma lets bacteria in, that tissue becomes inflamed and then dies, and the infection tracks out through the root tip into the bone. The choice is usually between cleaning that chamber out and keeping the tooth, or extracting it.",
+    urgency: [{ c: "planned", t: "Often planned" }, { c: "urgent", t: "Urgent when infected" }],
+    indications: "An abscessed or irreversibly inflamed dental pulp, a tooth with deep decay reaching the nerve, a cracked or traumatised tooth with a dying nerve, and re-treatment of a previous root filling that has failed.",
+    axes: {
+      before: [
+        { l: "Structural", b: "Decay or a crack has reached the pulp chamber. Bacteria are inside the root canal system, and often an abscess has formed at the root tip, eroding the surrounding bone." },
+        { l: "Functional", b: "Severe throbbing pain, often worse lying down and with heat, and the tooth may be too tender to bite on. <b>Untreated, the tooth is usually lost</b> and the infection can spread into the face and neck." },
+        { l: "Chemical", b: "Active bacterial infection with an inflammatory response in the surrounding bone. Antibiotics can suppress this temporarily but cannot reach inside the dead canal itself." }
+      ],
+      after: [
+        { l: "Structural", b: "The canals are cleaned, shaped and <b>sealed with an inert filling material</b>. The tooth is then usually crowned, because a root-treated tooth is more brittle and prone to fracture." },
+        { l: "Functional", b: "The pain resolves. <b>The tooth stays in place and continues to bite and chew</b> — but it no longer has a living nerve, so it cannot feel hot or cold." },
+        { l: "Chemical", b: "The bacterial reservoir is removed, so the infection resolves and the bone at the root tip heals over months. <b>This is the definitive treatment; antibiotics alone were never going to be.</b>" }
+      ]
+    },
+    benefits: ["Ends severe toothache at its source", "Keeps your own tooth rather than extracting it", "Preserves the bite, and avoids the drift of neighbouring teeth", "Resolves the infection definitively rather than suppressing it", "High success rate in competent hands"],
+    risks: ["Can fail, needing re-treatment or eventual extraction", "The tooth becomes more brittle and usually requires a crown", "An instrument can separate, or a canal be missed, in complex roots", "Soreness for a few days afterwards", "Cost, and usually more than one appointment", "Persistent infection if the seal is not complete"],
+    rbnote: "The realistic comparison is not root canal versus nothing — it is root canal versus losing the tooth. Antibiotics alone do not cure an infection inside a dead canal.",
+    journey: [
+      { n: "Diagnosis", d: "Examination, tapping and cold tests, and an X-ray to see the root tip and the extent of any bone loss." },
+      { n: "Numbing", d: "Local anaesthetic. A severely inflamed tooth can be harder to numb — say so if you still feel sharpness, as more can be given." },
+      { n: "Cleaning the canals", d: "An opening is made, the pulp removed, and the canals cleaned, shaped and disinfected. This is the longest part." },
+      { n: "Sealing", d: "Canals are filled and sealed, sometimes at a second visit with a medicated dressing in between." },
+      { n: "The crown", d: "Usually recommended afterwards to protect the tooth from fracture. Skipping it is a common reason root-treated teeth are later lost." }
+    ],
+    myths: [
+      { m: "“Root canal treatment is agonising.”", t: "<b>It relieves agony.</b> Under proper local anaesthetic it is comparable to having a filling. The pain people remember is the abscess that preceded it." },
+      { m: "“Antibiotics will sort out the abscess.”", t: "<b>Only temporarily.</b> They cannot reach inside a dead canal. Without treating the source, the infection returns." },
+      { m: "“It's easier to just pull the tooth.”", t: "<b>It's quicker, not simpler.</b> Losing a tooth means neighbouring teeth drift, bone resorbs, and replacement costs more than the root canal would have." }
+    ],
+    ask: ["What are my realistic options — treat or extract?", "How many visits, and will I need a crown?", "What is the chance of success for this particular tooth?", "What should I do if the pain returns afterwards?", "What is the total cost, including the crown?"]
+  },
+
+  catheter: {
+    reviewedBy: null, lastReviewed: null,
+    related: { symptoms: ['urinary','confusion'], procedures: ['ga','dialysis'], medicines: ['antibiotic'] },
+    cat: "Urological care", name: "Urinary catheter",
+    mini: "A soft tube draining the bladder — simple, often necessary, and best removed as soon as it is no longer needed.",
+    story: "A urinary catheter is one of the most common things done in hospitals and one of the least explained. A soft, flexible tube is passed along the urethra into the bladder and held in place by a small balloon, so urine drains continuously into a bag. It is frequently the right thing to do — for a blocked bladder it is genuinely relieving. But every day a catheter stays in carries a real and rising risk of infection, which is why the most important question about a catheter is not how it goes in but when it is coming out.",
+    urgency: [{ c: "planned", t: "Often routine in care" }, { c: "urgent", t: "Urgent in retention" }, { c: "emerg", t: "Emergency if the bladder is blocked" }],
+    indications: "Acute urinary retention (a blocked bladder that cannot empty), accurate monitoring of urine output in serious illness, during and after many operations, and long-term management of certain bladder and neurological conditions.",
+    axes: {
+      before: [
+        { l: "Structural", b: "In retention, the bladder is distended — sometimes dramatically — and pressure is transmitted back towards the kidneys. The urethra is otherwise undisturbed." },
+        { l: "Functional", b: "The bladder cannot empty. This is genuinely painful, and if it persists it damages the bladder muscle and can impair kidney function." },
+        { l: "Chemical", b: "If obstruction has lasted, waste products including urea and creatinine accumulate in the blood — sustained back-pressure injures the kidneys." }
+      ],
+      after: [
+        { l: "Structural", b: "A tube sits along the urethra into the bladder, held by a balloon. <b>The bladder is decompressed and the back-pressure on the kidneys is relieved.</b>" },
+        { l: "Functional", b: "Urine drains continuously and painlessly, and output can be measured precisely. <b>The bladder muscle is not doing its own work while the catheter is in</b>, which is one reason prolonged use is avoided." },
+        { l: "Chemical", b: "Kidney function typically recovers as pressure falls. Against this: <b>the tube is a direct route for bacteria into the bladder, and infection risk climbs with every day it stays.</b>" }
+      ]
+    },
+    benefits: ["Immediate relief of a painfully blocked bladder", "Protects the kidneys from sustained back-pressure", "Allows accurate measurement of urine output in serious illness", "Keeps skin dry and intact where incontinence causes breakdown", "Enables many operations to be done safely"],
+    risks: ["Urinary infection — the risk rises with every day it remains in place", "Discomfort, bladder spasms and a persistent urge to pass urine", "Injury to the urethra, particularly if insertion is difficult", "Blockage or bypassing around the tube", "Narrowing of the urethra after long-term or traumatic use", "Loss of dignity and independence, which is worth naming"],
+    rbnote: "A catheter can be exactly the right thing on day one and the wrong thing by day five. The single question worth repeating to the team is: can this come out yet?",
+    journey: [
+      { n: "The decision", d: "There should be a clear reason. Ask what it is — 'for convenience' is not one, and alternatives sometimes exist." },
+      { n: "Insertion", d: "Done with sterile technique and anaesthetic gel. Uncomfortable rather than painful for most people, and over in a few minutes." },
+      { n: "While it's in", d: "The bag stays below bladder level so urine cannot flow back. Good fluid intake and hygiene reduce infection risk." },
+      { n: "Removal", d: "The balloon is deflated and the tube slides out — quicker and easier than insertion. Some stinging when first passing urine afterwards is normal." },
+      { n: "Afterwards", d: "Normal passing of urine should return within hours. Not being able to go again, fever, or heavy bleeding all need reporting." }
+    ],
+    myths: [
+      { m: "“Insertion is extremely painful.”", t: "<b>Uncomfortable, not usually painful.</b> Anaesthetic gel is used, and the relief in a blocked bladder is immediate and considerable." },
+      { m: "“It's safer to leave it in a bit longer, just in case.”", t: "<b>The opposite.</b> Infection risk accumulates daily. Prompt removal when no longer needed is the single most effective safety measure." },
+      { m: "“Cloudy urine in a catheter means I need antibiotics.”", t: "<b>Often not.</b> Bacteria colonise every long-term catheter. Antibiotics are for genuine illness — fever, pain, feeling unwell — not for the appearance of the bag." }
+    ],
+    ask: ["Why exactly do I need this, and is there an alternative?", "When can it come out — and who decides?", "What symptoms mean an infection rather than normal colonisation?", "Who do I contact if it blocks or leaks?", "If it's long-term, what care and change schedule do I need?"]
   }
 });

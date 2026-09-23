@@ -142,6 +142,37 @@
       <path d="M14 14v3M24 12v5M34 14v3" stroke="${c}" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>`,
 
     /* ── Eye: the pupil narrowing to light, then opening again ── */
+
+    /* ── Ear: sound arriving as expanding rings, gathered by the outer ear ── */
+    ear: (c) => `
+      <path d="M17 20a7 7 0 0 1 14 0c0 4-3.5 5.5-3.5 9.5 0 3-1.5 5.5-4.5 5.5"
+            fill="${c}" opacity=".12"/>
+      <path d="M17 20a7 7 0 0 1 14 0c0 4-3.5 5.5-3.5 9.5 0 3-1.5 5.5-4.5 5.5"
+            fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M22 21a2.6 2.6 0 0 1 5 0c0 2.4-2.2 3.2-2.2 5.6"
+            fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+      <path d="M17 38c-2.5 0-4-1.8-4-4V22" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" opacity=".5"/>
+      <g fill="none" stroke="${c}" stroke-width="1.8" stroke-linecap="round">
+        <path class="sig-anim sig-radiate" d="M36 17a9 9 0 0 1 0 12" style="animation-delay:0s"/>
+        <path class="sig-anim sig-radiate" d="M40 13a15 15 0 0 1 0 20" style="animation-delay:.35s" opacity=".6"/>
+      </g>`,
+
+    /* ── Tooth: the crown, with the root canal lit from the inside ── */
+    tooth: (c) => `
+      <path d="M24 11c-4 0-5-1.5-8.5-1.5C11 9.5 9 13 9 18c0 6 2.5 8 4 14 1 4 1.5 7 3.5 7s2.5-3 3-6.5c.5-3.2 1.5-5 4.5-5s4 1.8 4.5 5c.5 3.5 1 6.5 3 6.5s2.5-3 3.5-7c1.5-6 4-8 4-14 0-5-2-8.5-6.5-8.5C29 9.5 28 11 24 11z"
+            fill="${c}" opacity=".12"/>
+      <path d="M24 11c-4 0-5-1.5-8.5-1.5C11 9.5 9 13 9 18c0 6 2.5 8 4 14 1 4 1.5 7 3.5 7s2.5-3 3-6.5c.5-3.2 1.5-5 4.5-5s4 1.8 4.5 5c.5 3.5 1 6.5 3 6.5s2.5-3 3.5-7c1.5-6 4-8 4-14 0-5-2-8.5-6.5-8.5C29 9.5 28 11 24 11z"
+            fill="none" stroke="${c}" stroke-width="2.4" stroke-linejoin="round"/>
+      <path class="sig-anim sig-fill" d="M19 20v8M29 20v8" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" opacity=".6"/>`,
+
+    /* ── Breast: tissue in section, with a small focus under examination ── */
+    breast: (c) => `
+      <path d="M10 33c0-9 6-16 14-16s14 7 14 16" fill="${c}" opacity=".12"/>
+      <path d="M10 33c0-9 6-16 14-16s14 7 14 16" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M8 33h32" stroke="${c}" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>
+      <circle cx="28" cy="27" r="3" fill="${c}" opacity=".9"/>
+      <circle class="sig-anim sig-radiate" cx="28" cy="27" r="7" fill="none" stroke="${c}" stroke-width="1.8"/>`,
+
     eye: (c) => `
       <path d="M6 24s7-10 18-10 18 10 18 10-7 10-18 10S6 24 6 24z"
             fill="${c}" opacity=".12" stroke="${c}" stroke-width="2.2" stroke-linejoin="round"/>
@@ -250,10 +281,14 @@
     [/respir|lung|breath|pulmon/i, 'lungs'],
     [/neuro|brain|nerve|mood|mind/i, 'brain'],
     [/gastro|stomach|digest|bowel|abdom/i, 'gut'],
+    [/breast|mammar/i, 'breast'],
+    [/dental|tooth|dentist/i, 'tooth'],
+    [/\bent\b|ear\b|otolog|tonsil/i, 'ear'],
+    [/mental|psych|anxiet|depress/i, 'brain'],
     [/ophthalm|eye|visual/i, 'eye'],
     [/orthop|musculo|bone|joint/i, 'bone'],
     [/dermat|skin/i, 'skin'],
-    [/renal|kidney|urin|genitourinary/i, 'kidney'],
+    [/renal|kidney|urin|urolog|genitourinary/i, 'kidney'],
     [/haemat|hemat|blood|transfus/i, 'blood'],
     [/diagnos|scan|imaging|endoscop/i, 'scan'],
     [/surg/i, 'scalpel'],

@@ -1,0 +1,141 @@
+/* Signal — shared component layer
+ *
+ * Styles for the pieces that appear identically in all three sections:
+ * the clinical-review stamp, the cross-section "Related" block, and the
+ * focus-visible treatment that makes the site keyboard-navigable.
+ *
+ * Everything here inherits each section's own palette through --accent /
+ * --accent-bg, so the components take on the section tint without any
+ * per-section overrides.
+ */
+
+/* ───────────────── keyboard focus ─────────────────
+ * Visible only for keyboard users, never on mouse click. This is the single
+ * most load-bearing accessibility style on the site: without it, a keyboard
+ * user cannot tell where they are in a grid of 20 identical tiles.
+ */
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--accent, #33507e);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.sheet:focus { outline: none; }
+
+/* A skip link, hidden until focused. */
+.sig-skip {
+  position: absolute; left: 12px; top: -60px; z-index: 200;
+  background: var(--card, #fff); color: var(--ink, #14201d);
+  font: 600 14px/1 var(--sans);
+  padding: 12px 18px; border-radius: 10px;
+  border: 1px solid var(--line, #ddd);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, .14);
+  transition: top .18s ease;
+}
+.sig-skip:focus { top: 12px; }
+
+/* ───────────────── clinical review stamp ───────────────── */
+
+.sig-review {
+  display: flex; gap: 11px; align-items: flex-start;
+  margin-top: 26px; padding: 14px 16px;
+  border-radius: 12px;
+  font: 400 13.5px/1.55 var(--sans);
+  border: 1px solid;
+}
+.sig-review svg {
+  width: 17px; height: 17px; flex: none; margin-top: 1px;
+  stroke: currentColor; fill: none;
+}
+.sig-review b { font-weight: 650; }
+
+/* Not yet signed off — deliberately visible, not a whisper. */
+.sig-review.pending {
+  background: #f6eddb; border-color: #e3d2ab; color: #6e5116;
+}
+/* Signed off by a named clinician. */
+.sig-review.done {
+  background: #e3f0ea; border-color: #bcd9cc; color: #215e48;
+}
+
+/* ───────────────── related (cross-section) ───────────────── */
+
+.sig-rel {
+  border: 1px solid var(--line, #e0e4ea);
+  background: var(--card, #fff);
+  border-radius: 14px;
+  padding: 6px 18px 16px;
+}
+.sig-rel-row {
+  display: flex; gap: 14px; align-items: baseline;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line, #e0e4ea);
+}
+.sig-rel-row:last-of-type { border-bottom: 0; }
+
+.sig-rel-label {
+  flex: none; width: 92px;
+  font: 600 11px/1.4 var(--sans);
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--ink-faint, #7a8590);
+}
+.sig-rel-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.sig-rel-chip {
+  display: inline-block;
+  font: 500 13.5px/1 var(--sans);
+  color: var(--accent, #33507e);
+  background: var(--accent-bg, #e7ecf5);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 8px 13px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.sig-rel-chip:hover {
+  border-color: var(--accent, #33507e);
+  transform: translateY(-1px);
+}
+.sig-rel-chip span { opacity: .55; }
+
+.sig-rel-note {
+  margin: 14px 0 0;
+  font: 400 12.5px/1.6 var(--sans);
+  color: var(--ink-faint, #7a8590);
+}
+
+@media (max-width: 560px) {
+  .sig-rel-row { flex-direction: column; gap: 9px; }
+  .sig-rel-label { width: auto; }
+}
+
+/* ───────────────── reduced motion ─────────────────
+ * anim.css honours this for the icon layer; this covers the page-level
+ * transitions (modal entry, tile lift, sliding toggles) that live in the
+ * section pages themselves.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ───────────────── utilities ───────────────── */
+
+/* Visible to screen readers only — used for labels where the visual design
+   already makes the purpose obvious (e.g. a search field with an icon). */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* Empty-state line shown when a search matches nothing. */
+.empty {
+  margin: 30px 0 0; text-align: center;
+  font: 400 15px/1.6 var(--sans);
+  color: var(--ink-faint, #7a8590);
+}

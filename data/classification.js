@@ -21,6 +21,16 @@
  *   - Every entry still needs physician sign-off before public deployment.
  */
 
+/* Clinical sign-off for this layer.
+ *
+ * The taxonomy is reviewed as a SET rather than entry-by-entry: the classes and
+ * conditions here are a coherent map, and a clinician signing it off is
+ * attesting to the map, not to 50 independent statements. Set `reviewedBy` to
+ * the named reviewer and `lastReviewed` to an ISO date (YYYY-MM-DD) once that
+ * review has happened. Leave null until then — the UI says so plainly.
+ */
+window.CLASSIFICATION_REVIEW = { reviewedBy: null, lastReviewed: null };
+
 window.PHARM = {
 
   /* ───────────────────────── CARDIOVASCULAR ───────────────────────── */
@@ -67,7 +77,15 @@ window.PHARM = {
         mech: "Act on a different, more powerful part of the kidney tubule, shifting a much larger volume of salt and water.",
         use: "Fluid overload — the breathlessness and leg swelling of heart failure, and some kidney and liver conditions.",
         note: "This is the class people most often self-adjust. Symptoms improve fast, which makes it feel optional; it usually is not.",
-        med: "heartfailure", mode: "daily"
+        med: "diuretic", mode: "daily"
+      },
+      potsparing: {
+        name: "Potassium-sparing diuretics",
+        tag: "Fluid overload",
+        mech: "Remove salt and water while holding potassium back, rather than flushing it out as the stronger diuretics do.",
+        use: "Often paired with another diuretic to offset the potassium loss that one would otherwise cause.",
+        note: "Potassium can rise too far, particularly alongside certain blood-pressure medicines, so blood tests are part of the arrangement.",
+        med: "diuretic", mode: "daily"
       },
       mra: {
         name: "Mineralocorticoid receptor antagonists",
@@ -288,6 +306,30 @@ window.PHARM = {
         note: "Usually intended as a defined course with review. Drifting into indefinite use without a reason is one of the commonest medication problems there is.",
         med: "acid", mode: "course"
       },
+      bulk: {
+        name: "Bulk-forming laxatives",
+        tag: "Constipation",
+        mech: "Hold water inside the stool so it becomes larger and softer, which is what prompts the bowel to move it along.",
+        use: "First-line for ordinary constipation, and where the diet is short on fibre.",
+        note: "They need plenty of fluid to work. Taken dry, they can make a blockage worse rather than better.",
+        med: "laxative", mode: "when"
+      },
+      osmotic: {
+        name: "Osmotic laxatives",
+        tag: "Constipation",
+        mech: "Draw water into the bowel by chemical attraction, softening what is there and increasing its volume.",
+        use: "Constipation that has not responded to fibre and fluid, and the usual choice where a regular laxative is genuinely needed.",
+        note: "Generally the safest group for sustained use, including alongside strong painkillers.",
+        med: "laxative", mode: "when"
+      },
+      stimlax: {
+        name: "Stimulant laxatives",
+        tag: "Constipation",
+        mech: "Act directly on the bowel wall to prompt the muscular contractions that move stool along.",
+        use: "Shorter-term relief, and routinely alongside opioid painkillers, which slow the bowel markedly.",
+        note: "Faster-acting and more likely to cause cramping, so usually intended for shorter runs than the osmotic group.",
+        med: "laxative", mode: "when"
+      },
       prokinetic: {
         name: "Prokinetics",
         tag: "Motility",
@@ -328,6 +370,22 @@ window.PHARM = {
         use: "A widely used modern option in several seizure types.",
         note: "Mood or irritability changes are worth reporting rather than tolerating.",
         med: "epilepsy", mode: "daily"
+      },
+      benzo: {
+        name: "Benzodiazepines",
+        tag: "Sedative",
+        mech: "Amplify the brain's main calming signal, reducing the excitability of nerve circuits throughout the nervous system.",
+        use: "Short-term severe anxiety, crisis insomnia, alcohol withdrawal, muscle spasm and some seizure situations.",
+        note: "Effective and habit-forming. The nervous system adapts within weeks, so these are started with an end date and stopped by gradual reduction, never abruptly.",
+        med: "sleepanxiety", mode: "when"
+      },
+      zdrug: {
+        name: "Z-drugs (non-benzodiazepine hypnotics)",
+        tag: "Sedative",
+        mech: "Act on the same calming receptor system as benzodiazepines, but more selectively towards sleep than towards anxiety.",
+        use: "Short-term insomnia.",
+        note: "Often presented as the safer alternative, but tolerance and dependence follow a similar pattern, so the same cautions apply.",
+        med: "sleepanxiety", mode: "when"
       },
       ssri: {
         name: "SSRIs",
@@ -451,18 +509,84 @@ window.PHARM = {
         note: "Alcohol during treatment causes a well-known and thoroughly unpleasant reaction.",
         med: "antibiotic", mode: "course"
       },
+      azole: {
+        name: "Azole antifungals",
+        tag: "Antifungal",
+        mech: "Block the fungus from building ergosterol, the molecule its cell membrane depends on, so the membrane fails.",
+        use: "Skin, nail, mouth and genital fungal infections, and serious internal fungal infection.",
+        note: "The oral forms interact with a notable number of other medicines, so the full list matters before starting.",
+        med: "antifungal", mode: "course"
+      },
+      allylamine: {
+        name: "Allylamine antifungals",
+        tag: "Antifungal",
+        mech: "Block an earlier step in the same membrane-building pathway, so toxic intermediates accumulate inside the fungus.",
+        use: "Particularly stubborn skin and nail infections, where courses run for weeks to months.",
+        note: "Liver function is sometimes monitored on the longer oral courses.",
+        med: "antifungal", mode: "course"
+      },
       antitb: {
         name: "Antitubercular agents",
         tag: "TB",
         mech: "Several drugs used together, each attacking the organism differently, for months rather than days.",
         use: "Tuberculosis — a leading example of why course completion is non-negotiable.",
         note: "Regionally important. Stopping early is the main driver of drug-resistant TB.",
-        med: "antibiotic", mode: "course"
+        med: "antitb", mode: "course"
       }
     }
   },
 
   /* ───────────────────────── IMMUNITY ───────────────────────── */
+  /* ───────────────────── BLOOD & NUTRITION ───────────────────── */
+  nutri: {
+    name: "Blood & nutrition",
+    icon: "blood",
+    blurb: "Replacing what the body is short of. The commonest error here is stopping when the symptom lifts, long before the store behind it is refilled.",
+    classes: {
+      ironsalt: {
+        name: "Oral iron salts",
+        tag: "Anaemia",
+        mech: "Supply iron for the bone marrow to build haemoglobin, the protein that carries oxygen in red cells.",
+        use: "Iron-deficiency anaemia from any cause, and prevention in pregnancy.",
+        note: "Absorbed better on an empty stomach and with vitamin C, and markedly less well with tea, milk or calcium. Black stools are expected and harmless.",
+        med: "ironfolate", mode: "course"
+      },
+      folate: {
+        name: "Folic acid & vitamin B12",
+        tag: "Anaemia",
+        mech: "Supply the vitamins cells need to divide and mature properly — without them red cells are made large and ineffective.",
+        use: "Folate or B12 deficiency, and routinely before and during early pregnancy to support neural development.",
+        note: "Giving folate alone where B12 is the real deficiency can correct the blood count while nerve damage quietly continues, which is why both are checked.",
+        med: "ironfolate", mode: "course"
+      }
+    }
+  },
+
+  /* ───────────────────── BONES & MINERALS ───────────────────── */
+  bone: {
+    name: "Bones & minerals",
+    icon: "bone",
+    blurb: "Silent, slow, and easy to abandon — because the benefit is a fracture that never happens.",
+    classes: {
+      calcium: {
+        name: "Calcium salts",
+        tag: "Bone health",
+        mech: "Supply the mineral bone is built from, where diet does not provide enough of it.",
+        use: "Osteoporosis and bone thinning, and alongside long-term steroid treatment.",
+        note: "Absorbed better in divided amounts, and it blocks the absorption of iron, thyroid replacement and some antibiotics — so those are spaced apart from it.",
+        med: "calciumvitd", mode: "daily"
+      },
+      vitd: {
+        name: "Vitamin D",
+        tag: "Bone health",
+        mech: "Allows the gut to absorb calcium at all. Without it, calcium supplements achieve very little.",
+        use: "Vitamin D deficiency, and as the foundation for any bone-strengthening treatment.",
+        note: "Fat-soluble, so it accumulates in the body — very high doses bought without advice are not harmless.",
+        med: "calciumvitd", mode: "daily"
+      }
+    }
+  },
+
   immune: {
     name: "Inflammation & immunity",
     icon: "shield",
@@ -490,7 +614,7 @@ window.PHARM = {
         mech: "Block histamine, the messenger behind itching, sneezing, hives and swelling.",
         use: "Allergic rhinitis, urticaria and allergic reactions.",
         note: "Newer types are far less sedating; older ones remain useful but are best not taken before driving.",
-        med: "steroid", mode: "when"
+        med: "antihistamine", mode: "when"
       }
     }
   }
@@ -527,7 +651,7 @@ window.SYSTEMS = {
       {
         id: "hf", name: "Heart failure",
         desc: "A heart that cannot pump enough for the body's needs — breathlessness, fatigue, swelling.",
-        classes: ["acei", "arb", "bb", "mra", "loop", "sglt2"], meds: ["heartfailure"],
+        classes: ["acei", "arb", "bb", "mra", "loop", "sglt2"], meds: ["heartfailure", "diuretic"],
         key: "Most of the combination is there to help you live longer, not to make today more comfortable. Only the diuretic does the latter."
       },
       {
@@ -613,6 +737,12 @@ window.SYSTEMS = {
         desc: "An ulcer in the stomach or duodenum, often driven by a bacterium.",
         classes: ["ppi", "betalactam", "macrolide", "nitroimidazole"], meds: ["acid", "antibiotic"],
         key: "When a bacterium is the cause, an antibiotic course treats the root — the acid-blocker alone only treats the effect."
+      },
+      {
+        id: "constipation", name: "Constipation",
+        desc: "Infrequent or difficult stools — usually diet, fluid, inactivity or a medicine, and occasionally something structural.",
+        classes: ["bulk", "osmotic", "stimlax"], meds: ["laxative"],
+        key: "A lasting change in bowel habit in an adult, particularly over 45, is a symptom to investigate rather than a routine to manage."
       }
     ]
   },
@@ -639,6 +769,12 @@ window.SYSTEMS = {
         desc: "Burning, shooting or electric pain from damaged nerves.",
         classes: ["gabapentinoid", "tca", "snri"], meds: ["painkiller", "antidepressant"],
         key: "Ordinary painkillers work poorly here. The medicines that help are borrowed from epilepsy and mood care — that is deliberate, not a mistake."
+      },
+      {
+        id: "insomnia", name: "Insomnia & short-term anxiety",
+        desc: "Sleeplessness or acute anxiety severe enough that a short course of sedation is being considered.",
+        classes: ["benzo", "zdrug"], meds: ["sleepanxiety"],
+        key: "These work quickly and stop working within weeks. They are started with an end date — and once taken regularly, stopped gradually rather than suddenly."
       }
     ]
   },
@@ -677,8 +813,48 @@ window.SYSTEMS = {
       {
         id: "tb", name: "Tuberculosis",
         desc: "A slow bacterial infection, most often of the lungs — a major regional health issue.",
-        classes: ["antitb"], meds: ["antibiotic"],
+        classes: ["antitb"], meds: ["antitb"],
         key: "Months of several medicines together. Interrupting treatment is the main cause of drug-resistant TB."
+      },
+      {
+        id: "fungal", name: "Fungal infections",
+        desc: "Skin, nail, scalp, mouth and genital infections — very common in humid climates, and slow to clear properly.",
+        classes: ["azole", "allylamine"], meds: ["antifungal"],
+        key: "Courses run far longer than the rash looks like it needs, and a steroid-containing cream relieves the itch while letting the infection spread."
+      }
+    ]
+  },
+
+  nutrisys: {
+    name: "Blood & nutrition",
+    icon: "blood",
+    blurb: "Deficiencies that are common, correctable, and very often treated for too short a time.",
+    conditions: [
+      {
+        id: "irondef", name: "Iron-deficiency anaemia",
+        desc: "Too little iron to build haemoglobin, so the blood carries less oxygen — causing tiredness, breathlessness and pallor.",
+        classes: ["ironsalt", "folate"], meds: ["ironfolate"],
+        key: "Two things matter equally: replacing the iron for long enough to refill the stores, and finding out why it ran low in the first place."
+      }
+    ]
+  },
+
+  bonesys: {
+    name: "Bones & minerals",
+    icon: "bone",
+    blurb: "Treatment you cannot feel working, measured in fractures that do not happen.",
+    conditions: [
+      {
+        id: "osteoporosis", name: "Osteoporosis & bone thinning",
+        desc: "Bone loses density with age, after menopause, and with long-term steroid treatment — until a minor fall breaks something.",
+        classes: ["calcium", "vitd"], meds: ["calciumvitd"],
+        key: "Calcium and vitamin D are the foundation, not the whole treatment — established osteoporosis usually needs a specific bone-strengthening medicine as well."
+      },
+      {
+        id: "vitddef", name: "Vitamin D deficiency",
+        desc: "Widespread even in sunny climates, because sun exposure, skin pigmentation, clothing and diet all affect how much is actually made.",
+        classes: ["vitd"], meds: ["calciumvitd"],
+        key: "Common enough to be worth measuring rather than assuming — and high doses bought over the counter are not automatically safe."
       }
     ]
   },
@@ -691,7 +867,7 @@ window.SYSTEMS = {
       {
         id: "allergy", name: "Allergy",
         desc: "Hay fever, hives and allergic reactions.",
-        classes: ["antihist", "steroid_sys"], meds: ["steroid"],
+        classes: ["antihist", "steroid_sys"], meds: ["antihistamine", "steroid"],
         key: "Antihistamines are when-needed; a steroid course for a severe flare is not."
       },
       {

@@ -10,9 +10,11 @@
 
 | Section | The question it answers | Content | Signature interaction |
 |---|---|---|---|
-| **Symptoms** | *"How worried should I be?"* | 20 common symptoms | Urgency-first sorting + red flags |
-| **Procedures** | *"What will it do to my body?"* | 20 common procedures | Before ↔ After toggle across 3 body layers |
-| **Medicines** | *"Every day, or only when I have symptoms?"* | 16 medicine groups | Take-daily / when-needed / course filter |
+| **Symptoms** | *"How worried should I be?"* | 30 common symptoms | Urgency-first sorting + red flags |
+| **Procedures** | *"What will it do to my body?"* | 30 common procedures | Before ↔ After toggle across 3 body layers |
+| **Medicines** | *"Every day, or only when I have symptoms?"* | 24 medicine groups, 62 drug classes, 29 conditions | Take-daily / when-needed / course filter |
+
+Every entry also carries a **clinical-review stamp** and a **`related` map** linking it to the other two sections. Both are described in §4.
 
 The guiding principle across all three: **lead with the real question, be honest about uncertainty, and be built to prevent harm** (never to replace a doctor).
 
@@ -26,7 +28,9 @@ This is the most important structural decision and must be preserved.
 - **Each page is a renderer.** The HTML/CSS/JS in each section's `index.html` reads its data file and builds the tiles and modal detail views from it. The page logic contains *no content*.
 - **To add an entry, you add an object to the data file** — the page picks it up automatically. This is what lets Signal scale from 20 entries to hundreds without touching page logic, and what would later let the same data feed a database, an API, or a mobile app.
 
-No build step, no framework, no dependencies. Plain static HTML/CSS/vanilla JS. This is intentional: it deploys anywhere, loads instantly, and has almost no attack surface or maintenance burden.
+No framework, no dependencies, no bundler. Plain static HTML/CSS/vanilla JS. This is intentional: it deploys anywhere, loads instantly, and has almost no attack surface or maintenance burden.
+
+**One caveat to "no build step":** `data/manifest.js` is *generated* (see §3a). The site serves as plain static files either way — nothing is compiled — but after editing content you re-run one command so the cross-links and the landing-page search stay in step. It exists so a symptom page can name a related medicine without downloading every data file on a slow connection.
 
 ---
 
@@ -34,7 +38,7 @@ No build step, no framework, no dependencies. Plain static HTML/CSS/vanilla JS. 
 
 ```
 signal-health/
-├── index.html              # Landing page — three-way hub
+├── index.html              # Landing page — three-way hub + unified search
 ├── symptoms/
 │   └── index.html          # Renders from ../data/symptoms.js
 ├── procedures/
@@ -42,10 +46,22 @@ signal-health/
 ├── medicines/
 │   └── index.html          # Renders from ../data/medicines.js
 ├── data/
-│   ├── symptoms.js         # window.SYMPTOMS  — 20 entries
-│   ├── procedures.js       # window.PROCEDURES — 20 entries
-│   └── medicines.js        # window.MEDICINES  — 16 entries
-├── assets/                 # (reserved for images/icons; .gitkeep placeholder)
+│   ├── symptoms.js         # window.SYMPTOMS   — 30 entries
+│   ├── procedures.js       # window.PROCEDURES — 30 entries
+│   ├── medicines.js        # window.MEDICINES  — 24 entries
+│   ├── classification.js   # window.PHARM (10 families / 62 classes)
+│   │                       # window.SYSTEMS (10 systems / 29 conditions)
+│   │                       # window.CLASSIFICATION_REVIEW
+│   └── manifest.js         # GENERATED — window.SIGNAL_INDEX + window.SIGNAL_COUNTS
+├── assets/
+│   ├── icons.js            # Animated icon set + label→icon routing
+│   ├── anim.css            # Shared motion layer
+│   ├── shared.css          # Review stamp, related block, focus styles
+│   └── signal.js           # Review line, cross-links, accessible modal, deep links
+├── tools/
+│   ├── build-manifest.js   # Regenerates data/manifest.js
+│   ├── sync-related.js     # Mirrors `related` links + reports dangling slugs
+│   └── check.js            # Integrity + safety-rule gate (exits non-zero on failure)
 ├── CLAUDE.md               # This file
 ├── README.md               # Human-facing readme + push instructions
 ├── LICENSE                 # MIT + medical disclaimer
@@ -57,11 +73,45 @@ Because pages load data via relative `../data/` paths, **serve the site rather t
 cd signal-health && python3 -m http.server 8000   # → http://localhost:8000
 ```
 
+### 3a. After editing content — run these two
+
+Both are plain Node scripts with no dependencies. Neither is needed to *serve* the site; both are needed to keep derived data honest.
+
+```bash
+node tools/sync-related.js     # mirrors related links, fails loudly on a bad slug
+node tools/build-manifest.js   # regenerates data/manifest.js
+node tools/check.js            # verifies everything still holds together
+```
+
+- **`sync-related.js`** — `related` is a mutual relationship. Author the link in whichever direction feels natural; this script writes the other half, refuses to create self-links, caps each list at 6 per section so one popular entry cannot accumulate an enormous list, and **exits non-zero naming any slug that does not resolve**. That last part is the real safety net against a typo becoming a silently missing chip.
+- **`build-manifest.js`** — rebuilds `data/manifest.js`: one small record per entry (section, slug, name, category, tag, hook) plus the headline counts. Pages read names from here instead of loading another section's full data file, and the landing page searches it. **Never hand-edit `data/manifest.js`.**
+- **`check.js`** — the gate. Verifies schema completeness, that every cross-link resolves, that the procedure axes are exactly Structural/Functional/Chemical on both sides, that every medicine group is reachable from all three views, that the §7 safety rules still hold (banners present, no doses, red flags on every symptom and medicine), and that the manifest is not stale. Exits non-zero on failure, so it can gate a commit or a deploy. It also prints the current review count and warns about any uncited figure — both are reported rather than failed, because they are editorial decisions, not defects.
+
 ---
 
 ## 4. Data schemas (exact)
 
 Every entry is keyed by a short slug (e.g. `chest`, `ga`, `bp`).
+
+### Shared by all three — review stamp + cross-links
+
+These two fields lead every entry, in all three data files:
+
+```js
+{
+  reviewedBy: null,          // null OR the named clinician, e.g. "Dr A. Rao, MD"
+  lastReviewed: null,        // null OR an ISO date, "YYYY-MM-DD"
+  related: {                 // slugs into the other sections (and siblings)
+    symptoms:   ['chest','breathless'],
+    procedures: ['pci'],
+    medicines:  ['statin']
+  },
+  // …then the section-specific fields below
+}
+```
+
+- **`reviewedBy` / `lastReviewed`** drive the stamp at the foot of every modal. While `reviewedBy` is `null` the entry renders a visible amber **"Pending clinical review"** notice; set it and the stamp turns green and names the reviewer and date. This is deliberately not subtle — an unreviewed entry should look unreviewed (§7.6). `data/classification.js` carries a single file-level `window.CLASSIFICATION_REVIEW` instead, because the taxonomy is reviewed as one coherent map rather than as 62 independent statements.
+- **`related`** is rendered as the "Related on Signal" block. Same-section chips open a modal in place; other-section chips are links carrying `?e=<slug>`. A slug missing from the manifest is skipped rather than rendered as a dead link. Run `tools/sync-related.js` after editing (§3a).
 
 ### Symptom — `window.SYMPTOMS[key]`
 ```js
@@ -136,6 +186,47 @@ Every entry is keyed by a short slug (e.g. `chest`, `ga`, `bp`).
 }
 ```
 
+### Classification — `window.PHARM` and `window.SYSTEMS`
+
+The medicines section has two further axes beyond "by rule", both living in `data/classification.js`.
+
+```js
+window.PHARM.<family> = {
+  name: "Heart & circulation",
+  icon: "heart",                           // name from assets/icons.js
+  blurb: "One line framing the family.",
+  classes: {
+    acei: {
+      name: "ACE inhibitors",
+      tag:  "Blood pressure",              // short chip
+      mech: "How it works, in plain language.",
+      use:  "What it's used for.",
+      note: "The one thing worth knowing.",
+      med:  "bp",                          // key into window.MEDICINES
+      mode: "daily"                        // 'daily' | 'when' | 'course' | 'mixed'
+    }
+  }
+}
+
+window.SYSTEMS.<system> = {
+  name: "Heart & circulation",
+  icon: "heart",
+  blurb: "One line framing the system.",
+  conditions: [{
+    id: "htn", name: "High blood pressure",
+    desc: "What the condition is.",
+    classes: ["acei","arb"],               // ids from PHARM[*].classes
+    meds: ["bp"],                          // keys from window.MEDICINES
+    key: "The one thing worth knowing."
+  }]
+}
+```
+
+> **Invariant:** every medicine group should be reachable from all three views. A group with no class pointing at it (`med`) and no condition listing it (`meds`) is invisible in two of the three axes. Check with:
+> ```bash
+> node -e "global.window={};require('./data/medicines.js');require('./data/classification.js');const{MEDICINES:M,PHARM:P,SYSTEMS:S}=window;const c=new Set(),d=new Set();Object.values(P).forEach(f=>Object.values(f.classes).forEach(x=>x.med&&c.add(x.med)));Object.values(S).forEach(s=>s.conditions.forEach(x=>x.meds.forEach(m=>d.add(m))));console.log('no class:',Object.keys(M).filter(k=>!c.has(k)).join()||'none');console.log('no condition:',Object.keys(M).filter(k=>!d.has(k)).join()||'none')"
+> ```
+
 ---
 
 ## 5. Design system
@@ -155,6 +246,8 @@ Every entry is keyed by a short slug (e.g. `chest`, `ga`, `bp`).
 | Procedures | `--deep #33507e` (blue) | `#e7ecf5` | `#f3f5f8` | `#ffffff` | `#141c26` |
 | Medicines | `--plum #6d4b86` (violet) | `#efe8f4` | `#f5f2f7` | `#fffdff` | `#1e1726` |
 
+Each page also aliases its accent as **`--accent` / `--accent-bg`** on `:root`. `assets/shared.css` is written against those aliases only, so the review stamp, the related block and the focus ring pick up each section's tint without any per-section overrides. Keep the alias when adding a section.
+
 **Shared functional colours (urgency / status), consistent site-wide:**
 - Calm/safe/good: green `#2f7d63`–`#3f7d6e`, bg `#e3f0ea`/`#e6f0ec`
 - Watch/caution: amber `#b8842b`, bg `#f6eddb`
@@ -166,8 +259,12 @@ Every entry is keyed by a short slug (e.g. `chest`, `ga`, `bp`).
 3. **Hero** — big serif headline with one italic accent word, subhead, section-specific framing.
 4. **Search input** — filters tiles live by name/keywords.
 5. **Tile grid** — `repeat(auto-fill, minmax(~240px, 1fr))`, each tile a button opening the modal.
-6. **Modal "sheet"** — centered overlay with blurred scrim, `rise` entry animation, `×` close, Esc-to-close, click-outside-to-close. This is where the full entry renders.
-7. **Footer disclaimer** — the "educational prototype, needs physician sign-off" text.
+6. **Modal "sheet"** — centered overlay with blurred scrim, `rise` entry animation, `×` close, Esc-to-close, click-outside-to-close. This is where the full entry renders. Opening and closing go through `SignalModal` in `assets/signal.js`, which adds `role="dialog"`, traps Tab inside the sheet, restores focus to the tile that opened it, and syncs a shareable `?e=<slug>` URL.
+7. **Related block** — `SignalRelated(entry, section)`, cross-section chips resolved through the manifest.
+8. **Review stamp** — `SignalReview(entry)`, the last thing in every modal body.
+9. **Footer disclaimer** — the "educational prototype, needs physician sign-off" text.
+
+**Accessibility baseline (do not regress):** every page has a skip link, one `<main id="main">`, labelled search inputs, `role="status" aria-live="polite"` on the result counts, and `:focus-visible` rings from `shared.css`. Tile grids are `role="list"` with `role="listitem"` buttons. The medicines view switcher is a real `role="tablist"`; its collapsible family headers are `role="button"` with `tabindex="0"`, `aria-expanded`, and Enter/Space handling. `prefers-reduced-motion` is honoured in `anim.css` (icon layer) and `shared.css` (page layer).
 
 ---
 
@@ -195,7 +292,9 @@ These are not stylistic preferences — they are what keeps the project responsi
 3. **Red flags everywhere.** Every symptom and medicine entry names the signs that mean "seek care." This is the safety net for an educational tool that can't examine anyone.
 4. **Medicines section carries no brand names and no doses — by design.** It's a *concepts* layer explaining groups of medicines, not a drug index (that space is mature and a medico-legal minefield). It exists to correct dangerous misconceptions — chiefly, stopping preventive medicines because you "feel fine" — never to instruct an individual.
 5. **Everything is framed as general education, subordinate to the reader's own clinician.** The footer states nothing is a substitute for medical care.
-6. **Physician sign-off is required before public deployment.** No entry is certified for real-user use until a named clinician has reviewed it. In the medicines data, the discontinuation ("rule") advice for **anticoagulants, insulin, steroids, epilepsy medicines, and antidepressants** is genuinely safety-critical and needs particular scrutiny — a second clinician read is wise.
+6. **Physician sign-off is required before public deployment.** No entry is certified for real-user use until a named clinician has reviewed it. This is now tracked in the data: every entry carries `reviewedBy` / `lastReviewed` (§4), and while `reviewedBy` is `null` the entry openly displays a **"Pending clinical review"** notice. Do not pre-fill these fields with a placeholder name — an unreviewed entry must look unreviewed.
+
+   In the medicines data, the discontinuation ("rule") advice for **anticoagulants, insulin, steroids, epilepsy medicines, antidepressants, TB medicines and sedatives** is genuinely safety-critical and needs particular scrutiny — a second clinician read is wise. TB medicines and sedatives join that list because both carry a two-sided instruction: complete the course / do not stop abruptly.
 7. **Region-awareness is a feature, not decoration.** The India/South-Asia notes (TB, dengue, earlier coronary disease, B12 deficiency, filariasis, the "stone belt", etc.) are part of what differentiates Signal. Keep them accurate and clearly caveated.
 
 ---
@@ -211,12 +310,18 @@ Settings → Pages → deploy from `main` branch, root folder. Live at `https://
 Connect the repo, no build command, publish directory = repo root. These give a cleaner root URL and easy custom-domain + HTTPS. Cloudflare Pages is a strong default for an India audience (good regional edge coverage).
 
 **Going-live checklist (do these before it faces real users):**
-- [ ] **Physician sign-off** on all entries, with special attention to the five medicines flagged in §7.6. Consider adding a `reviewedBy` / `lastReviewed` field per entry and surfacing it in the UI.
+
+Done:
+- [x] **`reviewedBy` / `lastReviewed` per entry**, surfaced in every modal, defaulting to a visible "Pending clinical review" notice.
+- [x] **Accessibility pass** — focus trap, focus restore, ARIA roles, skip links, labelled inputs, live regions, `prefers-reduced-motion`. Baseline recorded in §5.
+- [x] **Page `<title>`, `<meta name="description">`, canonical URL, Open Graph and Twitter card tags** on all four pages.
+
+Still open — **the first item is the blocker**:
+- [ ] **Physician sign-off on all 84 entries plus the classification layer.** Nothing else on this list gates public use the way this does. Special attention to the medicines flagged in §7.6. Until then, every entry openly says it is unreviewed, which is the honest state — not a bug to paper over.
+- [ ] **`og:image` per section.** The textual OG tags are in place; there is no image asset yet, so link previews will show no thumbnail.
 - [ ] **Decide public vs private repo.** Push to a **private** repo first for backup + version control; make it public only when the content is signed off. Public + MIT means it's genuinely out there.
 - [ ] **Confirm the LICENSE** — MIT is fine for the code; make sure you're happy to license the *content* that way too, or split them (e.g. code MIT, content CC-BY or all-rights-reserved).
-- [ ] **Add real sources** if you ever replace any qualitative claim with a figure.
-- [ ] **Accessibility pass** (see §9).
-- [ ] Add a proper page `<title>`/meta and an `og:` image per section for link previews.
+- [ ] **Add real sources** if you ever replace any qualitative claim with a figure. One already needs this: the `weightloss` symptom cites "more than about 5% of body weight" — a standard clinical threshold, but the only number in the corpus, and currently uncited (§7.2).
 - [ ] Add a privacy note if you introduce any analytics (prefer a privacy-respecting, cookieless one).
 
 ---
@@ -226,10 +331,11 @@ Connect the repo, no build command, publish directory = repo root. These give a 
 Good first prompts once this file is in the repo:
 
 - *"Read CLAUDE.md. Run the site locally and confirm all three sections render from their data files."*
-- *"Add 10 more symptoms to data/symptoms.js following the exact schema in CLAUDE.md §4. Keep the region notes India-aware and the frequency bands qualitative."*
-- *"Do an accessibility pass on the modal: focus-trap it, add ARIA roles, restore focus on close, and honour prefers-reduced-motion. Don't change the visual design."*
-- *"Add a `reviewedBy` and `lastReviewed` field to each entry's schema and surface a small 'Reviewed by … on …' line in each modal footer. Leave them blank/'Pending review' where unknown."*
-- *"Add cross-linking: on a symptom, show related procedures/medicines, and vice versa, using a new `related` array of slugs."*
+- *"Add 10 more symptoms to data/symptoms.js following the exact schema in CLAUDE.md §4. Keep the region notes India-aware and the frequency bands qualitative. Then run tools/sync-related.js and tools/build-manifest.js."*
+- *"Record Dr X's sign-off: set reviewedBy and lastReviewed on the entries they reviewed."*
+- *"Add cited sources per entry — a new `sources` array — and surface them under the review stamp."*
+- *"Add a print-friendly single-entry view so a clinician can hand a patient one page."*
+- *"Add a service worker so the site works offline on a poor connection."*
 - *"Set up deployment to Cloudflare Pages and write the steps into README."*
 
 **Guardrails to give Claude Code:** never invent statistics or add brand-name/dose data to medicines; never remove the safety banners or disclaimers; keep content in `data/*.js` and out of page logic; preserve the three signature interactions.
@@ -238,13 +344,18 @@ Good first prompts once this file is in the repo:
 
 ## 10. Extension roadmap (ideas, not commitments)
 
-- Physician-review workflow surfaced in the UI (`reviewedBy` / `lastReviewed`).
-- Cited references per entry.
-- Cross-linking between the three sections (a symptom → its likely procedures → the medicines involved).
-- Unified search across all three from the landing page.
+Done since this file was first written:
+- ~~Physician-review workflow surfaced in the UI (`reviewedBy` / `lastReviewed`).~~ — the *fields and UI* exist; the actual review does not.
+- ~~Cross-linking between the three sections.~~ — `related`, mirrored by `tools/sync-related.js`.
+- ~~Unified search across all three from the landing page.~~ — via the generated manifest.
+
+Still ideas, not commitments:
+- Cited references per entry (a `sources` array, rendered beneath the review stamp).
 - Offline support (service worker) — genuinely useful for low-connectivity regions.
 - Localisation (Tamil / Hindi) — the plain-language ethos suits translation well.
 - Print-friendly single-entry view, so a clinician can hand a patient a page.
+- `og:image` per section for link previews.
+- A "reviewed only" toggle, so the site can go public with a signed-off subset while the rest stays in draft.
 
 ---
 

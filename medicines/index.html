@@ -5,11 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Signal · Medicines — by rule, by drug class, by condition</title>
 <meta name="description" content="Plain-language guide to common medicine groups, explorable three ways: whether to take it daily, when needed or as a course; by pharmacological class; or by the condition being treated.">
+<link rel="canonical" href="https://gopitherobot.github.io/signal-health/medicines/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Signal">
+<meta property="og:title" content="Signal · Medicines — by rule, by drug class, by condition">
+<meta property="og:description" content="Plain-language guide to common medicine groups, explorable three ways: whether to take it daily, when needed or as a course; by pharmacological class; or by the condition being treated.">
+<meta property="og:url" content="https://gopitherobot.github.io/signal-health/medicines/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Signal · Medicines — by rule, by drug class, by condition">
+<meta name="twitter:description" content="Plain-language guide to common medicine groups, explorable three ways: whether to take it daily, when needed or as a course; by pharmacological class; or by the condition being treated.">
+<meta name="theme-color" content="#f4f5f7">
 <link rel="stylesheet" href="../assets/anim.css">
+<link rel="stylesheet" href="../assets/shared.css">
 <style>
   :root{
     --ink:#1e1726;--ink-soft:#54495e;--ink-faint:#867a8f;
     --paper:#f5f2f7;--card:#fffdff;--line:#e5dfea;
+    --accent:#6d4b86;--accent-bg:#efe8f4;
     --plum:#6d4b86;--plum-bg:#efe8f4;--plum-deep:#513467;
     --daily:#33507e;--daily-bg:#e7ecf5;--when:#b8842b;--when-bg:#f6eddb;--course:#2f7d63;--course-bg:#e3f0ea;--mixed:#8a5a86;--mixed-bg:#f0e6ef;
     --warn:#b23b2e;--warn-bg:#f7e4e0;
@@ -174,6 +186,7 @@
 </style>
 </head>
 <body>
+<a class="sig-skip" href="#main">Skip to the medicine list</a>
 <div class="safety"><b>Never start, stop or change a medicine based on this page.</b> It explains medicine groups in general terms only. Your own doctor's instructions for your situation always come first.</div>
 <header><div class="wrap brand">
   <a href="../index.html" class="mark">Signal<span class="dot">.</span></a>
@@ -182,7 +195,7 @@
   <a href="../procedures/index.html" class="navlink" style="margin-left:16px">Procedures →</a>
 </div></header>
 
-<main class="wrap">
+<main class="wrap" id="main">
   <div class="herowrap">
     <section class="hero">
       <h1>The question nobody explains: <em>keep taking it, or only when I have symptoms?</em></h1>
@@ -196,16 +209,16 @@
   </div>
   <div class="keymsg"><b>The single most important idea here:</b> many of the most important medicines treat problems you cannot feel — high blood pressure, high cholesterol, a thinning of the blood. Feeling well on them means they're working. It is almost never a reason to stop.</div>
 
-  <div class="axisbar" id="axisbar">
-    <div class="axisind" id="axisind"></div>
-    <button class="axisbtn active" data-v="rule"  onclick="setView('rule')">By rule</button>
-    <button class="axisbtn"        data-v="class" onclick="setView('class')">By drug class</button>
-    <button class="axisbtn"        data-v="cond"  onclick="setView('cond')">By condition</button>
+  <div class="axisbar" id="axisbar" role="tablist" aria-label="Three ways to explore medicines">
+    <div class="axisind" id="axisind" aria-hidden="true"></div>
+    <button class="axisbtn active" role="tab" id="tab-rule"  aria-selected="true"  aria-controls="v-rule"  data-v="rule"  onclick="setView('rule')">By rule</button>
+    <button class="axisbtn"        role="tab" id="tab-class" aria-selected="false" aria-controls="v-class" data-v="class" onclick="setView('class')">By drug class</button>
+    <button class="axisbtn"        role="tab" id="tab-cond"  aria-selected="false" aria-controls="v-cond"  data-v="cond"  onclick="setView('cond')">By condition</button>
   </div>
   <p class="axishint" id="axishint"></p>
 
   <!-- ═══ VIEW 1 — by rule ═══ -->
-  <div class="view on" id="v-rule">
+  <div class="view on" id="v-rule" role="tabpanel" aria-labelledby="tab-rule" tabindex="0">
     <div class="filterlabel">Filter by how it's taken</div>
     <div class="modes" id="modes">
       <button class="modebtn active" data-m="all" onclick="setMode('all')">All medicines</button>
@@ -216,31 +229,34 @@
     </div>
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="q" type="text" placeholder="Search — try &ldquo;blood pressure&rdquo; or &ldquo;inhaler&rdquo;" oninput="applyFilters()">
+      <label class="sr-only" for="q">Search medicine groups</label>
+      <input id="q" type="text" autocomplete="off" placeholder="Search — try &ldquo;blood pressure&rdquo; or &ldquo;inhaler&rdquo;" oninput="applyFilters()">
     </div>
-    <div class="section-label" id="countlabel">Explore by medicine group</div>
-    <div class="grid" id="grid"></div>
+    <div class="section-label" id="countlabel" role="status" aria-live="polite">Explore by medicine group</div>
+    <div class="grid" id="grid" role="list"></div>
     <div class="empty" id="empty" style="display:none">No medicine groups match that filter.</div>
   </div>
 
   <!-- ═══ VIEW 2 — by pharmacological class ═══ -->
-  <div class="view" id="v-class">
+  <div class="view" id="v-class" role="tabpanel" aria-labelledby="tab-class" tabindex="0">
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="qc" type="text" placeholder="Search a class — try &ldquo;beta-blocker&rdquo; or &ldquo;statin&rdquo;" oninput="renderClasses(this.value)">
+      <label class="sr-only" for="qc">Search pharmacological drug classes</label>
+      <input id="qc" type="text" autocomplete="off" placeholder="Search a class — try &ldquo;beta-blocker&rdquo; or &ldquo;statin&rdquo;" oninput="renderClasses(this.value)">
     </div>
-    <div class="section-label" id="classcount">Pharmacological families</div>
+    <div class="section-label" id="classcount" role="status" aria-live="polite">Pharmacological families</div>
     <div id="fams"></div>
     <div class="empty" id="emptyc" style="display:none">No drug classes match that search.</div>
   </div>
 
   <!-- ═══ VIEW 3 — by condition / system ═══ -->
-  <div class="view" id="v-cond">
+  <div class="view" id="v-cond" role="tabpanel" aria-labelledby="tab-cond" tabindex="0">
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="qs" type="text" placeholder="Search a condition — try &ldquo;asthma&rdquo; or &ldquo;diabetes&rdquo;" oninput="renderSystems(this.value)">
+      <label class="sr-only" for="qs">Search conditions by name or body system</label>
+      <input id="qs" type="text" autocomplete="off" placeholder="Search a condition — try &ldquo;asthma&rdquo; or &ldquo;diabetes&rdquo;" oninput="renderSystems(this.value)">
     </div>
-    <div class="section-label" id="condcount">Body systems &amp; the conditions within them</div>
+    <div class="section-label" id="condcount" role="status" aria-live="polite">Body systems &amp; the conditions within them</div>
     <div id="systems"></div>
     <div class="empty" id="emptys" style="display:none">No conditions match that search.</div>
   </div>
@@ -250,11 +266,13 @@
   <p><b>Educational prototype — general information, not personal advice.</b> No brand names or doses are given by design; this explains <i>groups</i> and <i>classes</i> of medicines and how they're used. Mechanisms are simplified teaching models. Every entry needs physician sign-off and cited sources before public deployment. Always follow the specific instructions you were given.</p>
 </footer>
 
-<div class="scrim" id="scrim" onclick="if(event.target===this)close_()"><div class="sheet" id="sheet"></div></div>
+<div class="scrim" id="scrim" aria-hidden="true" onclick="if(event.target===this)close_()"><div class="sheet" id="sheet"></div></div>
 
 <script src="../data/medicines.js"></script>
 <script src="../data/classification.js"></script>
+<script src="../data/manifest.js"></script>
 <script src="../assets/icons.js"></script>
+<script src="../assets/signal.js"></script>
 <script>
 const MED = window.MEDICINES, PHARM = window.PHARM, SYS = window.SYSTEMS;
 const modeNames = {daily:"Take every day", when:"Take when needed", course:"Take as a course", mixed:"Depends on type"};
@@ -281,7 +299,11 @@ function moveInd(){
 }
 function setView(v){
   curView = v;
-  document.querySelectorAll('.axisbtn').forEach(b=>b.classList.toggle('active', b.dataset.v===v));
+  document.querySelectorAll('.axisbtn').forEach(b=>{
+    const on = b.dataset.v===v;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on);
+  });
   document.querySelectorAll('.view').forEach(s=>s.classList.remove('on'));
   document.getElementById('v-'+v).classList.add('on');
   document.getElementById('axishint').textContent = hints[v];
@@ -299,6 +321,8 @@ function renderMeds(){
     b.style.animationDelay = Math.min(i*22,320)+'ms';
     b.dataset.name = (d.name+' '+d.cat+' '+d.mini+' '+d.syndrome).toLowerCase();
     b.dataset.mode = d.mode;
+    b.setAttribute('role','listitem');
+    b.setAttribute('aria-label', d.name+' — '+modeNames[d.mode]+'. Open full explainer.');
     b.onclick = ()=>openMed(k);
     b.innerHTML = `<span class="rail ${d.mode}"></span>
       <span class="ico">${SignalIcon(modeIcon[d.mode],26)}</span>
@@ -343,8 +367,8 @@ function renderClasses(q){
     el.className = 'fam sig-enter ' + open;
     el.style.animationDelay = Math.min(fams*30,240)+'ms';
     el.innerHTML = `
-      <div class="famhead" onclick="this.parentNode.classList.toggle('open')">
-        <div class="famicon">${SignalIcon(fam.icon,30)}</div>
+      <div class="famhead" role="button" tabindex="0" aria-expanded="${open?'true':'false'}" onclick="toggleFam(this)" onkeydown="famKey(event,this)">
+        <div class="famicon" aria-hidden="true">${SignalIcon(fam.icon,30)}</div>
         <div class="famtext"><h3>${fam.name}</h3><p>${fam.blurb}</p></div>
         <span class="famcount">${hits.length} class${hits.length===1?'':'es'}</span>
         <svg class="chev" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -381,8 +405,8 @@ function renderSystems(q){
     el.className = 'fam sig-enter ' + open;
     el.style.animationDelay = Math.min(n*30,240)+'ms';
     el.innerHTML = `
-      <div class="famhead" onclick="this.parentNode.classList.toggle('open')">
-        <div class="famicon">${SignalIcon(sys.icon,30)}</div>
+      <div class="famhead" role="button" tabindex="0" aria-expanded="${open?'true':'false'}" onclick="toggleFam(this)" onkeydown="famKey(event,this)">
+        <div class="famicon" aria-hidden="true">${SignalIcon(sys.icon,30)}</div>
         <div class="famtext"><h3>${sys.name}</h3><p>${sys.blurb}</p></div>
         <span class="famcount">${hits.length} condition${hits.length===1?'':'s'}</span>
         <svg class="chev" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -416,12 +440,16 @@ function findClass(id){
 
 /* ═══ modals ═══ */
 function ruleLabel(m){return {daily:"The rule · take every day",when:"The rule · take when needed",course:"The rule · take as a course",mixed:"The rule · it depends"}[m];}
-function show(html){
+function toggleFam(el){
+  const open = el.parentNode.classList.toggle('open');
+  el.setAttribute('aria-expanded', open);
+}
+function famKey(e, el){
+  if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleFam(el); }
+}
+function show(html, slug){
   document.getElementById('sheet').innerHTML = html;
-  document.getElementById('scrim').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  document.getElementById('sheet').scrollTop = 0;
-  document.querySelector('.scrim').scrollTop = 0;
+  SignalModal.open(slug);
 }
 function openMed(k){
   const d = MED[k];
@@ -453,7 +481,9 @@ function openMed(k){
       <div class="blk"><div class="mistakes"><div class="mh">Common — and sometimes dangerous — mistakes</div><ul>${li(d.mistakes)}</ul></div></div>
       <div class="blk"><div class="flags"><div class="fh">When to seek advice</div><ul>${li(d.flags)}</ul></div></div>
       <div class="blk"><div class="ask"><h4>Questions worth asking your doctor or pharmacist</h4><ul>${li(d.ask)}</ul></div></div>
-    </div>`);
+      ${SignalRelated(d,'medicines')}
+      ${SignalReview(d)}
+    </div>`, k);
 }
 function openClass(fk,ck){
   const fam = PHARM[fk], c = fam.classes[ck], parent = MED[c.med];
@@ -483,9 +513,14 @@ function openClass(fk,ck){
         <ul><li>Class names describe <i>how a medicine works</i> — they are not brand names, and no doses are given here.</li>
         <li>Two medicines in the same class are not automatically interchangeable for you.</li>
         <li>Never start, stop, swap or adjust anything based on this page.</li></ul></div></div>
+      ${SignalReview(window.CLASSIFICATION_REVIEW || {})}
     </div>`);
 }
-function close_(){document.getElementById('scrim').classList.remove('open');document.body.style.overflow='';}
+function close_(){ SignalModal.close(); }
+
+/* lets shared.js open a sibling medicine group in place rather than reloading */
+window.SignalOpenLocal = openMed;
+
 document.addEventListener('keydown', e=>{if(e.key==='Escape')close_()});
 
 /* ── boot ── */
@@ -494,6 +529,7 @@ renderClasses();
 renderSystems();
 document.getElementById('axishint').textContent = hints.rule;
 requestAnimationFrame(moveInd);
+SignalDeepLink(k=>!!MED[k], openMed);
 </script>
 </body>
 </html>
