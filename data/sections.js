@@ -11,6 +11,16 @@
  *   intro   — the thesis of the section in two sentences. The "why this exists".
  *   card    — the longer blurb used on the landing page pillar card.
  *   order   — the numeral shown on the landing card.
+ *   phase   — WHERE IN A HOSPITAL STAY this section belongs. See below.
+ *   when    — the phase spelled out for a reader.
+ *
+ * THE PHASE IS THE SPINE. The three sections are not three loose topics, they
+ * are three moments in one journey: the symptoms that decide whether you need
+ * admission, the procedures that happen once you are inside, and the medicines
+ * you are sent home with. Most health sites organise by body system or by
+ * disease; Signal organises by WHEN you need the information, because the
+ * question a person asks changes completely depending on where they are.
+ * Keep the phase visible — it is the reason the site is shaped this way.
  *
  * Keep `kicker` phrased as the reader's question, never as a feature. The
  * whole editorial premise of Signal is that people arrive with a question,
@@ -21,6 +31,8 @@ window.SECTIONS = {
 
   symptoms: {
     order: "01",
+    phase: "Before",
+    when:  "Before admission",
     name:   "Symptoms",
     kicker: "How worried should I be?",
     intro:  "Every symptom tells a story. Some are whispers, a few are alarms — and the skill that matters is not naming the disease, it is telling which is which, and knowing when to move.",
@@ -29,6 +41,8 @@ window.SECTIONS = {
 
   procedures: {
     order: "02",
+    phase: "During",
+    when:  "During your stay",
     name:   "Procedures",
     kicker: "What will it do to my body?",
     intro:  "A procedure is not a name on a consent form. It is a change to your structure, your function and your chemistry — and you are entitled to see that change before you agree to it.",
@@ -37,6 +51,8 @@ window.SECTIONS = {
 
   medicines: {
     order: "03",
+    phase: "After",
+    when:  "After you go home",
     name:   "Medicines",
     kicker: "Every day, or only when I need it?",
     intro:  "Some medicines treat what you can feel. Others prevent what you cannot. Confusing the two is how people stop the tablets that were quietly keeping them well.",

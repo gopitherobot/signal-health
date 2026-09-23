@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal · Who writes this, and why</title>
+<meta name="description" content="Signal is written and edited by Dr. Gopi Krishnan Palanivel — specialist anaesthesiologist and intensivist at St. Isabel's Hospital, Mylapore, Chennai, geriatrician and healthcare entrepreneur — explaining the medical concepts people meet around a hospital stay.">
+<link rel="canonical" href="https://gopitherobot.github.io/signal-health/about.html">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Signal">
+<meta property="og:title" content="Signal · Who writes this, and why">
+<meta property="og:description" content="Written and edited by Dr. Gopi Krishnan Palanivel — specialist anaesthesiologist and intensivist at St. Isabel's Hospital, Mylapore, Chennai.">
+<meta property="og:url" content="https://gopitherobot.github.io/signal-health/about.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Signal · Who writes this, and why">
+<meta name="twitter:description" content="Written and edited by Dr. Gopi Krishnan Palanivel — specialist anaesthesiologist and intensivist, St. Isabel's Hospital, Chennai.">
+<meta name="theme-color" content="#F3EFE7">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/anim.css">
+<link rel="stylesheet" href="assets/theme.css">
+
+<style>
+  .author {
+    display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 44px; align-items: start;
+    padding: 40px 44px; border-radius: var(--r-card);
+    background: var(--card); border: 1px solid var(--line);
+  }
+  .author .portrait {
+    width: 180px; height: 180px; border-radius: 50%;
+    background: var(--green); color: var(--green-light);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display); font-size: 62px; line-height: 1;
+  }
+  .author .name { font-family: var(--display); font-size: 48px; line-height: 1.02; letter-spacing: -0.02em; }
+  .author .creds { font-family: var(--mono); font-size: 13px; letter-spacing: .05em; color: var(--rust); margin-top: 10px; }
+  .author .where { font-size: 16px; line-height: 1.5; color: var(--ink-muted); margin-top: 10px; }
+  .author .roles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .author .bio { font-size: 18px; line-height: 1.65; color: var(--ink-body); margin-top: 22px; }
+  .author .bio + .bio { margin-top: 14px; }
+
+  .arc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; background: var(--card); }
+  .arc .leg { padding: 34px 32px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; }
+  .arc .leg:first-child { border-left: 0; }
+  .arc .ph { font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--rust); }
+  .arc .nm { font-family: var(--display); font-size: 38px; line-height: 1; }
+  .arc .q  { font-family: var(--display); font-style: italic; font-size: 20px; line-height: 1.2; color: var(--ink-muted); }
+  .arc .bd { font-size: 15.5px; line-height: 1.6; color: var(--ink-muted); margin-top: 4px; }
+  .arc .go { margin-top: auto; padding-top: 14px; font-size: 14px; font-weight: 500; color: var(--rust); }
+
+  .prose { max-width: 70ch; display: flex; flex-direction: column; gap: 20px; font-size: 18px; line-height: 1.7; color: var(--ink-body); }
+  .prose h2 { font-size: 40px; line-height: 1.08; color: var(--ink); margin-top: 8px; }
+
+  .policy { display: flex; flex-direction: column; gap: 14px; }
+  .policy .row { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 22px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .policy .row:first-child { border-top: 0; }
+  .policy .rk { font-family: var(--mono); font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); padding-top: 3px; }
+  .policy .rv { font-size: 16.5px; line-height: 1.65; color: var(--ink-body); }
+
+  @media (max-width: 900px) {
+    .author { grid-template-columns: minmax(0, 1fr); gap: 26px; padding: 28px 22px; }
+    .author .portrait { width: 110px; height: 110px; font-size: 40px; }
+    .author .name { font-size: 34px; }
+    .author .bio { font-size: 16.5px; }
+    .arc { grid-template-columns: minmax(0, 1fr); }
+    .arc .leg { border-left: 0; border-top: 1px solid var(--line); }
+    .arc .leg:first-child { border-top: 0; }
+    .prose { font-size: 16.5px; }
+    .prose h2 { font-size: 28px; }
+    .policy .row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  }
+</style>
+</head>
+<body>
+<a class="sig-skip" href="#main">Skip to the main content</a>
+
+<div class="utility">
+  <div class="shell wrap">
+    <div>EDUCATIONAL, NOT A DOCTOR &middot; IN AN EMERGENCY CALL 112</div>
+    <div class="utility-links">
+      <a href="#review">How entries are reviewed</a>
+      <a href="#limits">What Signal can't do</a>
+    </div>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="shell wrap">
+    <a href="index.html" class="mark" aria-label="Signal — home">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15h6l3-8 5 16 4-11 2 3h6"/></svg>
+      Signal
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="symptoms/index.html">Symptoms</a>
+      <a href="procedures/index.html">Procedures</a>
+      <a href="medicines/index.html">Medicines</a>
+      <a href="a-z.html">Conditions A&ndash;Z</a>
+      <a href="about.html" aria-current="page">About</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn--ghost btn--sm" href="index.html#search">Search everything</a>
+    </div>
+  </div>
+</header>
+
+<div class="safety">
+  <div class="shell wrap"><b>Signal is educational, not a doctor.</b> It never diagnoses, and never tells you to start or stop treatment. If something feels severe or sudden, contact emergency services now.</div>
+</div>
+
+<main id="main" class="shell wrap">
+
+  <section class="masthead">
+    <div class="mh-rule"></div>
+    <div class="mh-label">About Signal</div>
+    <h1 class="mh-name">Who writes this</h1>
+    <p class="mh-kicker">And on what authority?</p>
+    <p class="mh-intro">On a health site that is a fair question, and it deserves a direct answer rather than a page of mission statements. Signal is written and edited by one named clinician, and every entry says plainly whether it has been independently reviewed yet.</p>
+  </section>
+
+  <!-- ── The author ── -->
+  <section style="padding-top:36px">
+    <div class="author">
+      <div class="portrait" aria-hidden="true">GP</div>
+      <div>
+        <div class="name">Dr. Gopi Krishnan Palanivel</div>
+        <div class="creds">MD (Anaesthesia) &middot; MBA (Healthcare &amp; Hospital Management)</div>
+        <div class="where">Specialist Anaesthesiologist &amp; Intensivist &middot; St. Isabel's Hospital, Mylapore, Chennai</div>
+        <div class="roles">
+          <span class="chip chip--quiet">Anaesthesiologist &amp; Intensivist</span>
+          <span class="chip chip--quiet">Geriatrician</span>
+          <span class="chip chip--quiet">Healthcare entrepreneur</span>
+          <span class="chip chip--quiet">Author &amp; editor of Signal</span>
+        </div>
+        <p class="bio">A specialist anaesthesiologist and intensivist at St. Isabel's Hospital in Mylapore, Chennai, who also practises as a geriatrician, with a management background in healthcare and hospital administration.</p>
+        <p class="bio">Signal grew out of a pattern seen repeatedly from the theatre, the intensive care unit and the ward: patients and families are asked to make consequential decisions around a hospital stay while being given the least explanation at exactly the moments it matters most. The middle stretch of that stay &mdash; the part patients are least able to picture, because they are frequently unconscious for it &mdash; is where an anaesthesiologist and intensivist spends their working life.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Why it exists ── -->
+  <section class="band--tight prose" id="why">
+    <h2>Why Signal exists</h2>
+    <p>Signal explains the medical concepts people meet around a hospital stay &mdash; the symptoms that decide whether you need admission, the procedures that happen once you are inside, and the medicines you are sent home with.</p>
+    <p>Those three moments have something in common. They are where the stakes are highest, the time is shortest, and the explanation is thinnest. A person deciding at 2am whether chest pain warrants an emergency department, a person signing a consent form for a procedure they cannot picture, a person handed six boxes of tablets on discharge with no clear sense of which ones they must never stop &mdash; all three are being asked to act on information they were never really given.</p>
+    <p>That is the gap Signal is built for. Not a symptom checker, not a drug index, and not a replacement for the clinician in front of you &mdash; an explanation of the concepts, so that the conversation you have with your own doctor is a better one.</p>
+  </section>
+
+  <!-- ── The arc ── -->
+  <section class="band--tight stack gap-28" id="arc">
+    <div class="stack gap-12">
+      <div class="eyebrow"><span class="dot">&#9679;</span> The peri-hospitalisation arc</div>
+      <h2 class="h-sub">Organised by <em style="font-style:italic;color:var(--rust)">when</em> you need it</h2>
+      <p style="font-size:18px;line-height:1.65;color:var(--ink-muted);max-width:70ch">Most health sites are organised by body system or by disease. Signal is organised by where you are in a hospital stay &mdash; because the question a person actually asks changes completely depending on the moment.</p>
+    </div>
+
+    <div class="arc">
+      <a class="leg" href="symptoms/index.html">
+        <span class="ph">Phase 01 &middot; Before admission</span>
+        <span class="nm">Symptoms</span>
+        <span class="q">How worried should I be?</span>
+        <span class="bd">Reading the body's alarms honestly, so the decision to seek care &mdash; or not to &mdash; is made on something better than fear.</span>
+        <span class="go">Explore symptoms &rarr;</span>
+      </a>
+      <a class="leg" href="procedures/index.html">
+        <span class="ph">Phase 02 &middot; During your stay</span>
+        <span class="nm">Procedures</span>
+        <span class="q">What will it do to my body?</span>
+        <span class="bd">What actually changes inside you, across structure, function and chemistry &mdash; before you are asked to sign for it.</span>
+        <span class="go">Explore procedures &rarr;</span>
+      </a>
+      <a class="leg" href="medicines/index.html">
+        <span class="ph">Phase 03 &middot; After you go home</span>
+        <span class="nm">Medicines</span>
+        <span class="q">Every day, or only when I need it?</span>
+        <span class="bd">The discharge bag, made legible &mdash; and above all, which tablets you must keep taking long after you feel well again.</span>
+        <span class="go">Explore medicines &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Review policy ── -->
+  <section class="band--tight stack gap-28" id="review">
+    <div class="stack gap-12">
+      <div class="eyebrow"><span class="dot">&#9679;</span> Editorial policy</div>
+      <h2 class="h-sub">How entries are reviewed</h2>
+    </div>
+
+    <div class="policy">
+      <div class="row">
+        <div class="rk">Written by</div>
+        <div class="rv">Dr. Gopi Krishnan Palanivel, MD (Anaesthesia), MBA (Healthcare &amp; Hospital Management) &mdash; specialist anaesthesiologist and intensivist at St. Isabel's Hospital, Mylapore, Chennai, and a practising geriatrician. Every entry on Signal is authored and edited by a named clinician, not assembled anonymously.</div>
+      </div>
+      <div class="row">
+        <div class="rk">Independently reviewed</div>
+        <div class="rv"><b>Not yet.</b> Authorship and review are deliberately kept separate. An entry counts as reviewed only when a second named clinician has checked that specific entry &mdash; and until that happens, the entry says so on its face, in an amber notice you cannot miss. <span id="reviewCount"></span></div>
+      </div>
+      <div class="row">
+        <div class="rk">No invented numbers</div>
+        <div class="rv">Frequency and risk are described in relative terms &mdash; common, uncommon, rare. We would rather say &ldquo;uncommon&rdquo; honestly than quote a precise-sounding figure that cannot be sourced.</div>
+      </div>
+      <div class="row">
+        <div class="rk">No brands, no doses</div>
+        <div class="rv">The medicines section explains <i>groups</i> and <i>classes</i> of medicine and how they are used. It carries no brand names and no doses by design &mdash; it exists to correct dangerous misconceptions, never to instruct an individual.</div>
+      </div>
+      <div class="row">
+        <div class="rk">Region-aware</div>
+        <div class="rv">Written with the Indian and South Asian context in mind, where that changes the picture &mdash; tuberculosis, dengue, earlier coronary disease, widespread iron deficiency, the over-the-counter steroid creams that turn a treatable fungal rash into a stubborn one.</div>
+      </div>
+      <div class="row">
+        <div class="rk">Corrections</div>
+        <div class="rv">If something here is wrong, it should be fixed rather than defended. <a href="https://github.com/gopitherobot/signal-health/issues" style="border-bottom:1px solid var(--ink)">Report a correction</a>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Limits ── -->
+  <section class="band--tight prose" id="limits">
+    <h2>What Signal can't do</h2>
+    <p>It cannot examine you. It does not know your history, your medicines, your kidney function or what your own doctor has already told you &mdash; all of which change the answer.</p>
+    <p>So Signal never diagnoses, and never tells anyone to start or stop a treatment. Every symptom and every medicine names the signs that mean stop reading and seek care. Where an entry and your own clinician disagree, your clinician is right: they have the one thing this site will never have, which is you in front of them.</p>
+    <div class="promise" style="background:var(--warm);margin-top:8px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+      <span><strong>Where this stands today:</strong> Signal is an educational prototype. It is authored by a clinician, and it is not yet independently reviewed &mdash; and it tells you which of those is true on every single page.</span>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="shell wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-mark">Signal</div>
+        <p style="line-height:1.55;max-width:320px">Health, explained plainly. Educational information, not a substitute for your doctor.</p>
+        <p class="footer-byline">Written and edited by <a href="about.html">Dr. Gopi Krishnan Palanivel, MD</a></p>
+      </div>
+      <div class="footer-col">
+        <div class="head">Read</div>
+        <a href="symptoms/index.html">Symptoms</a>
+        <a href="procedures/index.html">Procedures</a>
+        <a href="medicines/index.html">Medicines</a>
+        <a href="a-z.html">Conditions A&ndash;Z</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Trust</div>
+        <a href="about.html">Who writes this</a>
+        <a href="#review">How entries are reviewed</a>
+        <a href="#limits">What Signal can't do</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Project</div>
+        <a href="https://github.com/gopitherobot/signal-health">Source on GitHub</a>
+        <a href="https://github.com/gopitherobot/signal-health/blob/main/README.md">About this prototype</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; <span id="yr"></span> Signal Health &middot; educational prototype</span>
+      <span>If you think it's an emergency, call 112 or go to the nearest emergency department.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/manifest.js"></script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function () {
+    const c = window.SIGNAL_COUNTS || {};
+    const n = (c.symptoms || 0) + (c.procedures || 0) + (c.medicines || 0);
+    if (n) document.getElementById('reviewCount').textContent =
+      `All ${n} entries are currently awaiting that second read.`;
+  })();
+</script>
+</body>
+</html>

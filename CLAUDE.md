@@ -8,13 +8,25 @@
 
 **Signal is a plain-language public health-education website** for the general public, written with the **Indian / South Asian context** in mind. It is deliberately *not* a symptom-checker, a drug index, or a diagnostic tool. It explains, in calm everyday language, the three things people most often need to understand — organised around the actual question a worried person arrives with.
 
-| Section | The question it answers | Content | Signature interaction |
-|---|---|---|---|
-| **Symptoms** | *"How worried should I be?"* | 30 common symptoms | Urgency-first sorting + red flags |
-| **Procedures** | *"What will it do to my body?"* | 30 common procedures | Before ↔ After toggle across 3 body layers |
-| **Medicines** | *"Every day, or only when I have symptoms?"* | 24 medicine groups, 62 drug classes, 29 conditions | Take-daily / when-needed / course filter |
+### Who writes it
 
-Every entry also carries a **clinical-review stamp** and a **`related` map** linking it to the other two sections. Both are described in §4.
+Signal is written and edited by **Dr. Gopi Krishnan Palanivel** — MD (Anaesthesia), MBA (Healthcare & Hospital Management), specialist anaesthesiologist and intensivist at St. Isabel's Hospital, Mylapore, Chennai, and a practising geriatrician. The details live in `data/editorial.js` and are stated on `about.html`, in the byline of every page, and on every entry.
+
+### The peri-hospitalisation arc — the spine of the site
+
+The three sections are **not three loose topics**. They are three moments in one journey, and this is the reason the site is shaped the way it is:
+
+| Phase | Section | The question it answers | Content | Signature interaction |
+|---|---|---|---|---|
+| **01 · Before admission** | **Symptoms** | *"How worried should I be?"* | 30 common symptoms | Urgency-first sorting + red flags |
+| **02 · During your stay** | **Procedures** | *"What will it do to my body?"* | 30 common procedures | Before ↔ After toggle across 3 body layers |
+| **03 · After you go home** | **Medicines** | *"Every day, or only when I need it?"* | 24 medicine groups, 62 drug classes, 29 conditions | Take-daily / when-needed / course filter |
+
+Most health sites organise by body system or by disease. Signal organises by **when you need the information**, because the question a person actually asks changes completely depending on where they are in a hospital stay. Those three moments share a property: the stakes are highest, the time is shortest, and the explanation is thinnest.
+
+**Keep the phase visible.** It appears on the landing page, on each section masthead, and as a chip above every entry article. `tools/check.js` fails if any of those drop it.
+
+Every entry also carries a **review stamp** and a **`related` map** linking it to the other two sections. Both are described in §4.
 
 The guiding principle across all three: **lead with the real question, be honest about uncertainty, and be built to prevent harm** (never to replace a doctor).
 
@@ -39,8 +51,9 @@ No framework, no dependencies, no bundler. Plain static HTML/CSS/vanilla JS. Thi
 
 ```
 signal-health/
-├── index.html              # Landing page — hero, search, pillars, trust
+├── index.html              # Landing page — hero, search, the three phases
 ├── a-z.html                # Everything alphabetically (entries + conditions)
+├── about.html              # Who writes this, the arc, the editorial policy
 ├── symptoms/
 │   ├── index.html          # Tile grid from ../data/symptoms.js
 │   └── entry.html          # One article, chosen by ?e=<slug>
@@ -54,7 +67,8 @@ signal-health/
 │   ├── symptoms.js         # window.SYMPTOMS   — 30 entries
 │   ├── procedures.js       # window.PROCEDURES — 30 entries
 │   ├── medicines.js        # window.MEDICINES  — 24 entries
-│   ├── sections.js         # window.SECTIONS — the three topics' name/kicker/intro
+│   ├── sections.js         # window.SECTIONS — name / kicker / intro / phase
+│   ├── editorial.js        # window.EDITORIAL — the author and the arc
 │   ├── classification.js   # window.PHARM (10 families / 62 classes)
 │   │                       # window.SYSTEMS (10 systems / 29 conditions)
 │   │                       # window.CLASSIFICATION_REVIEW
@@ -210,6 +224,24 @@ window.SECTIONS.symptoms = {
 
 The pages carry this copy **inline** rather than rendering it from the data file, so the topic title is a real `h1`, indexable and present without JavaScript. `tools/check.js` compares the two across all seven pages, so they cannot drift — change the wording in `data/sections.js` and the check will name every page that still disagrees.
 
+### Editorial identity — `window.EDITORIAL`
+
+Who writes this, and on what authority. On a health site this is not marketing copy: a reader deciding whether to trust a page about stopping their blood thinners is entitled to know who wrote it and what they are qualified in.
+
+```js
+window.EDITORIAL.author = {
+  name:        "Dr. Gopi Krishnan Palanivel",
+  credentials: "MD (Anaesthesia) · MBA (Healthcare & Hospital Management)",
+  primaryRole: "Specialist Anaesthesiologist & Intensivist",
+  affiliation: "St. Isabel's Hospital, Mylapore, Chennai",
+  roles:       ["Specialist Anaesthesiologist & Intensivist", "Geriatrician", "Healthcare entrepreneur"],
+  byline:      "Written and edited by Dr. Gopi Krishnan Palanivel, MD",
+  mission:     "…"
+}
+```
+
+**Authorship is not review — keep them apart.** The author being a clinician does *not* make an entry reviewed. `reviewedBy` means an **independent, second** named clinician has checked that specific entry. The entry pages state both facts side by side: *"Written by Dr. Gopi Krishnan Palanivel, MD (Anaesthesia). Independent review pending."* Saying "unreviewed" without naming the author undersells it; saying "written by a doctor" without the review status oversells it. Say both. `tools/check.js` fails if the author is ever recorded as their own reviewer.
+
 ### Classification — `window.PHARM` and `window.SYSTEMS`
 
 The medicines section has two further axes beyond "by rule", both living in `data/classification.js`.
@@ -338,7 +370,9 @@ These are not stylistic preferences — they are what keeps the project responsi
 3. **Red flags everywhere.** Every symptom and medicine entry names the signs that mean "seek care." This is the safety net for an educational tool that can't examine anyone.
 4. **Medicines section carries no brand names and no doses — by design.** It's a *concepts* layer explaining groups of medicines, not a drug index (that space is mature and a medico-legal minefield). It exists to correct dangerous misconceptions — chiefly, stopping preventive medicines because you "feel fine" — never to instruct an individual.
 5. **Everything is framed as general education, subordinate to the reader's own clinician.** The footer states nothing is a substitute for medical care.
-6. **Physician sign-off is required before public deployment.** No entry is certified for real-user use until a named clinician has reviewed it. This is now tracked in the data: every entry carries `reviewedBy` / `lastReviewed` (§4), and while `reviewedBy` is `null` the entry openly displays a **"Pending clinical review"** notice. Do not pre-fill these fields with a placeholder name — an unreviewed entry must look unreviewed.
+6. **Independent physician sign-off is required before public deployment.** Signal is *authored* by a named clinician (§4), which is more than most health sites offer — but it is not the same as being *reviewed*. No entry is certified for real-user use until a **second** named clinician has checked that specific entry. This is tracked in the data: every entry carries `reviewedBy` / `lastReviewed`, and while `reviewedBy` is `null` the entry openly displays an **"Independent review pending"** notice alongside the author's name.
+
+   **Never set `reviewedBy` to the author's own name**, and never pre-fill it with a placeholder. An entry that has not had a second pair of eyes must say so. `tools/check.js` enforces this.
 
    In the medicines data, the discontinuation ("rule") advice for **anticoagulants, insulin, steroids, epilepsy medicines, antidepressants, TB medicines and sedatives** is genuinely safety-critical and needs particular scrutiny — a second clinician read is wise. TB medicines and sedatives join that list because both carry a two-sided instruction: complete the course / do not stop abruptly.
 7. **Region-awareness is a feature, not decoration.** The India/South-Asia notes (TB, dengue, earlier coronary disease, B12 deficiency, filariasis, the "stone belt", etc.) are part of what differentiates Signal. Keep them accurate and clearly caveated.

@@ -25,7 +25,7 @@ const check = (label, ok, detail) => { checks++; ok ? pass(label) : fail(label +
 const section = t => console.log('\n' + t);
 
 global.window = {};
-['symptoms', 'procedures', 'medicines', 'classification', 'sections'].forEach(f => require(path.join(ROOT, 'data', f + '.js')));
+['symptoms', 'procedures', 'medicines', 'classification', 'sections', 'editorial'].forEach(f => require(path.join(ROOT, 'data', f + '.js')));
 const { SYMPTOMS, PROCEDURES, MEDICINES, PHARM, SYSTEMS } = global.window;
 const DATA = { symptoms: SYMPTOMS, procedures: PROCEDURES, medicines: MEDICINES };
 const SECTIONS = Object.keys(DATA);
@@ -151,7 +151,7 @@ section('Safety rules');
   const doses = medSrc.match(/[0-9]+\s?(mg|mcg|ml|IU)\b/gi) || [];
   check('medicines: no doses or units (§7.4)', !doses.length, doses.slice(0, 5).join(', '));
 
-  const pages = ['index.html', 'a-z.html',
+  const pages = ['index.html', 'a-z.html', 'about.html',
                  'symptoms/index.html', 'procedures/index.html', 'medicines/index.html',
                  'symptoms/entry.html', 'procedures/entry.html', 'medicines/entry.html'];
   const noBanner = pages.filter(p => !/class="safety"/.test(read(p)));
@@ -200,7 +200,7 @@ section('Safety rules');
 /* ───────────────────────── 5. pages and routing ───────────────────────── */
 section('Pages and routing');
 {
-  const INDEX_PAGES = ['index.html', 'a-z.html',
+  const INDEX_PAGES = ['index.html', 'a-z.html', 'about.html',
                        'symptoms/index.html', 'procedures/index.html', 'medicines/index.html'];
   const ENTRY_PAGES = ['symptoms/entry.html', 'procedures/entry.html', 'medicines/entry.html'];
   const PAGES = INDEX_PAGES.concat(ENTRY_PAGES);
@@ -247,7 +247,7 @@ section('Pages and routing');
 /* ───────────────────────── 6. accessibility baseline ───────────────────────── */
 section('Accessibility baseline');
 {
-  const INDEX_PAGES = ['index.html', 'a-z.html',
+  const INDEX_PAGES = ['index.html', 'a-z.html', 'about.html',
                        'symptoms/index.html', 'procedures/index.html', 'medicines/index.html'];
   const ENTRY_PAGES = ['symptoms/entry.html', 'procedures/entry.html', 'medicines/entry.html'];
   const PAGES = INDEX_PAGES.concat(ENTRY_PAGES);
@@ -281,8 +281,11 @@ section('Accessibility baseline');
   });
   check('every search input is labelled', !unlabelled.length, unlabelled.join(', '));
 
-  const noLive = INDEX_PAGES.filter(p => !/aria-live="polite"/.test(src[p]));
-  check('list pages announce result counts', !noLive.length, noLive.join(', '));
+  /* About is the one index-level page with nothing to filter, so it has no
+     result count to announce. */
+  const LIST_PAGES = INDEX_PAGES.filter(p => p !== 'about.html');
+  const noLive = LIST_PAGES.filter(p => !/aria-live="polite"/.test(src[p]));
+  check('pages with a filterable list announce their result count', !noLive.length, noLive.join(', '));
 
   const noSignal = ENTRY_PAGES.filter(p => !/assets\/signal\.js/.test(src[p]));
   check('entry pages load signal.js', !noSignal.length, noSignal.join(', '));
@@ -300,7 +303,7 @@ section('Accessibility baseline');
   check('collapsible headers are keyboard operable',
     /role="button" tabindex="0" aria-expanded/.test(src['medicines/index.html']));
 
-  const noManifest = ['index.html', 'a-z.html'].concat(ENTRY_PAGES)
+  const noManifest = ['index.html', 'a-z.html', 'about.html'].concat(ENTRY_PAGES)
     .filter(p => !/data\/manifest\.js/.test(src[p]));
   check('pages that need the manifest load it', !noManifest.length, noManifest.join(', '));
 }
@@ -359,6 +362,67 @@ section('Section identity');
   check('the topic title is the h1 on each section index', !badH1.length, badH1.join(', '));
 }
 
+/* ─────────────── 6b. authorship and the care arc ─────────────── */
+section('Authorship and the care arc');
+{
+  const ED  = global.window.EDITORIAL;
+  const SEC = global.window.SECTIONS;
+  const ALL = ['index.html', 'a-z.html', 'about.html',
+               'symptoms/index.html', 'procedures/index.html', 'medicines/index.html',
+               'symptoms/entry.html', 'procedures/entry.html', 'medicines/entry.html'];
+
+  check('data/editorial.js names the author',
+    !!(ED && ED.author && ED.author.name && ED.author.credentials &&
+       ED.author.primaryRole && ED.author.affiliation),
+    ED ? '' : 'missing');
+
+  /* A health site that does not say who wrote it is asking for trust it has
+     not earned. The byline is required on every page, not just About. */
+  const noByline = ALL.filter(p => !/class="footer-byline"/.test(read(p)));
+  check('every page carries the author byline', !noByline.length, noByline.join(', '));
+
+  const noAbout = ALL.filter(p => !/href="(\.\.\/)?about\.html"/.test(read(p)));
+  check('every page links to the About page', !noAbout.length, noAbout.join(', '));
+
+  /* The About page must state the details exactly as data/editorial.js has them. */
+  const about = read('about.html');
+  const a = ED.author;
+  const wrong = [];
+  if (!about.includes(a.name)) wrong.push('name');
+  if (!about.includes('MD (Anaesthesia)')) wrong.push('credentials');
+  if (!about.includes(a.affiliation)) wrong.push('affiliation');
+  if (!about.includes('Anaesthesiologist')) wrong.push('primary role');
+  check('About page matches data/editorial.js', !wrong.length, wrong.join(', '));
+
+  /* Authorship is not review. The site must never imply otherwise. */
+  const signed = [];
+  SECTIONS.forEach(s => {
+    for (const [k, d] of Object.entries(DATA[s])) {
+      if (d.reviewedBy && d.reviewedBy === a.name) signed.push(`${s}/${k}`);
+    }
+  });
+  check('the author is not recorded as their own independent reviewer',
+    !signed.length, signed.slice(0, 5).join(', ') + ' — authorship and review are separate (CLAUDE.md §7.6)');
+
+  const noEditorial = ['symptoms/entry.html', 'procedures/entry.html', 'medicines/entry.html']
+    .filter(p => !/data\/editorial\.js/.test(read(p)));
+  check('entry pages load the editorial data', !noEditorial.length, noEditorial.join(', '));
+
+  /* The peri-hospitalisation arc — the spine of the site. */
+  const noPhase = SECTIONS.filter(s => !SEC[s].phase || !SEC[s].when);
+  check('every section declares its phase in the hospital stay', !noPhase.length, noPhase.join(', '));
+
+  const phaseMissing = [];
+  SECTIONS.forEach(s => {
+    if (!read(s + '/index.html').includes(SEC[s].when)) phaseMissing.push(s + '/index.html');
+    if (!read(s + '/entry.html').includes(SEC[s].when)) phaseMissing.push(s + '/entry.html');
+    if (!read('index.html').includes(SEC[s].when))      phaseMissing.push('index.html (' + s + ')');
+    if (!read('about.html').includes(SEC[s].when))      phaseMissing.push('about.html (' + s + ')');
+  });
+  check('the phase is shown wherever a section is introduced',
+    !phaseMissing.length, phaseMissing.join(', '));
+}
+
 /* ───────────────────────── 7. generated manifest ───────────────────────── */
 section('Generated manifest');
 {
@@ -402,9 +466,12 @@ section('Clinical review status');
   let reviewed = 0, pending = 0;
   for (const sec of SECTIONS)
     for (const d of Object.values(DATA[sec])) d.reviewedBy ? reviewed++ : pending++;
-  console.log(`  note  ${reviewed} entr${reviewed === 1 ? 'y' : 'ies'} signed off, ${pending} pending review`);
-  if (pending) console.log('        Pending entries display a visible "Pending clinical review" notice.');
-  if (!global.window.CLASSIFICATION_REVIEW.reviewedBy) console.log('        The classification layer is also unreviewed.');
+  const a = global.window.EDITORIAL && global.window.EDITORIAL.author;
+  console.log(`  note  ${reviewed} entr${reviewed === 1 ? 'y' : 'ies'} independently reviewed, ${pending} pending`);
+  if (a) console.log(`        All entries are authored by ${a.name}, ${a.credentials.split(' · ')[0]}.`);
+  if (pending) console.log('        Pending entries display a visible "Independent review pending" notice');
+  if (pending) console.log('        alongside the author name. Authorship is not review (CLAUDE.md §7.6).');
+  if (!global.window.CLASSIFICATION_REVIEW.reviewedBy) console.log('        The classification layer is also awaiting independent review.');
 }
 
 /* ───────────────────────── result ───────────────────────── */

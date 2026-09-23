@@ -18,7 +18,7 @@ The guiding idea: most health sites answer *"what could this be?"* Signal answer
 
 **Nothing in this repository has been signed off for public deployment yet.** Before any of this content goes live to real users, every entry needs:
 
-1. **Physician review and sign-off** — a named, qualified clinician accountable for each entry. This is now tracked in the data: every entry has `reviewedBy` / `lastReviewed`, and until `reviewedBy` is set the entry openly displays a **"Pending clinical review"** notice on its page. As of today that is **all 84 entries**, plus the classification layer.
+1. **Independent physician review** — Signal is *authored* by a named clinician, which is more than most health sites offer. It is not the same as being *reviewed*. An entry counts as reviewed only when a **second** named clinician has checked that specific entry. Until then it openly displays an **"Independent review pending"** notice alongside the author's name. As of today that is **all 84 entries**, plus the classification layer.
 2. **Cited clinical sources** — the frequency bands and risk descriptions here are *illustrative teaching devices*, deliberately qualitative ("common / uncommon / rare", "usually minor"), **not statistics**. A production version must replace these with sourced, referenced figures or keep them qualitative by explicit editorial policy.
 3. **A medico-legal review** — disclaimers, scope, and jurisdiction (this content leans India/South Asia-aware) should be checked by someone who understands the liability of publishing health information.
 
@@ -34,6 +34,7 @@ The persistent red banner, the "not a diagnosis" framing, and the footer disclai
 signal-health/
 ├── index.html              # Landing page + unified search across all three sections
 ├── a-z.html                # Everything alphabetically — entries and conditions
+├── about.html              # Who writes this, the arc, the editorial policy
 ├── symptoms/
 │   ├── index.html          # Tile grid (renders from ../data/symptoms.js)
 │   └── entry.html          # One full article, chosen by ?e=<slug>
@@ -47,7 +48,8 @@ signal-health/
 │   ├── symptoms.js          # 30 symptom entries — window.SYMPTOMS
 │   ├── procedures.js        # 30 procedure entries — window.PROCEDURES
 │   ├── medicines.js         # 24 medicine-group entries — window.MEDICINES
-│   ├── sections.js          # the three topics — name, question, framing
+│   ├── sections.js          # the three topics — name, question, framing, phase
+│   ├── editorial.js         # the author, credentials and the care arc
 │   ├── classification.js    # window.PHARM (drug classes) + window.SYSTEMS (conditions)
 │   └── manifest.js          # GENERATED — lightweight index of all 84 entries
 ├── assets/
@@ -111,17 +113,25 @@ Every entry in all three sections begins with the same shared metadata:
 
 The two classification axes reference medicine keys and class ids rather than duplicating content, so all three views stay in sync from a single source of truth. Full schemas, invariants and safety rules are in [CLAUDE.md](CLAUDE.md).
 
-## The three topics
+## Who writes this
 
-Symptoms, Procedures and Medicines are the spine of the site, so each is introduced by name on every page it touches — a full masthead at the head of its index, a slim band above every entry, and a named card on the landing page. Each carries the reader's own question rather than a description of the feature:
+Signal is written and edited by **Dr. Gopi Krishnan Palanivel** — MD (Anaesthesia), MBA (Healthcare & Hospital Management), specialist anaesthesiologist and intensivist at St. Isabel's Hospital, Mylapore, Chennai, and a practising geriatrician.
 
-| | | |
-|---|---|---|
-| **Symptoms** | *How worried should I be?* | Every symptom tells a story. Some are whispers, a few are alarms. |
-| **Procedures** | *What will it do to my body?* | A procedure is not a name on a consent form. |
-| **Medicines** | *Every day, or only when I need it?* | Some medicines treat what you can feel. Others prevent what you cannot. |
+That background is the reason the site is shaped the way it is. An anaesthesiologist and intensivist spends their working life inside the stretch of a hospital stay that patients are least able to picture — frequently because they were unconscious for it.
 
-The wording lives in [data/sections.js](data/sections.js) and is checked against every page, so it cannot drift.
+**Authorship is not the same as review.** Every entry names its author *and* states plainly that a second clinician has not yet checked it. Both facts, together. See [about.html](about.html).
+
+## The three topics — a peri-hospitalisation arc
+
+The sections are not three loose topics. They are three moments in one journey, and the site is organised by **when** you need the information rather than by body system or disease:
+
+| Phase | Section | The reader's question | The thesis |
+|---|---|---|---|
+| **01 · Before admission** | **Symptoms** | *How worried should I be?* | Every symptom tells a story. Some are whispers, a few are alarms. |
+| **02 · During your stay** | **Procedures** | *What will it do to my body?* | A procedure is not a name on a consent form. |
+| **03 · After you go home** | **Medicines** | *Every day, or only when I need it?* | Some medicines treat what you can feel. Others prevent what you cannot. |
+
+Each topic is introduced by name on every page it touches — a full masthead at the head of its index, a slim band above every entry, and a named card on the landing page. The wording lives in [data/sections.js](data/sections.js) and is checked against every page, so it cannot drift.
 
 ## Design
 

@@ -52,29 +52,46 @@
   }
   window.SignalFormatDate = formatDate;
 
-  /* Two honest states — reviewed by a named clinician, or explicitly not yet. */
+  /* Authorship and review are two different claims, and the site keeps them
+     apart. Signal is written by a named clinician; an entry counts as
+     *reviewed* only once a SECOND named clinician has checked that entry.
+     Saying "unreviewed" without naming the author undersells it; saying
+     "written by a doctor" without the review status oversells it. Both. */
+  function author() {
+    var e = window.EDITORIAL && window.EDITORIAL.author;
+    return e ? e : null;
+  }
+
   window.SignalReview = function (d) {
     if (d && d.reviewedBy) {
       var when = d.lastReviewed ? ' &middot; ' + esc(formatDate(d.lastReviewed)) : '';
       return '<div class="sig-review done">' +
         '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
           '<path d="M20 6 9 17l-5-5"/></svg>' +
-        '<span>Clinically reviewed by <b>' + esc(d.reviewedBy) + '</b>' + when + '</span></div>';
+        '<span>Independently reviewed by <b>' + esc(d.reviewedBy) + '</b>' + when + '</span></div>';
     }
+    var a = author();
+    var written = a
+      ? 'Written by <b>' + esc(a.name) + '</b>, ' + esc(a.credentials.split(' · ')[0]) + '. '
+      : '';
     return '<div class="sig-review pending">' +
       '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
         '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' +
-      '<span><b>Pending clinical review.</b> No named clinician has signed this entry off yet. ' +
-      'Treat it as a draft explainer, not as guidance.</span></div>';
+      '<span>' + written + '<b>Independent review pending</b> &mdash; a second clinician has not yet ' +
+      'checked this entry. Treat it as a draft explainer, not as guidance.</span></div>';
   };
 
-  /* A one-line version for the article byline. */
+  /* The two-line byline in the article header. */
   window.SignalReviewLine = function (d) {
+    var a = author();
+    var who = a
+      ? 'Written by <strong>' + esc(a.name) + '</strong>'
+      : '<strong>Signal</strong>';
     if (d && d.reviewedBy) {
-      return 'Reviewed by <strong>' + esc(d.reviewedBy) + '</strong>' +
-        (d.lastReviewed ? '<br>' + esc(formatDate(d.lastReviewed)) : '');
+      return who + '<br>Reviewed by ' + esc(d.reviewedBy) +
+        (d.lastReviewed ? ' &middot; ' + esc(formatDate(d.lastReviewed)) : '');
     }
-    return '<strong>Not yet reviewed</strong><br>Awaiting clinical sign-off';
+    return who + '<br>Independent review pending';
   };
 
   /* ─────────────── cross-section links ─────────────── */
